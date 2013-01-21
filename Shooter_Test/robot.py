@@ -40,9 +40,9 @@ class MyRobot(wpilib.IterativeRobot):
         global motorValue
 
         if lstick.GetRawButton(0):              #Trigger sets shooter to 100%
-                motorValue = 1
-        if lstick.GetRawButton(1):              #Button 2 sets to 75%
-                motorValue = 0.75
+                motorValue = -1
+        if lstick.GetRawButton(1):              #Button 2 sets to magic number
+                motorValue = -0.47
         else:                                   #Joystick y axis controls incrementally
                 if lstick.GetY() > 0.05 or lstick.GetY() < -0.05:
                         motorValue += lstick.GetY()/100
