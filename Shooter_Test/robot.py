@@ -39,6 +39,7 @@ class MyRobot(wpilib.IterativeRobot):
         self.GetWatchdog().Feed()
         CheckRestart()
         global motorValue
+        global motorOld
 
         if lstick.GetRawButton(0):              #Trigger sets shooter to 100%
                 motorValue = -1
@@ -59,7 +60,7 @@ class MyRobot(wpilib.IterativeRobot):
 
         Motor.Set(motorValue)
         Motor2.Set(motorValue)
-        if motorValue != motorOld:
+        if motorValue != motorOld:              #prints motor value
             print(motorValue)
             motorOld = motorValue
         
