@@ -6,6 +6,7 @@ Motor = wpilib.Jaguar(1)
 Motor2 = wpilib.Jaguar(2)
 
 motorValue = 0
+motorOld = 0
 
 def CheckRestart():
     if lstick.GetRawButton(10):
@@ -58,7 +59,9 @@ class MyRobot(wpilib.IterativeRobot):
 
         Motor.Set(motorValue)
         Motor2.Set(motorValue)
-        print(motorValue)
+        if motorValue != motorOld:
+            print(motorValue)
+            motorOld = motor Value
         
   
 
