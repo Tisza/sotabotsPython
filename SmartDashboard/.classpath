@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-6-openjdk-amd64"/>
+	<classpathentry kind="lib" path="/media/OSDisk/Users/Frankie Lyon/Downloads/eclipse-SDK-4.2-win32-x86_64/eclipse/lib/WPILibJ/classes.jar"/>
+	<classpathentry kind="lib" path="/media/OSDisk/Program Files/SmartDashboard/SmartDashboard.jar"/>
+	<classpathentry kind="lib" path="/media/OSDisk/Program Files/SmartDashboard/extensions/WPICameraExtension.jar"/>
+	<classpathentry kind="lib" path="/media/OSDisk/Program Files/SmartDashboard/extensions/lib/WPIJavaCV.jar"/>
+	<classpathentry kind="lib" path="/home/frankie/Downloads/SmartDashboard2012.jar"/>
+	<classpathentry kind="lib" path="/home/frankie/.eclipse/org.eclipse.platform_3.7.0_155965261/plugins/edu.wpi.first.javadev.sunspotfrcsdk_1.0.7.1/sunspotfrcsdk/lib/WPILibJ/classes.jar"/>
+	<classpathentry kind="lib" path="/home/frankie/.eclipse/org.eclipse.platform_3.7.0_155965261/plugins/edu.wpi.first.javadev.sunspotfrcsdk_1.0.7.1/sunspotfrcsdk/lib/squawk_device.jar"/>
+	<classpathentry kind="lib" path="/home/frankie/SmartDashboard/SmartDashboard.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
