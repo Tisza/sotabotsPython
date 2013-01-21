@@ -29,8 +29,7 @@ public class Vision extends WPICameraExtension {
                 blue = image.getRedChannel().getThreshold(64);
 
  
- /* Find the threshold of the image, where dark and light colors are clearly
-   separated. */
+ /* Finds the threshold of the image */
  WPIBinaryImage threshold = red.getAnd(green).getAnd(blue);
 
  threshold.dilate(1);
@@ -45,12 +44,12 @@ public class Vision extends WPICameraExtension {
 
  for(WPIContour contour : contours)
    {
-     /* Approximate each polygon in the image. */
+     /* Approximate each polygon in the camera image */
      WPIPolygon p = contour.approxPolygon(25);
 
      
      /* Make sure it's a convex quadrilaterial that doesn't take up most
-       of the screen */
+       of the screen - this will avoid any mistaken polygons */
      if(p.isConvex() && p.getNumVertices() == 4 && p.getHeight() < 240)
        {
 
@@ -71,7 +70,7 @@ public class Vision extends WPICameraExtension {
 
          
          /* If the lengths of the top to bottom and left to right sides are
-           very close, the shape is a rectangle */
+           very close, the shape is a rectangle! */
          if(ratio1 < 0.1 && ratio2 < 0.1)
            {
 
@@ -103,12 +102,11 @@ public class Vision extends WPICameraExtension {
     	 height = side1;
     	 width  = side2;
      }
-
      else {
     	 width = side1;
     	 height = side2;
      }
-     double FOVft = 320 * (4.5 / width); //full camera fov = 320pix * (width of target in ft/width of target in px)
+     double FOVft = 320 * (4.5 / width); //full camera FOV = 320pix * (width of target in ft/width of target in px)
      double tan24 = 0.45; //tangent of 24 degrees (half of the camera FOV)
      
      double distance = FOVft / tan24;  
