@@ -61,7 +61,7 @@ class MyRobot(wpilib.IterativeRobot):
         Motor2.Set(motorValue)
         if motorValue != motorOld:
             print(motorValue)
-            motorOld = motor Value
+            motorOld = motorValue
         
   
 
