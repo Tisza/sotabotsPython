@@ -9,9 +9,9 @@ class gyroFilter():
                 self.samples[self.index] = updateValue
                 self.index += 1
                 
-                if self.index <= self.numSamples:
+                if self.index >= self.numSamples:
                         self.index = 0
         
         def getAverage(self):
-                return (round(sum(self.samples))/(float(len(self.samples))))
+                return round(sum(self.samples)/(float(len(self.samples))))
                  
