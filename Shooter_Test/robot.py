@@ -38,6 +38,7 @@ class MyRobot(wpilib.IterativeRobot):
         self.GetWatchdog().Feed()
         CheckRestart()
         global motorValue
+
         if lstick.GetRawButton(0):              #Trigger sets shooter to 100%
                 motorValue = 1
         if lstick.GetRawButton(1):              #Button 2 sets to 75%
@@ -46,7 +47,7 @@ class MyRobot(wpilib.IterativeRobot):
                 if lstick.GetY() > 0.05 or lstick.GetY() < -0.05:
                         motorValue += lstick.GetY()/100
                 
-        if abs(lstick.GetX() > 0.5) or lstick.GetRawButton(3):            #Shake joystick x-axis to e-stop motors
+        if abs(lstick.GetX() > 0.5) or lstick.GetRawButton(3):            #Shake joystick x-axis or press button 3 to e-stop motors
                 motorValue = 0
 
                 
