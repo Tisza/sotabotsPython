@@ -76,12 +76,10 @@ class MyRobot(wpilib.IterativeRobot):
         
         Motor.Set(motorValue)
         Motor2.Set(endMotorValue)
-        if endMotorValue != endMotorOld:              #prints motor values prettier
-            print("End Motor: "+str(int(endMotorValue*100))+"%")
+        if endMotorValue != endMotorOld or motorValue != motorOld:              #prints motor values prettier
+            print("End Motor: "+str(int(endMotorValue*100))+"% Feed Motor: "+str(int(motorValue*100))+"%")
             endMotorOld = endMotorValue
-        if motorValue != motorOld:
-            print("Feed Motor: "+str(int(motorValue*100))+"%")
-            motorOld = motorValue
+            motorValue != motorOld
         
 
 def run():
