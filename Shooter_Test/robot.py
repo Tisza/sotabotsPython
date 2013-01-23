@@ -5,11 +5,14 @@ rstick = wpilib.Joystick(2)
 
 Motor = wpilib.Jaguar(1)
 Motor2 = wpilib.Jaguar(2)
+Motor3 = wpilib.Jaguar(3)
 
 motorValue = 0
 motorOld = 0
 endMotorValue = 0
 endMotorOld = 0
+pulley = 0
+pulleyOld = 0
 
 def CheckRestart():
     if lstick.GetRawButton(10):
@@ -45,6 +48,8 @@ class MyRobot(wpilib.IterativeRobot):
         global motorOld
         global endMotorValue
         global endMotorOld
+        global pulley
+        global pulleyOld
 
         if lstick.GetRawButton(0):              #Trigger sets shooter to 100%
                 endMotorValue = -1
@@ -79,8 +84,13 @@ class MyRobot(wpilib.IterativeRobot):
         if endMotorValue != endMotorOld or motorValue != motorOld:              #prints motor values prettier
             print("End Motor: "+str(int(endMotorValue*100))+"% Feed Motor: "+str(int(motorValue*100))+"%")
             endMotorOld = endMotorValue
-            motorValue != motorOld
+            motorOld = motorValue
         
+        pulley = (lstick.GetThrottle() -1)*(-0.5)
+        Motor3.Set(pulley)
+        if pulley != pulleyOld:
+            print("Pulley: "+str(int(pulley*100))+"%")
+            pulleyOld=pulley
 
 def run():
     robot = MyRobot()
