@@ -14,6 +14,8 @@ gyro = wpilib.Gyro(1)
 
 gyroF = gyroFilter(100)
 
+shootEncoder = wpilib.Encoder(1,2,false,k4X)
+
 def CheckRestart():
     if lstick.GetRawButton(10):
         raise RuntimeError("Restart")
