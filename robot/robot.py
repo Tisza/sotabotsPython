@@ -16,10 +16,14 @@ gyroF = gyroFilter(100)
 
 shootEncoder = wpilib.Encoder(1,2,false,k4X)
 
+target = 0
+distance = 0
+
 def CheckRestart():
     if lstick.GetRawButton(10):
         raise RuntimeError("Restart")
         print("CheckRestart")
+
 
 class MyRobot(wpilib.IterativeRobot):
     def DisabledContinuous(self):
@@ -59,6 +63,12 @@ class MyRobot(wpilib.IterativeRobot):
         gyroF.update(gyro.GetAngle())
         print("Gyroscope calculated average: ", gyroF.getAverage())
         print("Raw value: ", gyro.GetAngle())
+
+    def Align(self):
+        global target = table.getDouble("CENTER")
+        while target < -0.05 and target > 0.05:
+                drive.ArcadeDrive(0,target)
+                target = table.getDouble("CENTER")
         
 
 def run():
