@@ -46,6 +46,7 @@ class MyRobot(wpilib.IterativeRobot):
         dog = self.GetWatchdog()
         dog.SetEnabled(True)
         dog.SetExpiration(0.25)
+        shootEncoder.Start()
         shootEncoder.Reset()
         
     def TeleopPeriodic(self):
@@ -95,8 +96,8 @@ class MyRobot(wpilib.IterativeRobot):
             #print("End Motor: "+str(int(endMotorValue*100))+"% Feed Motor: "+str(int(motorValue*100))+"%")
             endMotorOld = endMotorValue
             motorOld = motorValue
-        print rate
-        print RPM
+        print("RATE: " + rate)
+        print("RPM: " + RPM)
 
 def run():
     robot = MyRobot()
