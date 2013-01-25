@@ -67,7 +67,8 @@ class MyRobot(wpilib.IterativeRobot):
     def Align(self):
         global target = table.getDouble("CENTER")
         while target < -0.05 and target > 0.05:
-                drive.ArcadeDrive(0,target)
+                tarval = (target/100)^3 #So its not quite as rapid/jittery. Further tweeking will be nessessary.
+                drive.ArcadeDrive(0,tarval)
                 target = table.getDouble("CENTER")
         
 
