@@ -15,13 +15,33 @@ import edu.wpi.first.wpilibj.networking.NetworkTable;
 
 
 public class Vision extends WPICameraExtension {
-	public NetworkTable table = (NetworkTable) Robot.getTable();
+	//private static final long serialVersionUID = -7612889513919831857L;
+	//public NetworkTable table = (NetworkTable) Robot.getTable();
 	public JLabel widthLabel;
 	public JLabel heightLabel;
 	public JLabel distanceLabel;
+	public JLabel centerLabel;
+	public double width;
+	public double distance;
+	public double target;
+	public double height;
+	public double centerAim;
 	
 	
-	public WPIImage processImage(WPIColorImage image) {
+	private static double getLength(WPIPoint a, WPIPoint b)
+	  {
+
+	    int deltax = a.getX() - b.getX();
+
+	    int deltay = a.getY() - b.getY();
+
+	    
+	    return Math.sqrt((deltax * deltax) + (deltay * deltay));
+	  }
+	
+public WPIImage processImage(WPIColorImage image) {
+		//table.setTeam(2557);
+		
 		
 		WPIBinaryImage red = image.getRedChannel().getThreshold(64),
 
@@ -29,7 +49,8 @@ public class Vision extends WPICameraExtension {
                 blue = image.getRedChannel().getThreshold(64);
 
  
- /* Finds the threshold of the image */
+ /* Find the threshold of the image, where dark and light colors are clearly
+   separated. */
  WPIBinaryImage threshold = red.getAnd(green).getAnd(blue);
 
  threshold.dilate(1);
@@ -44,12 +65,12 @@ public class Vision extends WPICameraExtension {
 
  for(WPIContour contour : contours)
    {
-     /* Approximate each polygon in the camera image */
+     /* Approximate each polygon in the image. */
      WPIPolygon p = contour.approxPolygon(25);
 
      
      /* Make sure it's a convex quadrilaterial that doesn't take up most
-       of the screen - this will avoid any mistaken polygons */
+       of the screen */
      if(p.isConvex() && p.getNumVertices() == 4 && p.getHeight() < 240)
        {
 
@@ -70,11 +91,11 @@ public class Vision extends WPICameraExtension {
 
          
          /* If the lengths of the top to bottom and left to right sides are
-           very close, the shape is a rectangle! */
+           very close, the shape is a rectangle */
          if(ratio1 < 0.1 && ratio2 < 0.1)
            {
 
-             if(bestMatch == null || p.getHeight() > bestMatch.getHeight())
+             if(bestMatch == null || p.getHeight() < bestMatch.getHeight())
 
                bestMatch = p;
            }
@@ -89,8 +110,7 @@ public class Vision extends WPICameraExtension {
      
      WPIPoint[] points = bestMatch.getPoints();
      
-     double height = 0;
-     double width = 0;
+    
 
      double side1 = getLength(points[0], points[1]);
 
@@ -102,47 +122,52 @@ public class Vision extends WPICameraExtension {
     	 height = side1;
     	 width  = side2;
      }
+
      else {
     	 width = side1;
     	 height = side2;
      }
-     double FOVft = 320 * (4.5 / width); //full camera FOV = 320pix * (width of target in ft/width of target in px)
+     double FOVft = 320 * (4.5 / width); //full camera fov = 320pix * (width of target in ft/width of target in px)
      double tan24 = 0.45; //tangent of 24 degrees (half of the camera FOV)
      
-     double distance = FOVft / tan24;  
+     distance  = FOVft / tan24;  //calculates distance
      
-     table.beginTransaction();			//put values into networktable for robot to use
+     double centerPx  = points[1].getX() - (width/2); //gets pixel coordinate of center of target
+     centerAim = 2 * (centerPx / 320 ) - 1; 
+     
+    /* table.beginTransaction();			//put values into networktable for robot to use
      table.putDouble("WIDTH", width);
+     table.putDouble("CENTER", centerAim);
      table.putDouble("DISTANCE", distance);
-     table.endTransaction();
+     table.endTransaction();*/
      
-     widthLabel = new JLabel("Width: " + width);  	//add values to labels and print labels
-     heightLabel = new JLabel("Height: " + height);
-     distanceLabel = new JLabel("Distance: " + distance);
-     add(widthLabel);
-     add(heightLabel);
-     add(distanceLabel);
+     
      
      repaint();			//repaint panel
+   
+     setVisible(true);
+     repaint();
      
 		
 		
-		return image;
+	return image;
    }
+ 
+
+widthLabel = new JLabel("Width: " + width);  	//add values to labels and print labels
+heightLabel = new JLabel("Height: " + height);
+distanceLabel = new JLabel("Distance: " + distance);
+centerLabel = new JLabel("Target Coordinate: " + centerAim);
+add(centerLabel);
+add(widthLabel);
+add(heightLabel);
+add(distanceLabel);
+
 return output;
 		
 	}
 	
-	private static double getLength(WPIPoint a, WPIPoint b)
-	  {
-
-	    int deltax = a.getX() - b.getX();
-
-	    int deltay = a.getY() - b.getY();
-
-	    
-	    return Math.sqrt((deltax * deltax) + (deltay * deltay));
-	  }
+	
 
 }
 
