@@ -46,7 +46,7 @@ public WPIImage processImage(WPIColorImage image) {
 		WPIBinaryImage red = image.getRedChannel().getThreshold(64),
 
                 green = image.getGreenChannel().getThreshold(64),
-                blue = image.getRedChannel().getThreshold(64);
+                blue = image.getRedChannel().getThreshold(64); /* getRedChannel() for blue?? (D) */
 
  
  /* Find the threshold of the image, where dark and light colors are clearly
