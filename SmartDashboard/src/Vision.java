@@ -1,4 +1,8 @@
+
+
 import javax.swing.JLabel;
+
+import sun.misc.Timer;
 import edu.wpi.first.smartdashboard.camera.WPICameraExtension;
 import edu.wpi.first.wpijavacv.WPIBinaryImage;
 import edu.wpi.first.wpijavacv.WPIColor;
@@ -17,9 +21,10 @@ public class Vision extends WPICameraExtension {
 	public static double width = 0;
 	public static double distance = 0;
 	public static double target = 0;
-	public double height = 0;
+	public static double y = 0;
+	public static double height = 0;
 	public static double centerAim = 0;
-	
+	public double loopNumber = 0;
 	
 	
 private static double getLength(WPIPoint a, WPIPoint b)
@@ -36,10 +41,9 @@ private static double getLength(WPIPoint a, WPIPoint b)
 public WPIImage processImage(WPIColorImage image) {
 		
 	
-		WPIBinaryImage red = image.getRedChannel().getThreshold(64),
-
+				WPIBinaryImage red = image.getRedChannel().getThreshold(64),
                 green = image.getGreenChannel().getThreshold(64),
-                blue = image.getRedChannel().getThreshold(64);
+                blue = image.getBlueChannel().getThreshold(64);
 
  
  /* Find the threshold of the image, where dark and light colors are clearly
@@ -88,9 +92,9 @@ public WPIImage processImage(WPIColorImage image) {
          if(ratio1 < 0.1 && ratio2 < 0.1)
            {
 
-             if(bestMatch == null || p.getHeight() < bestMatch.getHeight())
+             if(bestMatch == null || p.getY() < bestMatch.getY()){
 
-               bestMatch = p;
+               bestMatch = p;}
            }
        }
    }
@@ -98,7 +102,7 @@ public WPIImage processImage(WPIColorImage image) {
  if(bestMatch != null)
    {
 
-     image.drawPolygon(bestMatch, new WPIColor(0, 128, 255), 4);
+     image.drawPolygon(bestMatch, new WPIColor(255, 253, 0), 8);
 
      
      WPIPoint[] points = bestMatch.getPoints();
@@ -134,21 +138,23 @@ public WPIImage processImage(WPIColorImage image) {
      table.putDouble("DISTANCE", distance);
      table.endTransaction();*/
      
-     
-     
-     repaint();			//repaint panel
-   
-     setVisible(true);
      repaint();
      
+     if (loopNumber > 10) {
+     Printer.refresh();
+     loopNumber = 0;
+     }
+     else {
+    	 loopNumber++;
+     }
+     
 		
-	return image;
+     return image;
    }
  
 
- Printer.refresh();
 
-return output;
+return null;
 		
 	}
 
