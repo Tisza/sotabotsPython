@@ -1,6 +1,7 @@
 
 
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 import edu.wpi.first.smartdashboard.camera.WPICameraExtension;
 import edu.wpi.first.wpijavacv.WPIBinaryImage;
@@ -27,6 +28,10 @@ public class Vision extends WPICameraExtension {
 	public static int polyNum = 0;
 	public double loopNumber = 0;
 	
+	public JTextField red    		= new JTextField("64");
+	public static JTextField green  = new JTextField("64");
+	public static JTextField blue   = new JTextField("64");
+	
 private static double getLength(WPIPoint a, WPIPoint b)
 	  {
 
@@ -39,9 +44,8 @@ private static double getLength(WPIPoint a, WPIPoint b)
 	  }
 	
 public WPIImage processImage(WPIColorImage image) {
-		
 	
-				WPIBinaryImage red = image.getRedChannel().getThreshold(64),
+				WPIBinaryImage red = image.getRedChannel().getThreshold(this.red.getText()), //need to parse to int before running
                 green = image.getGreenChannel().getThreshold(64),
                 blue = image.getBlueChannel().getThreshold(64);
 
