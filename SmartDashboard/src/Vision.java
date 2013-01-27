@@ -1,9 +1,5 @@
-import java.awt.Dimension;
-
 import javax.swing.JLabel;
-
 import edu.wpi.first.smartdashboard.camera.WPICameraExtension;
-import edu.wpi.first.smartdashboard.robot.Robot;
 import edu.wpi.first.wpijavacv.WPIBinaryImage;
 import edu.wpi.first.wpijavacv.WPIColor;
 import edu.wpi.first.wpijavacv.WPIColorImage;
@@ -17,18 +13,16 @@ import edu.wpi.first.wpilibj.networking.NetworkTable;
 public class Vision extends WPICameraExtension {
 	//private static final long serialVersionUID = -7612889513919831857L;
 	//public NetworkTable table = (NetworkTable) Robot.getTable();
-	public JLabel widthLabel;
-	public JLabel heightLabel;
-	public JLabel distanceLabel;
-	public JLabel centerLabel;
-	public double width;
-	public double distance;
-	public double target;
-	public double height;
-	public double centerAim;
+	
+	public static double width = 0;
+	public static double distance = 0;
+	public static double target = 0;
+	public double height = 0;
+	public static double centerAim = 0;
 	
 	
-	private static double getLength(WPIPoint a, WPIPoint b)
+	
+private static double getLength(WPIPoint a, WPIPoint b)
 	  {
 
 	    int deltax = a.getX() - b.getX();
@@ -40,13 +34,12 @@ public class Vision extends WPICameraExtension {
 	  }
 	
 public WPIImage processImage(WPIColorImage image) {
-		//table.setTeam(2557);
 		
-		
+	
 		WPIBinaryImage red = image.getRedChannel().getThreshold(64),
 
                 green = image.getGreenChannel().getThreshold(64),
-                blue = image.getRedChannel().getThreshold(64); /* getRedChannel() for blue?? (D) */
+                blue = image.getRedChannel().getThreshold(64);
 
  
  /* Find the threshold of the image, where dark and light colors are clearly
@@ -149,27 +142,21 @@ public WPIImage processImage(WPIColorImage image) {
      repaint();
      
 		
-		
 	return image;
    }
  
 
-widthLabel = new JLabel("Width: " + width);  	//add values to labels and print labels
-heightLabel = new JLabel("Height: " + height);
-distanceLabel = new JLabel("Distance: " + distance);
-centerLabel = new JLabel("Target Coordinate: " + centerAim);
-add(centerLabel);
-add(widthLabel);
-add(heightLabel);
-add(distanceLabel);
+ Printer.refresh();
 
 return output;
 		
 	}
-	
-	
+
+
 
 }
+
+
 
 	
 	
