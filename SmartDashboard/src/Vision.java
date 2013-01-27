@@ -2,7 +2,6 @@
 
 import javax.swing.JLabel;
 
-import sun.misc.Timer;
 import edu.wpi.first.smartdashboard.camera.WPICameraExtension;
 import edu.wpi.first.wpijavacv.WPIBinaryImage;
 import edu.wpi.first.wpijavacv.WPIColor;
@@ -11,6 +10,7 @@ import edu.wpi.first.wpijavacv.WPIContour;
 import edu.wpi.first.wpijavacv.WPIImage;
 import edu.wpi.first.wpijavacv.WPIPoint;
 import edu.wpi.first.wpijavacv.WPIPolygon;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.networking.NetworkTable;
 
 
@@ -24,8 +24,8 @@ public class Vision extends WPICameraExtension {
 	public static double y = 0;
 	public static double height = 0;
 	public static double centerAim = 0;
+	public static int polyNum = 0;
 	public double loopNumber = 0;
-	
 	
 private static double getLength(WPIPoint a, WPIPoint b)
 	  {
@@ -48,7 +48,7 @@ public WPIImage processImage(WPIColorImage image) {
  
  /* Find the threshold of the image, where dark and light colors are clearly
    separated. */
- WPIBinaryImage threshold = red.getAnd(green).getAnd(blue);
+ WPIBinaryImage threshold = red.getAnd(green);
 
  threshold.dilate(1);
  threshold.erode(1);
@@ -56,14 +56,14 @@ public WPIImage processImage(WPIColorImage image) {
  WPIColorImage output = new WPIColorImage(threshold.getBufferedImage());
 
  
- WPIPolygon bestMatch = null;
+ WPIPolygon bestMatch = null;		
  
  WPIContour[] contours = threshold.findContours();
 
  for(WPIContour contour : contours)
    {
      /* Approximate each polygon in the image. */
-     WPIPolygon p = contour.approxPolygon(25);
+     WPIPolygon p = contour.approxPolygon(9);
 
      
      /* Make sure it's a convex quadrilaterial that doesn't take up most
@@ -92,7 +92,7 @@ public WPIImage processImage(WPIColorImage image) {
          if(ratio1 < 0.1 && ratio2 < 0.1)
            {
 
-             if(bestMatch == null || p.getY() < bestMatch.getY()){
+             if(bestMatch == null || p == bestMatch || (p.getY() < bestMatch.getY() && p.getHeight() < bestMatch.getHeight()) ) {
 
                bestMatch = p;}
            }
@@ -148,13 +148,14 @@ public WPIImage processImage(WPIColorImage image) {
     	 loopNumber++;
      }
      
-		
+     
+
      return image;
    }
  
 
 
-return null;
+return image;
 		
 	}
 
