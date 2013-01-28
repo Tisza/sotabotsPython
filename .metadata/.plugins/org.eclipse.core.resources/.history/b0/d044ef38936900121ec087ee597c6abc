@@ -25,7 +25,6 @@ public class Vision extends WPICameraExtension {
 	public static double y = 0;
 	public static double height = 0;
 	public static double centerAim = 0;
-	public static double xcoor = 0;
 	public static int polyNum = 0;
 	public double loopNumber = 0;
 	
@@ -134,7 +133,7 @@ public WPIImage processImage(WPIColorImage image) {
      
      double centerPx  = points[1].getX() - (width/2); //gets pixel coordinate of center of target
      centerAim = (centerPx/160) - 1; 
-     xcoor = centerPx;
+     
     /* table.beginTransaction();			//put values into networktable for robot to use
      table.putDouble("WIDTH", width);
      table.putDouble("CENTER", centerAim);

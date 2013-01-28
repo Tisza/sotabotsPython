@@ -25,7 +25,6 @@ public class Vision extends WPICameraExtension {
 	public static double y = 0;
 	public static double height = 0;
 	public static double centerAim = 0;
-	public static double xcoor = 0;
 	public static int polyNum = 0;
 	public double loopNumber = 0;
 	
@@ -44,9 +43,9 @@ private static double getLength(WPIPoint a, WPIPoint b)
 	
 public WPIImage processImage(WPIColorImage image) {
 	
-				WPIBinaryImage red = image.getRedChannel().getThreshold(50), //Tested threshold values
-                green = image.getGreenChannel().getThreshold(155),
-                blue = image.getBlueChannel().getThreshold(0);
+				WPIBinaryImage red = image.getRedChannel().getThreshold(Integer.parseInt(Inputs.red.getText())), //Text field inputs for threshold values
+                green = image.getGreenChannel().getThreshold(Integer.parseInt(Inputs.green.getText())),
+                blue = image.getBlueChannel().getThreshold(Integer.parseInt(Inputs.blue.getText()));
 
  
  /* Find the threshold of the image, where dark and light colors are clearly
@@ -133,8 +132,8 @@ public WPIImage processImage(WPIColorImage image) {
      distance  = FOVft / tan24;  //calculates distance
      
      double centerPx  = points[1].getX() - (width/2); //gets pixel coordinate of center of target
-     centerAim = (centerPx/160) - 1; 
-     xcoor = centerPx;
+     centerAim = 2 * (centerPx / 320 ) - 1; 
+     
     /* table.beginTransaction();			//put values into networktable for robot to use
      table.putDouble("WIDTH", width);
      table.putDouble("CENTER", centerAim);

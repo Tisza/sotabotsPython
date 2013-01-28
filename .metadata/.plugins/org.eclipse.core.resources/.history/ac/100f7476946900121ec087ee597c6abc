@@ -134,7 +134,8 @@ public WPIImage processImage(WPIColorImage image) {
      
      double centerPx  = points[1].getX() - (width/2); //gets pixel coordinate of center of target
      centerAim = (centerPx/160) - 1; 
-     xcoor = centerPx;
+     centerPx = xcoor;
+     
     /* table.beginTransaction();			//put values into networktable for robot to use
      table.putDouble("WIDTH", width);
      table.putDouble("CENTER", centerAim);
