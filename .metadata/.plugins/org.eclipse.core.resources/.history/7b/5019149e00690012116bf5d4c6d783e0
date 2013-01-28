@@ -1,0 +1,26 @@
+import javax.swing.JTextField;
+
+import edu.wpi.first.smartdashboard.gui.StaticWidget;
+import edu.wpi.first.smartdashboard.properties.Property;
+
+
+public class Inputs extends StaticWidget {
+
+	@Override
+	public void init() {
+		JTextField red    = new JTextField("RED");
+		JTextField green  = new JTextField("GREEN");
+		JTextField blue   = new JTextField("BLUE");
+		
+		add(red);
+		add(green);
+		add(blue);
+		
+	}
+
+	@Override
+	public void propertyChanged(Property arg0) {
+		
+	}
+
+}

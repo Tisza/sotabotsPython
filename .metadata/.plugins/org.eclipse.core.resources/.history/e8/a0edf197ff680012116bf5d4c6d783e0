@@ -28,7 +28,9 @@ public class Vision extends WPICameraExtension {
 	public static int polyNum = 0;
 	public double loopNumber = 0;
 	
-	
+	public JTextField red    		= new JTextField("64");
+	public static JTextField green  = new JTextField("64");
+	public static JTextField blue   = new JTextField("64");
 	
 private static double getLength(WPIPoint a, WPIPoint b)
 	  {
@@ -43,9 +45,9 @@ private static double getLength(WPIPoint a, WPIPoint b)
 	
 public WPIImage processImage(WPIColorImage image) {
 	
-				WPIBinaryImage red = image.getRedChannel().getThreshold(Integer.parseInt(Inputs.red.getText())), //Text field inputs for threshold values
-                green = image.getGreenChannel().getThreshold(Integer.parseInt(Inputs.green.getText())),
-                blue = image.getBlueChannel().getThreshold(Integer.parseInt(Inputs.blue.getText()));
+				WPIBinaryImage red = image.getRedChannel().getThreshold(this.red.getText()), //need to parse to int before running
+                green = image.getGreenChannel().getThreshold(64),
+                blue = image.getBlueChannel().getThreshold(64);
 
  
  /* Find the threshold of the image, where dark and light colors are clearly
