@@ -12,7 +12,9 @@ table = wpilib.NetworkTable.GetTable("SmartDashboard")
 
 gyro = wpilib.Gyro(1)
 
-gyroF = gyroFilter(150)
+filterGyro = gyroFilter(150) #untested value for list lenth
+
+filterAim = gyroFilter(150) #untested value for list length
 
 shootEncoder = wpilib.Encoder(1,2,false,k4X)
 
@@ -59,14 +61,16 @@ class MyRobot(wpilib.IterativeRobot):
         PrintGyro()
         
     def PrintGyro(self):
-        gyroF.update(gyro.GetAngle())
-        print("Gyroscope calculated average: ", gyroF.update())
+        filterGyro.update(gyro.GetAngle())
+        print("Gyroscope calculated average: ", filterGyro.update())
         print("Raw value: ", gyro.GetAngle())
 
     def Align(self):
         global target = table.getDouble("CENTER")
+        
         while target < -0.05 and target > 0.05:
-                tarval = (target^3)/2 #Slows down turning. Changed /3 to /2
+                
+                tarval = filterAim((target^3)/2) #Slows down turning. Changed /3 to /2 -- filterAim gets a moving avg of the values to reduce impact of outliers
                 drive.ArcadeDrive(0,tarval)
                 target = table.getDouble("CENTER")
         
