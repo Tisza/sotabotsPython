@@ -2,6 +2,8 @@
 <section name="Workbench">
 	<section name="completion_proposal_size">
 	</section>
+	<section name="JavaElementSearchActions">
+	</section>
 	<section name="JarPackageWizard">
 		<item value="false" key="JarPackageWizardPage.INCLUDE_DIRECTORY_ENTRIES"/>
 		<item value="true" key="JarManifestWizardPage.GENERATE_MANIFEST"/>

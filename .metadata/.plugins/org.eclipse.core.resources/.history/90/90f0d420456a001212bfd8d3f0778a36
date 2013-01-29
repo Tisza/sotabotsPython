@@ -4,7 +4,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import edu.wpi.first.smartdashboard.camera.WPICameraExtension;
-import edu.wpi.first.smartdashboard.robot.Robot;
 import edu.wpi.first.wpijavacv.WPIBinaryImage;
 import edu.wpi.first.wpijavacv.WPIColor;
 import edu.wpi.first.wpijavacv.WPIColorImage;
@@ -141,18 +140,6 @@ public WPIImage processImage(WPIColorImage image) {
      table.putDouble("CENTER", centerAim);
      table.putDouble("DISTANCE", distance);
      table.endTransaction();*/
-     
-     try {
-    	 NetworkTable table = Robot.getTable();
-    	 table.beginTransaction();
-    	 table.putDouble("DISTANCE", this.distance);
-    	 table.putDouble("CENTER", this.centerAim);
-    	 table.endTransaction();
-    	 
-     }
-     catch(Exception e) {
-    	 
-     }
      
      repaint();
      

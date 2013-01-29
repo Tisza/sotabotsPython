@@ -12,12 +12,11 @@ table = wpilib.NetworkTable.GetTable("SmartDashboard")
 
 gyro = wpilib.Gyro(1)
 
-gyroF = gyroFilter(100)
+gyroF = gyroFilter(150)
 
 shootEncoder = wpilib.Encoder(1,2,false,k4X)
 
-target = 0
-distance = 0
+
 
 def CheckRestart():
     if lstick.GetRawButton(10):
@@ -61,13 +60,13 @@ class MyRobot(wpilib.IterativeRobot):
         
     def PrintGyro(self):
         gyroF.update(gyro.GetAngle())
-        print("Gyroscope calculated average: ", gyroF.getAverage())
+        print("Gyroscope calculated average: ", gyroF.update())
         print("Raw value: ", gyro.GetAngle())
 
     def Align(self):
         global target = table.getDouble("CENTER")
         while target < -0.05 and target > 0.05:
-                tarval = (target^3)/3 #So its not quite as rapid/jittery. Further tweeking will be nessessary.
+                tarval = (target^3)/2 #Slows down turning. Changed /3 to /2
                 drive.ArcadeDrive(0,tarval)
                 target = table.getDouble("CENTER")
         
