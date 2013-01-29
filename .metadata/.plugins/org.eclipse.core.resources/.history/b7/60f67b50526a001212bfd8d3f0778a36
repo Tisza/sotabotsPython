@@ -1,0 +1,23 @@
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
+
+public class Average {
+	public int index = 0;
+	public int numSamples = 150; //untested value
+	public double[] sampleArray = new double[numSamples];
+	public DecimalFormat df = new DecimalFormat("##.##");
+	
+	public double update(double x) {
+		sampleArray[index] = x;
+		index++;
+		
+		if (index >= numSamples) {
+				index = 0;
+		}
+		
+		double average = ;
+		return average;
+	}
+
+}

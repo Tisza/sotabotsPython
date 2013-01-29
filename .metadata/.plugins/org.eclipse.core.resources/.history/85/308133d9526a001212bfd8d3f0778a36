@@ -26,8 +26,9 @@ public class Printer extends StaticWidget{
 	}
 	
 	public static void refresh() {
+		xLabel.setText("Target x coordinate " + Vision.xcoor);
 		distanceLabel.setText("DISTANCE: " + Vision.distance);
-		aimLabel.setText("AIM COORDINATE (AVG): " + Vision.centerAim);
+		aimLabel.setText("AIM COORDINATE: " + Vision.centerAim);
 	} 
 
 }
