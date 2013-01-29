@@ -128,13 +128,13 @@ public WPIImage processImage(WPIColorImage image) {
     	 width = side1;
     	 height = side2;
      }
-     double FOVft = 320 * (4.5 / width); //full camera fov = 320pix * (width of target in ft/width of target in px)
+     double FOVft = 640 * (4.5 / width); //full camera fov = 320pix * (width of target in ft/width of target in px)
      double tan24 = 0.45; //tangent of 24 degrees (half of the camera FOV)
      
      distance  = FOVft / tan24;  //calculates distance
      
      double centerPx  = points[1].getX() - (width/2); //gets pixel coordinate of center of target
-     centerAim = (centerPx/160) - 1; 
+     centerAim = (centerPx/320) - 1; 
      xcoor = centerPx;
     /* table.beginTransaction();			//put values into networktable for robot to use
      table.putDouble("WIDTH", width);
