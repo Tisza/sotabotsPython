@@ -27,3 +27,8 @@ Command-line arguments:  -os linux -ws gtk -arch x86_64
 !MESSAGE Save operation warnings.
 !SUBENTRY 1 org.eclipse.core.resources 2 234 2013-01-31 10:02:11.658
 !MESSAGE The project description file (.project) for 'AP' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
+
+!ENTRY org.eclipse.core.resources 2 2 2013-01-31 14:18:27.870
+!MESSAGE Save operation warnings.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2013-01-31 14:18:27.870
+!MESSAGE The project description file (.project) for 'AP' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
