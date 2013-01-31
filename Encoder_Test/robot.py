@@ -3,16 +3,16 @@ import wpilib
 lstick = wpilib.Joystick(1)
 rstick = wpilib.Joystick(2)
 
-Motor = wpilib.Jaguar(1)
+'''Motor = wpilib.Jaguar(1)
 Motor2 = wpilib.Jaguar(2)
-Motor3 = wpilib.Jaguar(3)
+Motor3 = wpilib.Jaguar(3)'''
 
-motorValue = 0
+'''motorValue = 0
 motorOld = 0
 endMotorValue = 0
 endMotorOld = 0
 pulley = 0
-pulleyOld = 0
+pulleyOld = 0'''
 
 shootEncoder = wpilib.Encoder(1, 2, true, k4X)
 shootEncoder.SetDistancePerPulse(1)
@@ -52,17 +52,17 @@ class MyRobot(wpilib.IterativeRobot):
     def TeleopPeriodic(self):
         self.GetWatchdog().Feed()
         CheckRestart()
-        global motorValue
+        '''global motorValue
         global motorOld
         global endMotorValue
         global endMotorOld
         global pulley
-        global pulleyOld
+        global pulleyOld'''
         global rate = shootEncoder.GetRate()
         global RPM = 60 * (rate/4096)
 
 
-        if lstick.GetRawButton(0):              #Trigger sets shooter to 100%
+        '''if lstick.GetRawButton(0):              #Trigger sets shooter to 100%
                 endMotorValue = -1
         if rstick.GetRawButton(0):
                 motorValue = -1
@@ -95,7 +95,7 @@ class MyRobot(wpilib.IterativeRobot):
         if endMotorValue != endMotorOld or motorValue != motorOld:              #prints motor values prettier
             #print("End Motor: "+str(int(endMotorValue*100))+"% Feed Motor: "+str(int(motorValue*100))+"%")
             endMotorOld = endMotorValue
-            motorOld = motorValue
+            motorOld = motorValue'''
         print("RATE: " + rate)
         print("RPM: " + RPM)
 
