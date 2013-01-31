@@ -1,5 +1,5 @@
-from pylab import *
-from numpy import *
+#from pylab import *
+#from numpy import *
 
 class Kalman:
       def __init__(self, ndim):
@@ -23,7 +23,7 @@ class Kalman:
         self.index += 1
         self.mu_init[self.index] = obs
 
-        if self.index > 50 
+        if self.index > 50: 
                 self.index = 0
 
         # Make prediction

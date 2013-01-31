@@ -1,6 +1,5 @@
 import wpilib
-import kalman
-
+from kalman import Kalman
 
 lstick = wpilib.Joystick(1)
 
@@ -45,8 +44,8 @@ class MyRobot(wpilib.IterativeRobot):
         CheckRestart()
        
         #Print gyro values
-        print("Plain gyro value: " + gyro.GetAngle())
-        print(kalmanFilter.update(gyro.GetAngle())
+        print("Plain gyro value: ", gyro.GetAngle())
+        #print(kalmanFilter.update(gyro.GetAngle())
         
 def run():
     robot = MyRobot()
