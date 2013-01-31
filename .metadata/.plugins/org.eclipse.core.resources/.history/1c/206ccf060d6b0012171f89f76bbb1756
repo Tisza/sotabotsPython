@@ -1,0 +1,17 @@
+
+public class Test {
+	public static void main( String args[] ) {
+		String name1 = "Richard Feynman";
+		String name2 = "John Wayne";
+		
+		String ame1  = name1.substring(name1.length()-4);
+		String ame2  = name2.substring(name2.length()-4);
+		
+		System.out.println(name1 + " ->> " + ame1);
+		System.out.println(name2 + " ->> " + ame2);
+		double j = 13/2;
+		double l = (double)(13/2);
+		System.out.println(j + " " + l);
+		
+	}
+}

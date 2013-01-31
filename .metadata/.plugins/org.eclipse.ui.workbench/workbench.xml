@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="18" version="2.0">
+<workbench progressCount="16" version="2.0">
 <workbenchAdvisor/>
-<window height="734" maximized="true" width="1020" x="24" y="26">
+<window height="726" maximized="true" width="1016" x="236" y="26">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="160"/>
@@ -28,22 +28,35 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
+<part id="2"/>
+<part id="3"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
 <editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Vision.java" partName="Vision.java" path="/home/frankie/Documents/git/sotabotsPython/SmartDashboard/src/Vision.java" title="Vision.java" tooltip="SmartDashboard/src/Vision.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SmartDashboard/src/Vision.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4211" selectionTopPixel="2024"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3725" selectionTopPixel="1888"/>
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Printer.java" partName="Printer.java" path="/home/frankie/Documents/git/sotabotsPython/SmartDashboard/src/Printer.java" title="Printer.java" tooltip="SmartDashboard/src/Printer.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SmartDashboard/src/Printer.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="351" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="391" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Average.java" partName="Average.java" path="/home/frankie/Documents/git/sotabotsPython/SmartDashboard/src/Average.java" title="Average.java" tooltip="SmartDashboard/src/Average.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SmartDashboard/src/Average.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="776" selectionTopPixel="108"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Test.java" partName="Test.java" path="/home/frankie/Documents/git/sotabotsPython/AP/src/Test.java" title="Test.java" tooltip="AP/src/Test.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/AP/src/Test.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="196" selectionTopPixel="0"/>
 </editor>
 </editors>
 <views>
 <view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
 <viewState CommonNavigator.LINKING_ENABLED="0" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0"/>
+</view>
+<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
+<viewState/>
 </view>
 <view id="org.eclipse.ui.views.TaskList" partName="Tasks">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.completionField" categoryGroup="none" markerContentGenerator="org.eclipse.ui.ide.tasksGenerator" partName="Tasks">
@@ -91,9 +104,22 @@
 <perspective_action id="org.eclipse.team.ui.TeamSynchronizingPerspective"/>
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
-<view id="org.eclipse.ui.navigator.ProjectExplorer"/>
-<view id="org.eclipse.ui.views.ContentOutline"/>
 <fastViewBars>
+<fastViewBar fastViewLocation="131072" id="org.eclipse.ui.internal.ViewStack@6a25dcb2" orientation="512" selectedTabId="org.eclipse.ui.console.ConsoleView" style="0">
+<fastViews>
+<view id="org.eclipse.ui.console.ConsoleView" ratio="0.3"/>
+</fastViews>
+</fastViewBar>
+<fastViewBar fastViewLocation="16384" id="bottomLeft" orientation="512" selectedTabId="org.eclipse.ui.views.ContentOutline" style="0">
+<fastViews>
+<view id="org.eclipse.ui.views.ContentOutline" ratio="0.3"/>
+</fastViews>
+</fastViewBar>
+<fastViewBar fastViewLocation="16384" id="topLeft" orientation="512" selectedTabId="org.eclipse.ui.navigator.ProjectExplorer" style="0">
+<fastViews>
+<view id="org.eclipse.ui.navigator.ProjectExplorer" ratio="0.29984543"/>
+</fastViews>
+</fastViewBar>
 <fastViewBar fastViewLocation="1024" id="bottomRight" orientation="256" selectedTabId="org.eclipse.ui.views.TaskList" style="0">
 <fastViews>
 <view id="org.eclipse.ui.views.TaskList" ratio="0.3"/>
@@ -103,14 +129,12 @@
 <layout>
 <mainWindow>
 <info folder="true" part="topLeft">
-<folder activePageID="org.eclipse.ui.navigator.ProjectExplorer" appearance="2" expanded="2">
-<page content="org.eclipse.ui.navigator.ProjectExplorer" label="Project Explorer"/>
+<folder appearance="2" expanded="0">
+<page content="org.eclipse.ui.navigator.ProjectExplorer" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
 <page content="org.eclipse.team.ccvs.ui.RepositoriesView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@7d1050be" ratio="0.7495049" ratioLeft="757" ratioRight="253" relationship="2" relative="topLeft">
@@ -129,13 +153,17 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@6a25dcb2" ratio="0.5" ratioLeft="548" ratioRight="548" relationship="2" relative="org.eclipse.ui.editorss">
+<folder appearance="2" expanded="0">
+<page content="org.eclipse.ui.console.ConsoleView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+</folder>
+</info>
 <info folder="true" part="bottomLeft" ratio="0.49919224" ratioLeft="309" ratioRight="310" relationship="4" relative="topLeft">
-<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<folder appearance="2" expanded="0">
+<page content="org.eclipse.ui.views.ContentOutline" label="LabelNotFound"/>
 <page content="org.eclipse.ant.ui.views.AntView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 </mainWindow>
@@ -146,131 +174,159 @@
 <navigationHistory>
 <editors>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/SmartDashboard/src/Vision.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/SmartDashboard/src/Inputs.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/SmartDashboard/src/Average.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/SmartDashboard/src/Printer.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/AP/src/Test.java"/>
 </editors>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="Test.java" index="3">
+<position info="not_deleted" x="337" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="1620" y="0"/>
+<item historyLabel="Average.java" index="1">
+<position info="not_deleted" x="509" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position/>
+<item historyLabel="Test.java" index="3">
+<position info="not_deleted" x="337" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position/>
+<item historyLabel="Test.java" index="3">
+<position info="not_deleted" x="386" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="1676" y="0"/>
+<item historyLabel="Average.java" index="1">
+<position info="not_deleted" x="110" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position/>
+<item historyLabel="Test.java" index="3">
+<position info="not_deleted" x="386" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="1857" y="0"/>
+<item historyLabel="Average.java" index="1">
+<position info="not_deleted" x="619" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position/>
+<item historyLabel="Test.java" index="3">
+<position info="not_deleted" x="299" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="1857" y="0"/>
+<item historyLabel="Average.java" index="1">
+<position info="not_deleted" x="735" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position/>
+<item historyLabel="Test.java" index="3">
+<position info="not_deleted" x="299" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position/>
+<item historyLabel="Average.java" index="1">
+<position info="not_deleted" x="584" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position/>
+<item historyLabel="Test.java" index="3">
+<position info="not_deleted" x="178" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="1601" y="0"/>
-</item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="1050" y="0"/>
-</item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="1002" y="0"/>
-</item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="1010" y="10"/>
-</item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="1108" y="0"/>
-</item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="1109" y="0"/>
-</item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="1166" y="0"/>
-</item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="1167" y="0"/>
-</item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="1518" y="0"/>
-</item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="1523" y="3"/>
-</item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="1458" y="0"/>
-</item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="1505" y="12"/>
-</item>
-<item historyLabel="Vision.java" index="0">
-<position/>
-</item>
-<item historyLabel="Vision.java" index="0">
-<position/>
-</item>
-<item historyLabel="Vision.java" index="0">
-<position/>
-</item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="1485" y="0"/>
-</item>
-<item historyLabel="Vision.java" index="0">
-<position/>
-</item>
-<item historyLabel="Inputs.java" index="1">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Inputs.java" index="1">
-<position info="not_deleted" x="428" y="0"/>
-</item>
-<item historyLabel="Inputs.java" index="1">
-<position info="not_deleted" x="455" y="0"/>
-</item>
-<item historyLabel="Inputs.java" index="1">
-<position info="not_deleted" x="486" y="0"/>
-</item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="794" y="0"/>
+<item historyLabel="Average.java" index="1">
+<position info="not_deleted" x="619" y="0"/>
 </item>
 <item historyLabel="Printer.java" index="2">
-<position info="not_deleted" x="462" y="0"/>
+<position info="not_deleted" x="369" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="794" y="0"/>
+<item historyLabel="Average.java" index="1">
+<position info="not_deleted" x="440" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="3973" y="0"/>
+<item historyLabel="Test.java" index="3">
+<position info="not_deleted" x="196" y="0"/>
 </item>
-<item historyLabel="Printer.java" index="2">
-<position info="not_deleted" x="604" y="0"/>
+<item historyLabel="Average.java" index="1">
+<position info="not_deleted" x="440" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
+<item historyLabel="Average.java" index="1">
+<position info="not_deleted" x="535" y="0"/>
+</item>
+<item historyLabel="Average.java" index="1">
+<position info="not_deleted" x="526" y="3"/>
+</item>
+<item historyLabel="Average.java" index="1">
 <position/>
 </item>
+<item historyLabel="Average.java" index="1">
+<position info="not_deleted" x="371" y="0"/>
+</item>
+<item historyLabel="Average.java" index="1">
+<position info="not_deleted" x="368" y="0"/>
+</item>
+<item historyLabel="Average.java" index="1">
+<position info="not_deleted" x="335" y="0"/>
+</item>
+<item historyLabel="Average.java" index="1">
+<position info="not_deleted" x="218" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="0">
+<position info="not_deleted" x="3748" y="0"/>
+</item>
 <item historyLabel="Printer.java" index="2">
-<position info="not_deleted" x="351" y="0"/>
+<position info="not_deleted" x="369" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="0">
+<position info="not_deleted" x="982" y="0"/>
+</item>
+<item historyLabel="Average.java" index="1">
+<position info="not_deleted" x="735" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="0">
+<position info="not_deleted" x="4101" y="0"/>
+</item>
+<item historyLabel="Average.java" index="1">
+<position info="not_deleted" x="776" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="0">
+<position info="not_deleted" x="4101" y="0"/>
+</item>
+<item historyLabel="Printer.java" index="2">
+<position info="not_deleted" x="452" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="0">
+<position info="not_deleted" x="4101" y="0"/>
+</item>
+<item historyLabel="Printer.java" index="2">
+<position info="not_deleted" x="711" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="0">
+<position info="not_deleted" x="4418" y="0"/>
+</item>
+<item historyLabel="Printer.java" index="2">
+<position info="not_deleted" x="391" y="0"/>
+</item>
+<item historyLabel="Average.java" index="1">
+<position info="not_deleted" x="776" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="0">
+<position info="not_deleted" x="4489" y="0"/>
+</item>
+<item historyLabel="Printer.java" index="2">
+<position info="not_deleted" x="391" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="0">
+<position info="not_deleted" x="4489" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="0">
+<position info="not_deleted" x="4206" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="0">
+<position info="not_deleted" x="4229" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="0">
+<position info="not_deleted" x="4236" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="0">
+<position info="not_deleted" x="4270" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="0">
+<position info="not_deleted" x="4397" y="0"/>
+</item>
+<item historyLabel="Printer.java" index="2">
+<position info="not_deleted" x="391" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="0">
+<position info="not_deleted" x="4406" y="0"/>
+</item>
+<item historyLabel="Average.java" index="1">
+<position info="not_deleted" x="776" y="0"/>
+</item>
+<item historyLabel="Average.java" index="1">
+<position info="not_deleted" x="776" y="0"/>
 </item>
 <item active="true" historyLabel="Vision.java" index="0">
-<position/>
+<position info="not_deleted" x="4406" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -278,6 +334,13 @@
 <workbenchWindowAdvisor/>
 <actionBarAdvisor/>
 <trimLayout>
+<trimArea IMemento.internal.id="16384">
+<trimItem IMemento.internal.id="topLeft"/>
+<trimItem IMemento.internal.id="bottomLeft"/>
+</trimArea>
+<trimArea IMemento.internal.id="131072">
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@6a25dcb2"/>
+</trimArea>
 <trimArea IMemento.internal.id="128">
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
 </trimArea>
@@ -290,6 +353,12 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Test.java" tooltip="AP/src/Test.java">
+<persistable path="/AP/src/Test.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Average.java" tooltip="SmartDashboard/src/Average.java">
+<persistable path="/SmartDashboard/src/Average.java"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Printer.java" tooltip="SmartDashboard/src/Printer.java">
 <persistable path="/SmartDashboard/src/Printer.java"/>
 </file>

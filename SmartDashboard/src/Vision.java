@@ -29,8 +29,10 @@ public class Vision extends WPICameraExtension {
 	public static double xcoor = 0;
 	public static int polyNum = 0;
 	public double loopNumber = 0;
-	Average distanceAverage = new Average();
-	Average xCoorAverage = new Average();
+	public static double avgCenterAim = 0;
+	public static double avgDistance = 0;
+	DistanceAverage distanceAverage = new DistanceAverage();
+	CoorAverage xCoorAverage = new CoorAverage();
 	
 	
 	
@@ -45,6 +47,7 @@ private static double getLength(WPIPoint a, WPIPoint b)
 	    return Math.sqrt((deltax * deltax) + (deltay * deltay));
 	  }
 	
+@SuppressWarnings("static-access")
 public WPIImage processImage(WPIColorImage image) {
 	
 				WPIBinaryImage red = image.getRedChannel().getThreshold(50), //Tested threshold values
@@ -130,20 +133,26 @@ public WPIImage processImage(WPIColorImage image) {
     	 width = side1;
     	 height = side2;
      }
-     double FOVft = 640 * (4.5 / width); //full camera fov = 320pix * (width of target in ft/width of target in px)
+     double FOVft = 320 * (4.5 / width); //full camera fov = 320pix * (width of target in ft/width of target in px)
      double tan24 = 0.45; //tangent of 24 degrees (half of the camera FOV)
      
-     distance  = distanceAverage.update(FOVft / tan24);  //calculates distance
+     distance = FOVft / tan24;
+     avgDistance  = distanceAverage.update(distance * 2);  //calculates distance
      
-     double centerPx  = points[1].getX() - (width/2); //gets pixel coordinate of center of target
-     centerAim = xCoorAverage.update((centerPx/320) - 1); 
-    /* table.beginTransaction();			//put values into networktable for robot to use
-     table.putDouble("WIDTH", width);
-     table.putDouble("CENTER", centerAim);
-     table.putDouble("DISTANCE", distance);
-     table.endTransaction();*/
+     double pq = 0;
      
-     try {
+     
+     if (height == side1) 
+    	 pq = points[2].getX();
+     else
+    	 pq = points[1].getX();
+     
+     centerAim  = pq - (width/2); //gets pixel coordinate of center of target
+     double center = (centerAim/320)/16 - 1;
+     avgCenterAim = xCoorAverage.update(center); 
+    
+     
+     /*try {
     	 NetworkTable table = Robot.getTable();
     	 table.beginTransaction();
     	 table.putDouble("DISTANCE", this.distance);
@@ -153,11 +162,11 @@ public WPIImage processImage(WPIColorImage image) {
      }
      catch(Exception e) {
     	 
-     }
+     }*/
      
      repaint();
      
-     if (loopNumber > 10) {
+     if (loopNumber > 3) {
      Printer.refresh();
      loopNumber = 0;
      }

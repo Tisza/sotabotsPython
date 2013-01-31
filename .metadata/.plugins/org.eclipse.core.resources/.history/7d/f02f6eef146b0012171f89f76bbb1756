@@ -1,0 +1,13 @@
+import java.util.Scanner;
+import java.util.Scanner.*;
+
+public class Test {
+	public static void main( String args[] ) {
+		Scanner myScanner = new Scanner(System.in);
+		
+		int int1 = myScanner.nextInt();
+		int int2 = myScanner.nextInt();
+		
+		System.out.println(int1 + " " + int2);
+	}
+}
