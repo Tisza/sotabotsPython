@@ -1,5 +1,6 @@
 import wpilib
 from GyroFilter import gyroFilter
+from AimFilter import aimFilter
 
 lstick = wpilib.Joystick(1)
 
@@ -14,7 +15,7 @@ gyro = wpilib.Gyro(1)
 
 filterGyro = gyroFilter(150) #untested value for list lenth
 
-filterAim = gyroFilter(150) #untested value for list length
+filterAim = aimFilter(150) #untested value for list length
 
 shootEncoder = wpilib.Encoder(1,2,false,k4X)
 
