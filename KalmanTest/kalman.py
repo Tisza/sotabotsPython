@@ -1,5 +1,5 @@
 #from pylab import *
-#from numpy import *
+import numpy
 
 class Kalman:
       def __init__(self, ndim):
