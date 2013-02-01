@@ -71,7 +71,7 @@ class MyRobot(wpilib.IterativeRobot):
         
         while target < -0.05 and target > 0.05:
                 
-                tarval = filterAim((target^3)/2) #Slows down turning. Changed /3 to /2 -- filterAim gets a moving avg of the values to reduce impact of outliers
+                tarval = filterAim.update((target^3)/2) #Slows down turning. Changed /3 to /2 -- filterAim gets a moving avg of the values to reduce impact of outliers
                 drive.ArcadeDrive(0,tarval)
                 target = table.getDouble("CENTER")
         

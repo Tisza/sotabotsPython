@@ -1,4 +1,5 @@
 import wpilib
+from EncoderFilter import encoderFilter
 
 lstick = wpilib.Joystick(1)
 rstick = wpilib.Joystick(2)
@@ -9,6 +10,8 @@ shootEncoder.SetDistancePerPulse(1)
 
 motor1 = wpilib.Jaguar(2)
 endMotorValue = 0.0
+
+filterEncoder = encoderFilter(75)
 
 rate = 0;
 RPM  = 0;
@@ -52,18 +55,23 @@ class MyRobot(wpilib.IterativeRobot):
         rate = shootEncoder.GetRate()
         global RPM
         RPM = 60 * (rate/4096)
+        RPM = filterEncoder.update(RPM)
 
         print("RPM: ", "%.2f" % float(RPM))
 
+        if endMotorValue > 1:
+                endMotorValue = 1
+        elif endMotorValue < 0:
+                endMotorValue = 0
 
-
-        if lstick.GetRawButton(1):              #Button 2 sets to magic number
-                endMotorValue = -0.47
-        else:                                   #Joystick y axis controls incrementally
-                if lstick.GetY() > 0.05 or lstick.GetY() < -0.05:
-                        endMotorValue += lstick.GetY()/100
+        
         if lstick.GetRawButton(3):
                 endMotorValue = 0
+        elif float("%.2f" % RPM) < 30:
+                endMotorValue += 0.02
+        elif float("%.2f" % RPM) > 30:
+                endMotorValue -= 0.02
+                
 
         motor1.Set(endMotorValue)
         

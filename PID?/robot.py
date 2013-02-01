@@ -1,9 +1,13 @@
 import wpilib
+from EncoderFilter import encoderFilter
 
 lstick = wpilib.Joystick(1)
 
-motor = wpilib.Jaguar(1)
-encoder = wpilib.Encoder(1,2,k4X)
+motor = wpilib.Jaguar(2)
+encoder = wpilib.Encoder(7,8,True,wpilib.CounterBase.k4X)
+
+filterEncoder = encoderFilter(100)
+
 
 class MotorOutput(wpilib.PIDOutput):
     def __init__(self, motor):
@@ -11,7 +15,11 @@ class MotorOutput(wpilib.PIDOutput):
         self.motor = motor
 
     def PIDWrite(self, output):
-        self.motor.Set(output)
+        if output >=0:        
+                self.motor.Set(output)
+        else: 
+                self.motor.Set(abs(output))
+        print("Output: ", output)
 
 class AnalogSource(wpilib.PIDSource):
     def __init__(self, encoder):
@@ -19,11 +27,12 @@ class AnalogSource(wpilib.PIDSource):
         self.encoder = encoder
 
     def PIDGet(self):
-        return (encoder.GetRate() / 4096) * 60
+        return filterEncoder.update((encoder.GetRate() / 4096) * 60)
+
 
 pidSource = AnalogSource(encoder)
 pidOutput = MotorOutput(motor)
-pidController = wpilib.PIDController(1.0, 0.2, 0.0, pidSource, pidOutput)
+pidController = wpilib.PIDController(1.0, 0.5, 0.25, 1.0, pidSource, pidOutput)
 
 def CheckRestart():
     if lstick.GetRawButton(10):
@@ -45,7 +54,7 @@ class MyRobot(wpilib.SimpleRobot):
         dog = self.GetWatchdog()
         dog.SetEnabled(True)
         dog.SetExpiration(0.25)
-
+        encoder.Start()
         pidController.Enable()
 
         while self.IsOperatorControl() and self.IsEnabled():
@@ -53,9 +62,9 @@ class MyRobot(wpilib.SimpleRobot):
             CheckRestart()
 
             # Motor control
-            pidController.SetSetpoint(200) #sets to 200rpm
-            print("Reading: " + pidSource)
-            print("Output: " + pidOutput)
+            pidController.SetSetpoint(5) #sets to 5rpm
+            #print("Reading: ", AnalogSource(encoder).PIDGet())
+
 
             wpilib.Wait(0.04)
 

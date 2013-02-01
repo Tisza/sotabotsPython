@@ -12,6 +12,6 @@ class encoderFilter():
                 if self.index >= self.numSamples:
                         self.index = 0
 
-                return round(sum(self.samples)/(float(len(self.samples))))
+                return (sum(self.samples))/(float(len(self.samples)))
  
                  
