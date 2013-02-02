@@ -15,10 +15,7 @@ class MotorOutput(wpilib.PIDOutput):
         self.motor = motor
 
     def PIDWrite(self, output):
-        if output >=0:        
-                self.motor.Set(output)
-        else: 
-                self.motor.Set(abs(output))
+        self.motor.Set(abs(output))
         print("Output: ", output)
 
 class AnalogSource(wpilib.PIDSource):
@@ -32,7 +29,7 @@ class AnalogSource(wpilib.PIDSource):
 
 pidSource = AnalogSource(encoder)
 pidOutput = MotorOutput(motor)
-pidController = wpilib.PIDController(1.0, 0.5, 0.25, 1.0, pidSource, pidOutput)
+pidController = wpilib.PIDController(0.05, 0.005, 0.0, pidSource, pidOutput)
 
 def CheckRestart():
     if lstick.GetRawButton(10):
