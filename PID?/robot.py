@@ -1,70 +1,65 @@
 import wpilib
+from VelocityPID import PID
 from EncoderFilter import encoderFilter
 
 lstick = wpilib.Joystick(1)
 
-motor = wpilib.Jaguar(2)
-encoder = wpilib.Encoder(7,8,True,wpilib.CounterBase.k4X)
+leftMotor = wpilib.Jaguar(2)
 
+PIDController = PID()
+
+shootEncoder = wpilib.Encoder(7,8,False,wpilib.CounterBase.k4X)
+shootEncoder.SetDistancePerPulse(1)
 filterEncoder = encoderFilter(100)
-
-
-class MotorOutput(wpilib.PIDOutput):
-    def __init__(self, motor):
-        super().__init__()
-        self.motor = motor
-
-    def PIDWrite(self, output):
-        self.motor.Set(abs(output))
-        print("Output: ", output)
-
-class AnalogSource(wpilib.PIDSource):
-    def __init__(self, encoder):
-        super().__init__()
-        self.encoder = encoder
-
-    def PIDGet(self):
-        return filterEncoder.update((encoder.GetRate() / 4096) * 60)
-
-
-pidSource = AnalogSource(encoder)
-pidOutput = MotorOutput(motor)
-pidController = wpilib.PIDController(0.05, 0.005, 0.0, pidSource, pidOutput)
 
 def CheckRestart():
     if lstick.GetRawButton(10):
         raise RuntimeError("Restart")
+        print("CheckRestart")
 
-class MyRobot(wpilib.SimpleRobot):
-    def Disabled(self):
-        while self.IsDisabled():
-            CheckRestart()
-            wpilib.Wait(0.01)
 
-    def Autonomous(self):
+class MyRobot(wpilib.IterativeRobot):
+    def DisabledContinuous(self):
+        wpilib.Wait(0.01)
+    def AutonomousContinuous(self):
+        wpilib.Wait(0.01)
+    def TeleopContinuous(self):
+        wpilib.Wait(0.01)
+
+    def DisabledPeriodic(self):
+        CheckRestart()
+
+    def AutonomousInit(self):
         self.GetWatchdog().SetEnabled(False)
-        while self.IsAutonomous() and self.IsEnabled():
-            CheckRestart()
-            wpilib.Wait(0.01)
 
-    def OperatorControl(self):
+    def AutonomousPeriodic(self):
+        CheckRestart()
+
+    def TeleopInit(self):
         dog = self.GetWatchdog()
         dog.SetEnabled(True)
         dog.SetExpiration(0.25)
-        encoder.Start()
-        pidController.Enable()
+        PIDController.__init__(0.5, 0.0, 0.0, 0, 0, 500, -500)
+        self.motorOutput = 0.5       
 
-        while self.IsOperatorControl() and self.IsEnabled():
-            dog.Feed()
-            CheckRestart()
+        
+    def TeleopPeriodic(self):
+        self.GetWatchdog().Feed()
+        CheckRestart()
+        
+        PIDController.setPoint(30) #set setPoint to 30 RPM
+        
+        #rpm  = (shootEncoder.GetRate() / 4096) * 60
+        #leftMotor.Set(self.motorOutput)
+	#filterEncoder.update((shootEncoder.GetRate() / 4096) * 60)
+        # PIDreturn = PIDController.update( (shootEncoder.GetRate() / 4096) * 60 )
+        #"Motor: ", '%.2f' % self.motorOutput, "    PID: ", '%.2f' % PIDreturn, "  
+        #self.motorOutput = ((PIDController.update(shootEncoder.GetRate())) / 15 -1)
+        
+        print("RPM: ", shootEncoder.GetRate())
 
-            # Motor control
-            pidController.SetSetpoint(5) #sets to 5rpm
-            #print("Reading: ", AnalogSource(encoder).PIDGet())
-
-
-            wpilib.Wait(0.04)
-
+        
+        
 def run():
     robot = MyRobot()
     robot.StartCompetition()
