@@ -51,12 +51,12 @@ private static double getLength(WPIPoint a, WPIPoint b)
 	
 @SuppressWarnings("static-access")
 public WPIImage processImage(WPIColorImage image) {
-	/*try {
+	try {
 	NetworkTable.getTable("SmartDashboard").putDouble("DISTANCE", 7);
 	}
-	catch (Exception e) {
+	catch Exception e {
 		
-	}*/
+	}
 				WPIBinaryImage red = image.getRedChannel().getThreshold(50), //Tested threshold values
                 green = image.getGreenChannel().getThreshold(155),
                 blue = image.getBlueChannel().getThreshold(0);

@@ -57,12 +57,12 @@ class MyRobot(wpilib.IterativeRobot):
         RPM = 60 * (rate/4096)
         RPM = filterEncoder.update(RPM)
 
-        print("RPM: ", "%.2f" % float(RPM))
+        print("RPM: ", "%.2f" % filterEncoder.update(shootEncoder.GetRate())
 
         if endMotorValue > 1:
                 endMotorValue = 1
         elif endMotorValue < 0:
-                endMotorValue = 0
+                endMotorValue = 0 
 
         
         if lstick.GetRawButton(3):

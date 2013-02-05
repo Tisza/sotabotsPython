@@ -56,7 +56,7 @@ class MyRobot(wpilib.IterativeRobot):
         #"Motor: ", '%.2f' % self.motorOutput, "    PID: ", '%.2f' % PIDreturn, "  
         #self.motorOutput = ((PIDController.update(shootEncoder.GetRate())) / 15 -1)
         
-        print("RPM: ", shootEncoder.GetRate())
+        print("RPM: ", (shootEncoder.GetRate() / 4096) * 60)
 
         
         

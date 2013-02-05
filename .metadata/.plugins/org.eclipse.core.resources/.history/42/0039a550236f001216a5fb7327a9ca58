@@ -18,8 +18,10 @@ public class Printer extends StaticWidget{
 	static JLabel distanceLabel = new JLabel();
 	static JLabel aimLabel 	 = new JLabel();
 	static JLabel targetLabel   = new JLabel();
+	static NetworkTable table;
 	@Override
 	public void init() {
+		table = Robot.getTable();	
 		add(xLabel);
 		add(distanceLabel);
 		add(aimLabel);

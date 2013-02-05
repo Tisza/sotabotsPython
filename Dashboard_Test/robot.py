@@ -1,13 +1,11 @@
 import wpilib
-from GyroFilter import gyroFilter
-from AimFilter import aimFilter
+
 
 lstick = wpilib.Joystick(1)
 
-leftMotor = wpilib.Jaguar(1)
-rightMotor = wpilib.Jaguar(2)
-
-drive = wpilib.RobotDrive(leftMotor,rightMotor)
+wpilib.NetworkTable.SetIPAddress(ip)
+wpilib.NetworkTable.SetClientMode()
+wpilib.NetworkTable.Initialize()
 
 table = wpilib.NetworkTable.GetTable("SmartDashboard")
 
@@ -38,34 +36,19 @@ class MyRobot(wpilib.IterativeRobot):
         dog = self.GetWatchdog()
         dog.SetEnabled(True)
         dog.SetExpiration(0.25)
-        table.PutNumber("T", 1)
-        gyro.Reset()
+
 
     def TeleopPeriodic(self):
         self.GetWatchdog().Feed()
         CheckRestart()
-        
-        # Motor control
-        drive.ArcadeDrive(lstick)
+        try:
+        	print("SmartDashboard::test: %s" % table.GetNumber('DISTANCE'))
+        except:
+        	print("No value yet")
 
-        #Print gyro values
-        PrintGyro()
         
-    def PrintGyro(self):
-        filterGyro.update(gyro.GetAngle())
-        print("Gyroscope calculated average: ", filterGyro.update())
-        print("Raw value: ", gyro.GetAngle())
-
-    def Align(self):
-        global target = table.getDouble("CENTER")
         
-        while target < -0.05 and target > 0.05:
-                
-                tarval = filterAim.update((target^3)/2) #Slows down turning. Changed /3 to /2 -- filterAim gets a moving avg of the values to reduce impact of outliers
-                drive.ArcadeDrive(0,tarval)
-                target = table.getDouble("CENTER")
-        
-
+    
 def run():
     robot = MyRobot()
     robot.StartCompetition()

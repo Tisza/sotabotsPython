@@ -18,8 +18,11 @@ public class Printer extends StaticWidget{
 	static JLabel distanceLabel = new JLabel();
 	static JLabel aimLabel 	 = new JLabel();
 	static JLabel targetLabel   = new JLabel();
+	static NetworkTable table;
+	static SmartDashboard dashboard = new SmartDashboard();
 	@Override
 	public void init() {
+		table = Robot.getTable();	
 		add(xLabel);
 		add(distanceLabel);
 		add(aimLabel);
@@ -33,10 +36,11 @@ public class Printer extends StaticWidget{
 	}
 	
 	public static void refresh() {
-		distanceLabel.setText("DISTANCE" + Vision.distance);
+		distanceLabel.setText("DISTANCE: " + Vision.distance);
 		xLabel.setText("AVG DISTANCE: " + Vision.avgDistance);
 		aimLabel.setText("AIM COORDINATE: " + Vision.centerAim);
 		targetLabel.setText("AIM AVG: " + Vision.avgCenterAim);
+		dashboard.putDouble("DISTANCE", 7);
 	} 
 
 }

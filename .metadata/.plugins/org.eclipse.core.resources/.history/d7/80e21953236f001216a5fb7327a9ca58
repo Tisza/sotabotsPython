@@ -20,6 +20,7 @@ public class Printer extends StaticWidget{
 	static JLabel targetLabel   = new JLabel();
 	@Override
 	public void init() {
+		table = Robot.getTable();	
 		add(xLabel);
 		add(distanceLabel);
 		add(aimLabel);

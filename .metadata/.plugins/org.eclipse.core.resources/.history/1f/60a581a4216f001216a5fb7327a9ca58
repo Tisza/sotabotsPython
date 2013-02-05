@@ -14,13 +14,12 @@ import edu.wpi.first.wpijavacv.WPIPoint;
 import edu.wpi.first.wpijavacv.WPIPolygon;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.networking.NetworkTable;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Vision extends WPICameraExtension {
 	//private static final long serialVersionUID = -7612889513919831857L;
 	//public NetworkTable table = (NetworkTable) Robot.getTable();
-
+	
 	public static double width = 0;
 	public static double distance = 0;
 	public static double target = 0;
@@ -51,12 +50,7 @@ private static double getLength(WPIPoint a, WPIPoint b)
 	
 @SuppressWarnings("static-access")
 public WPIImage processImage(WPIColorImage image) {
-	/*try {
-	NetworkTable.getTable("SmartDashboard").putDouble("DISTANCE", 7);
-	}
-	catch (Exception e) {
-		
-	}*/
+	
 				WPIBinaryImage red = image.getRedChannel().getThreshold(50), //Tested threshold values
                 green = image.getGreenChannel().getThreshold(155),
                 blue = image.getBlueChannel().getThreshold(0);
