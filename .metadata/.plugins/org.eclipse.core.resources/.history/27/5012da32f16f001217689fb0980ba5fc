@@ -1,0 +1,13 @@
+package javajav;
+
+public class NetworkTable {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

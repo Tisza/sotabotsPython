@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="16" version="2.0">
+<workbench progressCount="12" version="2.0">
 <workbenchAdvisor/>
-<window height="726" maximized="true" width="1016" x="236" y="26">
+<window height="718" maximized="true" width="1012" x="63" y="26">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="160"/>
@@ -28,32 +28,22 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
-<part id="2"/>
-<part id="3"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Vision.java" partName="Vision.java" path="/home/frankie/Documents/git/sotabotsPython/SmartDashboard/src/Vision.java" title="Vision.java" tooltip="SmartDashboard/src/Vision.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SmartDashboard/src/Vision.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3725" selectionTopPixel="1888"/>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Vision.java" partName="Vision.java" path="/home/frankie/Documents/git/sotabotsPython/TestNetworkTable/src/Vision.java" title="Vision.java" tooltip="TestNetworkTable/src/Vision.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TestNetworkTable/src/Vision.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4896" selectionTopPixel="2726"/>
 </editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Printer.java" partName="Printer.java" path="/home/frankie/Documents/git/sotabotsPython/SmartDashboard/src/Printer.java" title="Printer.java" tooltip="SmartDashboard/src/Printer.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SmartDashboard/src/Printer.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="391" selectionTopPixel="0"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Average.java" partName="Average.java" path="/home/frankie/Documents/git/sotabotsPython/SmartDashboard/src/Average.java" title="Average.java" tooltip="SmartDashboard/src/Average.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SmartDashboard/src/Average.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="776" selectionTopPixel="108"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Test.java" partName="Test.java" path="/home/frankie/Documents/git/sotabotsPython/AP/src/Test.java" title="Test.java" tooltip="AP/src/Test.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/AP/src/Test.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="196" selectionTopPixel="0"/>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="NetworkTablesDesktopClient.java" partName="NetworkTablesDesktopClient.java" path="/home/frankie/Documents/git/sotabotsPython/TestNetworkTable/src/NetworkTablesDesktopClient.java" title="NetworkTablesDesktopClient.java" tooltip="TestNetworkTable/src/NetworkTablesDesktopClient.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TestNetworkTable/src/NetworkTablesDesktopClient.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="491" selectionTopPixel="108"/>
 </editor>
 </editors>
 <views>
 <view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
-<viewState CommonNavigator.LINKING_ENABLED="0" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0"/>
+<viewState CommonNavigator.LINKING_ENABLED="0" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="1"/>
 </view>
 <view id="org.eclipse.ui.console.ConsoleView" partName="Console">
 <viewState/>
@@ -104,20 +94,16 @@
 <perspective_action id="org.eclipse.team.ui.TeamSynchronizingPerspective"/>
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
+<view id="org.eclipse.ui.navigator.ProjectExplorer"/>
 <fastViewBars>
 <fastViewBar fastViewLocation="131072" id="org.eclipse.ui.internal.ViewStack@6a25dcb2" orientation="512" selectedTabId="org.eclipse.ui.console.ConsoleView" style="0">
 <fastViews>
-<view id="org.eclipse.ui.console.ConsoleView" ratio="0.3"/>
+<view id="org.eclipse.ui.console.ConsoleView" ratio="0.29907265"/>
 </fastViews>
 </fastViewBar>
 <fastViewBar fastViewLocation="16384" id="bottomLeft" orientation="512" selectedTabId="org.eclipse.ui.views.ContentOutline" style="0">
 <fastViews>
 <view id="org.eclipse.ui.views.ContentOutline" ratio="0.3"/>
-</fastViews>
-</fastViewBar>
-<fastViewBar fastViewLocation="16384" id="topLeft" orientation="512" selectedTabId="org.eclipse.ui.navigator.ProjectExplorer" style="0">
-<fastViews>
-<view id="org.eclipse.ui.navigator.ProjectExplorer" ratio="0.29984543"/>
 </fastViews>
 </fastViewBar>
 <fastViewBar fastViewLocation="1024" id="bottomRight" orientation="256" selectedTabId="org.eclipse.ui.views.TaskList" style="0">
@@ -129,12 +115,14 @@
 <layout>
 <mainWindow>
 <info folder="true" part="topLeft">
-<folder appearance="2" expanded="0">
-<page content="org.eclipse.ui.navigator.ProjectExplorer" label="LabelNotFound"/>
+<folder activePageID="org.eclipse.ui.navigator.ProjectExplorer" appearance="2" expanded="2">
+<page content="org.eclipse.ui.navigator.ProjectExplorer" label="Project Explorer"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
 <page content="org.eclipse.team.ccvs.ui.RepositoriesView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@7d1050be" ratio="0.7495049" ratioLeft="757" ratioRight="253" relationship="2" relative="topLeft">
@@ -145,7 +133,7 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info part="org.eclipse.ui.editorss" ratio="0.25940594" ratioLeft="262" ratioRight="748" relationship="2" relative="topLeft"/>
+<info part="org.eclipse.ui.editorss" ratio="0.4748663" ratioLeft="444" ratioRight="491" relationship="2" relative="topLeft"/>
 <info folder="true" part="bottomRight" ratio="0.65912765" ratioLeft="408" ratioRight="211" relationship="4" relative="org.eclipse.ui.editorss">
 <folder appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.TaskList" label="LabelNotFound"/>
@@ -154,13 +142,13 @@
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@6a25dcb2" ratio="0.5" ratioLeft="548" ratioRight="548" relationship="2" relative="org.eclipse.ui.editorss">
-<folder appearance="2" expanded="0">
+<folder appearance="2" expanded="2">
 <page content="org.eclipse.ui.console.ConsoleView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info folder="true" part="bottomLeft" ratio="0.49919224" ratioLeft="309" ratioRight="310" relationship="4" relative="topLeft">
-<folder appearance="2" expanded="0">
+<folder appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ContentOutline" label="LabelNotFound"/>
 <page content="org.eclipse.ant.ui.views.AntView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
@@ -173,160 +161,165 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/SmartDashboard/src/Vision.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/SmartDashboard/src/Average.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/SmartDashboard/src/Printer.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/AP/src/Test.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/SmartDashboard/src/javajav/Printer.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TestNetworkTable/src/NetworkTablesDesktopClient.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/SmartDashboard/src/javajav/NetworkTablesDesktopClient.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/SmartDashboard/src/NetworkTablesDesktopClient.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/SmartDashboard/src/javajav/CoorAverage.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TestNetworkTable/src/CoorAverage.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TestNetworkTable/src/DistanceAverage.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TestNetworkTable/src/Printer.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TestNetworkTable/src/Vision.java"/>
 </editors>
-<item historyLabel="Test.java" index="3">
-<position info="not_deleted" x="337" y="0"/>
-</item>
-<item historyLabel="Average.java" index="1">
-<position info="not_deleted" x="509" y="0"/>
-</item>
-<item historyLabel="Test.java" index="3">
-<position info="not_deleted" x="337" y="0"/>
-</item>
-<item historyLabel="Test.java" index="3">
-<position info="not_deleted" x="386" y="0"/>
-</item>
-<item historyLabel="Average.java" index="1">
-<position info="not_deleted" x="110" y="0"/>
-</item>
-<item historyLabel="Test.java" index="3">
-<position info="not_deleted" x="386" y="0"/>
-</item>
-<item historyLabel="Average.java" index="1">
-<position info="not_deleted" x="619" y="0"/>
-</item>
-<item historyLabel="Test.java" index="3">
-<position info="not_deleted" x="299" y="0"/>
-</item>
-<item historyLabel="Average.java" index="1">
-<position info="not_deleted" x="735" y="0"/>
-</item>
-<item historyLabel="Test.java" index="3">
-<position info="not_deleted" x="299" y="0"/>
-</item>
-<item historyLabel="Average.java" index="1">
-<position info="not_deleted" x="584" y="0"/>
-</item>
-<item historyLabel="Test.java" index="3">
-<position info="not_deleted" x="178" y="0"/>
-</item>
-<item historyLabel="Average.java" index="1">
-<position info="not_deleted" x="619" y="0"/>
-</item>
-<item historyLabel="Printer.java" index="2">
-<position info="not_deleted" x="369" y="0"/>
-</item>
-<item historyLabel="Average.java" index="1">
-<position info="not_deleted" x="440" y="0"/>
-</item>
-<item historyLabel="Test.java" index="3">
-<position info="not_deleted" x="196" y="0"/>
-</item>
-<item historyLabel="Average.java" index="1">
-<position info="not_deleted" x="440" y="0"/>
-</item>
-<item historyLabel="Average.java" index="1">
-<position info="not_deleted" x="535" y="0"/>
-</item>
-<item historyLabel="Average.java" index="1">
-<position info="not_deleted" x="526" y="3"/>
-</item>
-<item historyLabel="Average.java" index="1">
+<item historyLabel="NetworkTablesDesktopClient.java" index="2">
 <position/>
 </item>
-<item historyLabel="Average.java" index="1">
-<position info="not_deleted" x="371" y="0"/>
+<item historyLabel="NetworkTablesDesktopClient.java" index="1">
+<position/>
 </item>
-<item historyLabel="Average.java" index="1">
-<position info="not_deleted" x="368" y="0"/>
+<item historyLabel="NetworkTablesDesktopClient.java" index="2">
+<position/>
 </item>
-<item historyLabel="Average.java" index="1">
-<position info="not_deleted" x="335" y="0"/>
+<item historyLabel="NetworkTablesDesktopClient.java" index="1">
+<position/>
 </item>
-<item historyLabel="Average.java" index="1">
-<position info="not_deleted" x="218" y="0"/>
+<item historyLabel="NetworkTablesDesktopClient.java" index="2">
+<position/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="3748" y="0"/>
+<item historyLabel="NetworkTablesDesktopClient.java" index="1">
+<position/>
 </item>
-<item historyLabel="Printer.java" index="2">
-<position info="not_deleted" x="369" y="0"/>
+<item historyLabel="NetworkTablesDesktopClient.java" index="2">
+<position/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="982" y="0"/>
+<item historyLabel="NetworkTablesDesktopClient.java" index="2">
+<position/>
 </item>
-<item historyLabel="Average.java" index="1">
-<position info="not_deleted" x="735" y="0"/>
+<item historyLabel="NetworkTablesDesktopClient.java" index="3">
+<position info="not_deleted" x="0" y="1"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="4101" y="0"/>
+<item historyLabel="NetworkTablesDesktopClient.java" index="3">
+<position info="not_deleted" x="89" y="0"/>
 </item>
-<item historyLabel="Average.java" index="1">
-<position info="not_deleted" x="776" y="0"/>
+<item historyLabel="NetworkTablesDesktopClient.java" index="3">
+<position info="not_deleted" x="492" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="4101" y="0"/>
+<item historyLabel="NetworkTablesDesktopClient.java" index="1">
+<position/>
 </item>
-<item historyLabel="Printer.java" index="2">
-<position info="not_deleted" x="452" y="0"/>
+<item historyLabel="NetworkTablesDesktopClient.java" index="2">
+<position info="not_deleted" x="410" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="4101" y="0"/>
+<item historyLabel="Printer.java" index="0">
+<position info="not_deleted" x="189" y="0"/>
 </item>
-<item historyLabel="Printer.java" index="2">
-<position info="not_deleted" x="711" y="0"/>
+<item historyLabel="Printer.java" index="0">
+<position info="not_deleted" x="249" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="4418" y="0"/>
+<item historyLabel="Printer.java" index="0">
+<position info="not_deleted" x="665" y="0"/>
 </item>
-<item historyLabel="Printer.java" index="2">
-<position info="not_deleted" x="391" y="0"/>
+<item historyLabel="NetworkTablesDesktopClient.java" index="1">
+<position/>
 </item>
-<item historyLabel="Average.java" index="1">
-<position info="not_deleted" x="776" y="0"/>
+<item historyLabel="CoorAverage.java" index="4">
+<position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="4489" y="0"/>
+<item historyLabel="CoorAverage.java" index="4">
+<position info="not_deleted" x="8" y="7"/>
 </item>
-<item historyLabel="Printer.java" index="2">
-<position info="not_deleted" x="391" y="0"/>
+<item historyLabel="CoorAverage.java" index="4">
+<position info="not_deleted" x="195" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="4489" y="0"/>
+<item historyLabel="CoorAverage.java" index="4">
+<position info="not_deleted" x="8" y="7"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="4206" y="0"/>
+<item historyLabel="NetworkTablesDesktopClient.java" index="1">
+<position/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="4229" y="0"/>
+<item historyLabel="CoorAverage.java" index="5">
+<position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="4236" y="0"/>
+<item historyLabel="DistanceAverage.java" index="6">
+<position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="4270" y="0"/>
+<item historyLabel="Printer.java" index="7">
+<position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="4397" y="0"/>
+<item historyLabel="Vision.java" index="8">
+<position info="not_deleted" x="2" y="0"/>
 </item>
-<item historyLabel="Printer.java" index="2">
-<position info="not_deleted" x="391" y="0"/>
+<item historyLabel="Vision.java" index="8">
+<position info="not_deleted" x="126" y="0"/>
 </item>
-<item historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="4406" y="0"/>
+<item historyLabel="Printer.java" index="7">
+<position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="Average.java" index="1">
-<position info="not_deleted" x="776" y="0"/>
+<item historyLabel="DistanceAverage.java" index="6">
+<position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="Average.java" index="1">
-<position info="not_deleted" x="776" y="0"/>
+<item historyLabel="CoorAverage.java" index="5">
+<position info="not_deleted" x="0" y="0"/>
 </item>
-<item active="true" historyLabel="Vision.java" index="0">
-<position info="not_deleted" x="4406" y="0"/>
+<item historyLabel="NetworkTablesDesktopClient.java" index="1">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="8">
+<position info="not_deleted" x="2" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="8">
+<position info="not_deleted" x="32" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="8">
+<position info="not_deleted" x="495" y="0"/>
+</item>
+<item historyLabel="NetworkTablesDesktopClient.java" index="1">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="8">
+<position info="not_deleted" x="4976" y="0"/>
+</item>
+<item historyLabel="NetworkTablesDesktopClient.java" index="1">
+<position info="not_deleted" x="353" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="8">
+<position info="not_deleted" x="4976" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="8">
+<position info="not_deleted" x="4976" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="8">
+<position info="not_deleted" x="4934" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="8">
+<position info="not_deleted" x="4943" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="8">
+<position info="not_deleted" x="4930" y="3"/>
+</item>
+<item historyLabel="NetworkTablesDesktopClient.java" index="1">
+<position info="not_deleted" x="345" y="0"/>
+</item>
+<item historyLabel="NetworkTablesDesktopClient.java" index="1">
+<position info="not_deleted" x="301" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="8">
+<position info="not_deleted" x="4903" y="32"/>
+</item>
+<item historyLabel="NetworkTablesDesktopClient.java" index="1">
+<position info="not_deleted" x="318" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="8">
+<position info="not_deleted" x="4896" y="0"/>
+</item>
+<item historyLabel="NetworkTablesDesktopClient.java" index="1">
+<position info="not_deleted" x="318" y="0"/>
+</item>
+<item historyLabel="Vision.java" index="8">
+<position info="not_deleted" x="4896" y="0"/>
+</item>
+<item active="true" historyLabel="NetworkTablesDesktopClient.java" index="1">
+<position info="not_deleted" x="318" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -353,6 +346,36 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="NetworkTablesDesktopClient.java" tooltip="TestNetworkTable/src/NetworkTablesDesktopClient.java">
+<persistable path="/TestNetworkTable/src/NetworkTablesDesktopClient.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Vision.java" tooltip="TestNetworkTable/src/Vision.java">
+<persistable path="/TestNetworkTable/src/Vision.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Printer.java" tooltip="TestNetworkTable/src/Printer.java">
+<persistable path="/TestNetworkTable/src/Printer.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DistanceAverage.java" tooltip="TestNetworkTable/src/DistanceAverage.java">
+<persistable path="/TestNetworkTable/src/DistanceAverage.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CoorAverage.java" tooltip="TestNetworkTable/src/CoorAverage.java">
+<persistable path="/TestNetworkTable/src/CoorAverage.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="NetworkTablesDesktopClient.java" tooltip="SmartDashboard/src/javajav/NetworkTablesDesktopClient.java">
+<persistable path="/SmartDashboard/src/javajav/NetworkTablesDesktopClient.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Vision.java" tooltip="SmartDashboard/src/javajav/Vision.java">
+<persistable path="/SmartDashboard/src/javajav/Vision.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CoorAverage.java" tooltip="SmartDashboard/src/javajav/CoorAverage.java">
+<persistable path="/SmartDashboard/src/javajav/CoorAverage.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Printer.java" tooltip="SmartDashboard/src/javajav/Printer.java">
+<persistable path="/SmartDashboard/src/javajav/Printer.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DistanceAverage.java" tooltip="SmartDashboard/src/javajav/DistanceAverage.java">
+<persistable path="/SmartDashboard/src/javajav/DistanceAverage.java"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Test.java" tooltip="AP/src/Test.java">
 <persistable path="/AP/src/Test.java"/>
 </file>

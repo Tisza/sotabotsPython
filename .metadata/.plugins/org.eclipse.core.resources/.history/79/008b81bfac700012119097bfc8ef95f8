@@ -1,0 +1,51 @@
+import java.io.IOException;
+
+import edu.wpi.first.smartdashboard.robot.Robot;
+import edu.wpi.first.wpilibj.networktables.*;
+import edu.wpi.first.wpilibj.networktables2.*;
+
+
+public class NetworkTablesDesktopClient {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		new NetworkTablesDesktopClient();
+		NetworkTablesDesktopClient.run();
+
+	}
+
+	@SuppressWarnings("deprecation")
+	static void run() {
+		//NetworkTable.setClientMode()
+		NetworkTable.setIPAddress("10.25.57.2");
+		try {
+			NetworkTable.initialize();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		NetworkTable table = NetworkTable.getTable("SmartDashboard");
+		
+		while (true) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			table.putNumber("Q", 11);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(table.getNumber("Q"));
+			
+		}
+		
+	}
+
+}

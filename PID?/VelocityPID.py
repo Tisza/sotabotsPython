@@ -34,10 +34,10 @@ class PID:
 		elif self.Integrator < self.Integrator_min:
                         self.Integrator = self.Integrator_min
 
+		self.feed_forward = current_value
 		self.I_value = self.Integrator * self.Ki
-		self.PIDQ = self.P_value + self.I_value + self.D_value
-		self.difference = current_value - self.PIDQ
-		PID = self.difference
+		self.PIDQ = self.P_value + self.I_value + self.D_value + self.feed_forward
+		
 
 		return self.PIDQ
 

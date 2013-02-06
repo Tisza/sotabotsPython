@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;NetworkTablesDesktopClient.java&apos; to &apos;SmartDashboard/src/javajav&apos;&#x0A;- Original project: &apos;TestNetworkTable&apos;&#x0A;- Destination element: &apos;SmartDashboard/src/javajav&apos;&#x0A;- Original element: &apos;NetworkTablesDesktopClient.java&apos;" description="Copy compilation unit" destination="=SmartDashboard/src&lt;javajav" element1="/src&lt;{NetworkTablesDesktopClient.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1360111775271" units="1" version="1.0"/>
+</session>

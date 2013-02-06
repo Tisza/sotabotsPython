@@ -1,0 +1,15 @@
+package javajav;
+
+import edu.wpi.first.wpilibj.networktables2.client.NetworkTableClient;
+
+public class NetworkTableClass {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		new NetworkTableClass()).run();
+
+	}
+
+}
