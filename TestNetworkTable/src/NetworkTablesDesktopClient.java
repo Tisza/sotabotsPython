@@ -15,8 +15,8 @@ public class NetworkTablesDesktopClient {
 	}
 
 	static void run() {
-		NetworkTable.setTeam(2557); //sets our team number
-		NetworkTable table = (NetworkTable) Robot.getTable(); 
+		NetworkTable.setIPAddress("10.25.57.2"); //sets our team number
+		NetworkTable table = NetworkTable.getTable("SmartDashboard"); 
 		
 		while (true) {
 			try {

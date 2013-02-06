@@ -44,19 +44,18 @@ class MyRobot(wpilib.IterativeRobot):
 
         
     def TeleopPeriodic(self):
-        self.GetWatchdog().Feed()
-        CheckRestart()
+	self.GetWatchdog().Feed()
+	CheckRestart()
         
-        PIDController.setPoint(30) #set setPoint to 30 RPM
+	PIDController.setPoint(30) #set setPoint to 30 RPM
         
-        #rpm  = (shootEncoder.GetRate() / 4096) * 60
-        #leftMotor.Set(self.motorOutput)
-	#filterEncoder.update((shootEncoder.GetRate() / 4096) * 60)
-        # PIDreturn = PIDController.update( (shootEncoder.GetRate() / 4096) * 60 )
-        #"Motor: ", '%.2f' % self.motorOutput, "    PID: ", '%.2f' % PIDreturn, "  
-        #self.motorOutput = ((PIDController.update(shootEncoder.GetRate())) / 15 -1)
-        leftMotor.Set(.75)
-        print("RPM: ", (shootEncoder.GetRate() / 4096) * 60)
+	rpm  = (shootEncoder.GetRate() / 4096) * 60
+	leftMotor.Set(self.motorOutput)
+	filterEncoder.update((shootEncoder.GetRate() / 4096) * 60)
+	PIDreturn = PIDController.update( (shootEncoder.GetRate() / 4096) * 60 )
+	self.motorOutput = ((PIDController.update(shootEncoder.GetRate())) / 15 -1)
+	leftMotor.Set(.75)
+	print("RPM: ", (shootEncoder.GetRate() / 4096) * 60)
 
         
         
