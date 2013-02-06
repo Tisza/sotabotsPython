@@ -29,7 +29,7 @@ class PID:
 
 		self.Integrator = self.Integrator + self.error
 
-		if self.Integrator > self.Integrator_max:
+		if self.Integrator > self.Integracd tor_max:
 			self.Integrator = self.Integrator_max
 		elif self.Integrator < self.Integrator_min:
                         self.Integrator = self.Integrator_min
