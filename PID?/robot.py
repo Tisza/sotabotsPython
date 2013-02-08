@@ -4,7 +4,6 @@ from VelocityPID import PID
 
 lstick = wpilib.Joystick(1)
 
-PIDController = PID()
 
 shootEncoder = wpilib.Encoder(7, 8, True, wpilib.CounterBase.k4X)
 shootEncoder.SetDistancePerPulse(1)
@@ -42,20 +41,22 @@ class MyRobot(wpilib.IterativeRobot):
         
         shootEncoder.Start()
         shootEncoder.Reset()
-        PIDController.__init__(0.5, 0.0, 0.0, 0, 0, 500, -500)
-        PIDController.setPoint(30) #set setPoint to 30 RPM
         self.motorOutput = 0.5       
         
         
     def TeleopPeriodic(self):
         self.GetWatchdog().Feed()
         CheckRestart()
-        leftMotor.Set(self.motorOutput)
-        rAverage = filterEncoder.update((shootEncoder.GetRate() / 4096) * 60)
-        PIDreturn = PIDController.update( rAverage )
-        self.motorOutput = ( self.motorOutput + (PIDreturn / 30) )
-	
-        print("PID Return: ", PIDreturn, "   RPM:  ", rAverage, "   Motor: ", self.motorOutput)
+        
+        if filterEncoder.update(((shootEncoder.GetRate() / 4096) * 60) ) - 6 < 0.5 and (((shootEncoder.GetRate() / 4096) * 60) ) - 6 > -0.5:
+        	self.motorOutput = self.motorOutput
+        elif filterEncoder.update( (shootEncoder.GetRate() / 4096) * 60) < 6:
+        	self.motorOutput += 0.001
+        elif filterEncoder.update((shootEncoder.GetRate() / 4096) * 60) > 6:
+        	self.motorOutput -= 0.001
+        	
+        print("RPM: ", filterEncoder.update((shootEncoder.GetRate() / 4096) * 60), "    Motor:  ", self.motorOutput)
+
         leftMotor.Set(self.motorOutput)
         
 
