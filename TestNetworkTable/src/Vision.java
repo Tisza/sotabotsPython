@@ -29,9 +29,9 @@ public class Vision extends WPICameraExtension {
 	public double loopNumber = 0;
 	public static double avgCenterAim = 0;
 	public static double avgDistance = 0;
+        public static double center;
 	DistanceAverage distanceAverage = new DistanceAverage();
 	CoorAverage xCoorAverage = new CoorAverage();
-	public static double center;
 	
 	
 	
@@ -136,19 +136,12 @@ public WPIImage processImage(WPIColorImage image) {
      
      distance = FOVft / tan24;
      avgDistance  = distanceAverage.update(distance * 2);  //calculates distance
+    
      
-     double pq = 0;
+     int halfWidth = bestMatch.getWidth() / 2;
+     center = bestMatch.getX() + halfWidth;
      
-     
-     if (height == side1) 
-    	 pq = points[2].getX();
-     else
-    	 pq = points[1].getX();
-     
-     centerAim  = pq - (width/2); //gets pixel coordinate of center of target
-     centerAim = (centerAim/320)/16 - 1;
-     
-     avgCenterAim = xCoorAverage.update(centerAim);
+     avgCenterAim = xCoorAverage.update((center/320) - 1);
     
      
      /*try {
@@ -173,7 +166,6 @@ public WPIImage processImage(WPIColorImage image) {
     	 loopNumber++;
      }
      
-     NetworkTablesDesktopClient.run();
      
      return image;
    }

@@ -1,6 +1,5 @@
 import wpilib
 from EncoderFilter import encoderFilter
-from VelocityPID import PID
 
 lstick = wpilib.Joystick(1)
 
@@ -48,6 +47,7 @@ class MyRobot(wpilib.IterativeRobot):
         self.GetWatchdog().Feed()
         CheckRestart()
         
+        #Sets shooter to ~6RPM          (this value in RPM,                vv  the actual RPM calculation is a little off)
         if filterEncoder.update(((shootEncoder.GetRate() / 4096) * 60) ) - 6 < 0.5 and (((shootEncoder.GetRate() / 4096) * 60) ) - 6 > -0.5:
         	self.motorOutput = self.motorOutput
         elif filterEncoder.update( (shootEncoder.GetRate() / 4096) * 60) < 6:
