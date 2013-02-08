@@ -76,7 +76,7 @@ class MyRobot(wpilib.IterativeRobot):
                 motorValue = -1.0
         if endMotorValue > 1.0:
                 endMotorValue = 1.0
-        elif motorValue < -1.0:
+        elif endMotorValue < -1.0:
                 endMotorValue = -1.0
         
         Motor.Set(motorValue)
