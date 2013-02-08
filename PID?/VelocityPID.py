@@ -29,7 +29,7 @@ class PID:
 
 		self.Integrator = self.Integrator + self.error
 
-		if self.Integrator > self.Integracd tor_max:
+		if self.Integrator > self.Integrator_max:
 			self.Integrator = self.Integrator_max
 		elif self.Integrator < self.Integrator_min:
                         self.Integrator = self.Integrator_min
@@ -37,9 +37,10 @@ class PID:
 		self.feed_forward = current_value
 		self.I_value = self.Integrator * self.Ki
 		self.PIDQ = self.P_value + self.I_value + self.D_value + self.feed_forward
+		self.lala = (current_value - self.PIDQ)
 		
 
-		return self.PIDQ
+		return self.lala
 
 	def setPoint(self,set_point):
 		"""

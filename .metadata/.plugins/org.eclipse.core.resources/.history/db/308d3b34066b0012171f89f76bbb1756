@@ -1,9 +1,0 @@
-
-public class Test {
-	public static void main( String args[] ) {
-		String q = "fuck you";
-		String u = q.substring(4, 6);
-		System.out.println(u);
-		
-	}
-}

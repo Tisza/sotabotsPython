@@ -1,5 +1,7 @@
 import edu.wpi.first.smartdashboard.robot.Robot;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.networktables2.*;
+
 
 public class NetworkTablesDesktopClient {
 
@@ -13,8 +15,7 @@ public class NetworkTablesDesktopClient {
 	}
 
 	static void run() {
-                NetworkTable.setClientMode();
-		NetworkTable.setIPAddress("10.25.57.2"); //sets our team number
+		NetworkTable.setTeam(2557); //sets our team number
 		NetworkTable table = NetworkTable.getTable("SmartDashboard"); 
 		
 		while (true) {
