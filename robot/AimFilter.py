@@ -1,4 +1,4 @@
-class encoderFilter():
+class aimFilter():
 
         def __init__(self, numSamples):
                 self.numSamples = numSamples
