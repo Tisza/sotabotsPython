@@ -79,17 +79,8 @@ class MyRobot(wpilib.IterativeRobot):
         drive.ArcadeDrive(lstick)
 
 	#shooter controls
-	if rstick.GetY() > 0.05 or rstick.GetY() < -0.05:
-                motorValue += rstick.GetY()/100
-	elif rstick.GetRawButton(3):
-		motorValue = 0
-        if motorValue > 1.0:                    #Keeps increments at or under +/-100%
-                motorValue = 1.0
-        elif motorValue < -1.0:
-                motorValue = -1.0
-        
-        forwardShooter.Set(motorValue)
-        backShooter.Set(motorValue)
+        forwardShooter.Set((rstick.GetThrottle()-1)/2)
+        backShooter.Set((rstick.GetThrottle()-1)/2)
         
         #Shooter piston control
         if rstick.GetTrigger(): 
@@ -97,6 +88,12 @@ class MyRobot(wpilib.IterativeRobot):
         	wpilib.Timer.Delay( 1 )
         	loader.Set( wpilib.DoubleSolenoid.Value.kReverse )
         	
+        #lift controls
+        if rstick.GetRawButton(10):
+        	liftMotor.Set(-0.4)
+        elif rstick.GetRawButton(11):
+        	liftMotor.Set(0.4)
+        
 
 def run():
     robot = MyRobot()
