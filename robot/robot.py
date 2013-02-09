@@ -36,7 +36,7 @@ drive = wpilib.RobotDrive(leftMotor,rightMotor)
 #network table initilization
 table = wpilib.NetworkTable.GetTable("SmartDashboard")
 
-#averaging filter for encoder values
+#averaging filter for encoder values with array of length 100
 filterEncoder = aimFilter(100)
 
 
@@ -75,14 +75,14 @@ class MyRobot(wpilib.IterativeRobot):
         self.GetWatchdog().Feed()
         CheckRestart()
         
-        # Motor control
+        # Drive control
         drive.ArcadeDrive(lstick)
 
 	#shooter controls
 	if rstick.GetY() > 0.05 or rstick.GetY() < -0.05:
-                        motorValue += rstick.GetY()/100
+                motorValue += rstick.GetY()/100
 	elif rstick.GetRawButton(3):
-			motorValue = 0
+		motorValue = 0
         if motorValue > 1.0:                    #Keeps increments at or under +/-100%
                 motorValue = 1.0
         elif motorValue < -1.0:
@@ -90,6 +90,13 @@ class MyRobot(wpilib.IterativeRobot):
         
         forwardShooter.Set(motorValue)
         backShooter.Set(motorValue)
+        
+        #Shooter piston control
+        if rstick.GetTrigger(): 
+        	loader.Set( wpilib.DoubleSolenoid.Value.kForward )
+        	wpilib.Timer.Delay( 1 )
+        	loader.Set( wpilib.DoubleSolenoid.Value.kReverse )
+        	
 
 def run():
     robot = MyRobot()
