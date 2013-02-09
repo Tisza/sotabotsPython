@@ -93,6 +93,9 @@ class MyRobot(wpilib.IterativeRobot):
         	liftMotor.Set(-0.4)
         elif rstick.GetRawButton(11):
         	liftMotor.Set(0.4)
+        	
+        #prints encoder value
+        print(shootEncoder.GetRate())
         
 
 def run():
