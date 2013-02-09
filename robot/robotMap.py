@@ -17,3 +17,6 @@ drumEncoder1 = 0
 drumEncoder2 = 0
 
 liftMotorChannel = 0
+
+pressureSwitch = 0 
+compressorSpike = 0
