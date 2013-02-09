@@ -21,6 +21,9 @@ liftMotor = wpilib.Jaguar(robotMap.liftMotorChannel)
 #loader piston
 loader = wpilib.DoubleSolenoid( robotMap.pistonForwardChannel, robotMap.pistonReverseChannel )
 
+#compressor
+compressor = wpilib.Compressor(robotMap.pressureSwitch,robotMap.compressorSpike)
+
 #encoders
 shootEncoder = wpilib.Encoder( robotMap.shootEncoder1 , robotMap.shootEncoder2 , True, wpilib.CounterBase.k4X)
 leftDriveEncoder = wpilib.Encoder( robotMap.leftDriveEncoder1 , robotMap.leftDriveEncoder2 , True, wpilib.CounterBase.k4X)
@@ -68,6 +71,8 @@ class MyRobot(wpilib.IterativeRobot):
         dog = self.GetWatchdog()
         dog.SetEnabled(True)
         dog.SetExpiration(0.25)
+        compressor.Start()
+        shootEncoder.Start()
 
         global motorValue
 
