@@ -1,23 +1,43 @@
 import wpilib
 from GyroFilter import gyroFilter
 from AimFilter import aimFilter
+import robotMap
 
+#joysticks
 lstick = wpilib.Joystick(1)
+rstick = wpilib.Joystick(2)
 
+#drive motors
 leftMotor = wpilib.Jaguar(1)
 rightMotor = wpilib.Jaguar(2)
 
+#shooter motors
+forwardShooter = wpilib.Jaguar(robotMap.forwardShooterChannel)
+backShooter = wpilib.Jaguar(robotMap.backShooterChannel)
+
+#lift motor
+liftMotor = wpilib.Jaguar(robotMap.liftMotorChannel)
+
+#loader piston
+loader = wpilib.DoubleSolenoid( robotMap.pistonForwardChannel, robotMap.pistonReverseChannel )
+
+#encoders
+shootEncoder = wpilib.Encoder( robotMap.shootEncoder1 , robotMap.shootEncoder2 , True, wpilib.CounterBase.k4X)
+leftDriveEncoder = wpilib.Encoder( robotMap.leftDriveEncoder1 , robotMap.leftDriveEncoder2 , True, wpilib.CounterBase.k4X)
+rightDriveEncoder = wpilib.Encoder( robotMap.rightDriveEncoder1 , robotMap.rightDriveEncoder2 , True, wpilib.CounterBase.k4X)
+drumEncoder = wpilib.Encoder( robotMap.drumEncoder1 , robotMap.drumEncoder2 , True, wpilib.CounterBase.k4X)
+
+#shooter motor value
+motorValue = 0.0
+
+#drive train
 drive = wpilib.RobotDrive(leftMotor,rightMotor)
 
+#network table initilization
 table = wpilib.NetworkTable.GetTable("SmartDashboard")
 
-gyro = wpilib.Gyro(1)
-
-filterGyro = gyroFilter(150) #untested value for list lenth
-
-filterAim = aimFilter(150) #untested value for list length
-
-shootEncoder = wpilib.Encoder(1,2,false,k4X)
+#averaging filter for encoder values
+filterEncoder = aimFilter(100)
 
 
 
@@ -48,8 +68,8 @@ class MyRobot(wpilib.IterativeRobot):
         dog = self.GetWatchdog()
         dog.SetEnabled(True)
         dog.SetExpiration(0.25)
-        table.PutNumber("T", 1)
-        gyro.Reset()
+
+        global motorValue
 
     def TeleopPeriodic(self):
         self.GetWatchdog().Feed()
@@ -58,23 +78,18 @@ class MyRobot(wpilib.IterativeRobot):
         # Motor control
         drive.ArcadeDrive(lstick)
 
-        #Print gyro values
-        PrintGyro()
+	#shooter controls
+	if rstick.GetY() > 0.05 or rstick.GetY() < -0.05:
+                        motorValue += rstick.GetY()/100
+	elif rstick.GetRawButton(3):
+			motorValue = 0
+        if motorValue > 1.0:                    #Keeps increments at or under +/-100%
+                motorValue = 1.0
+        elif motorValue < -1.0:
+                motorValue = -1.0
         
-    def PrintGyro(self):
-        filterGyro.update(gyro.GetAngle())
-        print("Gyroscope calculated average: ", filterGyro.update())
-        print("Raw value: ", gyro.GetAngle())
-
-    def Align(self):
-        global target = table.getDouble("CENTER")
-        
-        while target < -0.05 and target > 0.05:
-                
-                tarval = filterAim.update((target^3)/2) #Slows down turning. Changed /3 to /2 -- filterAim gets a moving avg of the values to reduce impact of outliers
-                drive.ArcadeDrive(0,tarval)
-                target = table.getDouble("CENTER")
-        
+        forwardShooter.Set(motorValue)
+        backShooter.Set(motorValue)
 
 def run():
     robot = MyRobot()
