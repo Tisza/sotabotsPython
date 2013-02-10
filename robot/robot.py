@@ -8,14 +8,15 @@ lstick = wpilib.Joystick(1)
 rstick = wpilib.Joystick(2)
 
 #drive motors
-leftMotor1 = wpilib.Jaguar(robotMap.left1)
-rightMotor1 = wpilib.Jaguar(robotMap.right1)
-leftMotor2 = wpilib.Jaguar(robotMap.left2)
-rightMotor2 = wpilib.Jaguar(robotMap.right2)
+leftMotor = wpilib.Jaguar(robotMap.leftDrive)
+rightMotor = wpilib.Jaguar(robotMap.rightDrive)
 
 #shooter motors
 forwardShooter = wpilib.Jaguar(robotMap.forwardShooterChannel)
 backShooter = wpilib.Jaguar(robotMap.backShooterChannel)
+
+#loader piston 
+loader = wpilib.DoubleSolenoid(robotMap.pistonForwardChannel, robotMap.pistonReverseChannel )
 
 #lift motor
 liftMotor = wpilib.Jaguar(robotMap.liftMotorChannel)
@@ -33,7 +34,7 @@ drumEncoder = wpilib.Encoder( robotMap.drumEncoder1 , robotMap.drumEncoder2 , Tr
 motorValue = 0.0
 
 #drive train
-drive = wpilib.RobotDrive(leftMotor1,leftMotor2,rightMotor1,rightMotor2)
+drive = wpilib.RobotDrive(leftMotor,rightMotor)
 
 
 #network table initilization
@@ -84,14 +85,14 @@ class MyRobot(wpilib.IterativeRobot):
         drive.ArcadeDrive(lstick)
 
 	#shooter controls
-        forwardShooter.Set((rstick.GetThrottle()-1)/2)
-        backShooter.Set((rstick.GetThrottle()-1)/2)
+        forwardShooter.Set((rstick.GetThrottle()-1)/2) #Richs prefers a increase decrease button on 10/11 and
+        backShooter.Set((rstick.GetThrottle()-1)/2) #on the other side of rightJoystick... whatever values those are
         
         #Shooter piston control
         if rstick.GetTrigger(): 
-        	wpilib.DoubleSolenoid(robotMap.pistonForwardChannel, robotMap.pistonReverseChannel ).Set( wpilib.DoubleSolenoid.Value.kForward )
+        	loader.Set( wpilib.DoubleSolenoid.Value.kForward )
         	wpilib.Timer.Delay( 1 )
-        	wpilib.DoubleSolenoid(robotMap.pistonForwardChannel, robotMap.pistonReverseChannel ).Set( wpilib.DoubleSolenoid.Value.kReverse )
+        	loader.Set( wpilib.DoubleSolenoid.Value.kReverse )
         	
         #lift controls
         if rstick.GetRawButton(10):
