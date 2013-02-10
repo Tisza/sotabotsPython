@@ -18,9 +18,6 @@ backShooter = wpilib.Jaguar(robotMap.backShooterChannel)
 #lift motor
 liftMotor = wpilib.Jaguar(robotMap.liftMotorChannel)
 
-#loader piston
-loader = wpilib.DoubleSolenoid( robotMap.pistonForwardChannel, robotMap.pistonReverseChannel )
-
 #compressor
 compressor = wpilib.Compressor(robotMap.pressureSwitch,robotMap.compressorSpike)
 
@@ -89,9 +86,9 @@ class MyRobot(wpilib.IterativeRobot):
         
         #Shooter piston control
         if rstick.GetTrigger(): 
-        	loader.Set( wpilib.DoubleSolenoid.Value.kForward )
+        	wpilib.DoubleSolenoid(robotMap.pistonForwardChannel, robotMap.pistonReverseChannel ).Set( wpilib.DoubleSolenoid.Value.kForward )
         	wpilib.Timer.Delay( 1 )
-        	loader.Set( wpilib.DoubleSolenoid.Value.kReverse )
+        	wpilib.DoubleSolenoid(robotMap.pistonForwardChannel, robotMap.pistonReverseChannel ).Set( wpilib.DoubleSolenoid.Value.kReverse )
         	
         #lift controls
         if rstick.GetRawButton(10):
