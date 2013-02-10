@@ -8,8 +8,10 @@ lstick = wpilib.Joystick(1)
 rstick = wpilib.Joystick(2)
 
 #drive motors
-leftMotor = wpilib.Jaguar(1)
-rightMotor = wpilib.Jaguar(2)
+leftMotor1 = wpilib.Jaguar(robotMap.left1)
+rightMotor1 = wpilib.Jaguar(robotMap.right1)
+leftMotor2 = wpilib.Jaguar(robotMap.left2)
+rightMotor2 = wpilib.Jaguar(robotMap.right2)
 
 #shooter motors
 forwardShooter = wpilib.Jaguar(robotMap.forwardShooterChannel)
@@ -31,7 +33,8 @@ drumEncoder = wpilib.Encoder( robotMap.drumEncoder1 , robotMap.drumEncoder2 , Tr
 motorValue = 0.0
 
 #drive train
-drive = wpilib.RobotDrive(leftMotor,rightMotor)
+drive = wpilib.RobotDrive(leftMotor1,leftMotor2,rightMotor1,rightMotor2)
+
 
 #network table initilization
 table = wpilib.NetworkTable.GetTable("SmartDashboard")
