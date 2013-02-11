@@ -19,6 +19,7 @@ backShooter = wpilib.Jaguar(robotMap.backShooterChannel)
 loader1 = wpilib.Solenoid(robotMap.pistonForwardChannel)
 loader2 = wpilib.Solenoid(robotMap.pistonReverseChannel)
 
+
 #lift motor
 liftMotor = wpilib.Jaguar(robotMap.liftMotorChannel)
 
@@ -89,47 +90,41 @@ class MyRobot(wpilib.IterativeRobot):
         drive.ArcadeDrive(lstick)
 
 	#shooter controls
-        if rstick.GetRawButton(11):
-            frontValue+=1
+        if rstick.GetRawButton(11):				#right button 11 increments FRONT by 10%
+            frontValue+=.1
             if frontValue > 1:
                 frontValue = 1
             print("Front: "+str(int(frontValue*100))+"%")
-            wpilib.Timer.Delay(1)
-        if rstick.GetRawButton(10):
-            frontValue-=1
+        elif rstick.GetRawButton(10):				#right button 10 decrements FRONT to by 10%
+            frontValue-=.1
             if frontValue < 0:
                 frontValue = 0
             print("Front: "+str(int(backValue*100))+"%")
-            wpilib.Timer.Delay(1)
-        if rstick.GetRawButton(6):
-            backValue+=1
+        if rstick.GetRawButton(6):				#right button 6 increments BACK by 10%
+            backValue+=.1
             if backValue > 1:
                 backValue = 1
             print("Back: "+str(int(frontValue*100))+"%")
-            wpilib.Timer.Delay(1)
-        if rstick.GetRawButton(7):
-            backValue-=1
+        elif rstick.GetRawButton(7):				#right button 7 decrements BACK by 10% 
+            backValue-=.1
             if backValue < 0:
                 backValue = 0
             print("Back: "+str(int(backValue*100))+"%")
-            wpilib.Timer.Delay(1)
         forwardShooter.Set(frontValue)
         backShooter.Set(backValue)
         
         #Shooter piston control
         if rstick.GetTrigger():
-            #loader.Set( wpilib.DoubleSolenoid.Value.kForward )
-            loader1.Set(True )
-            loader2.Set(False )
+            loader1.Set( True )	#trigger fires loader solenoid
+            loader2.Set( False )
             wpilib.Timer.Delay( 1 )
-            #loader.Set( wpilib.DoubleSolenoid.Value.kReverse )
-            loader1.Set(False )
-            loader2.Set(True )
-        	
+            loader1.Set( True )
+            loader.Set( False )
+                    	
         #lift controls
-        if lstick.GetRawButton(10):
+        if lstick.GetRawButton(10):				#left button 10 retracts lift
         	liftMotor.Set(-0.4)
-        elif lstick.GetRawButton(11):
+        elif lstick.GetRawButton(11):				#left button 11 extends lift
         	liftMotor.Set(0.4)
         	
         #prints encoder value
