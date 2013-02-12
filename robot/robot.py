@@ -36,6 +36,7 @@ drumEncoder = wpilib.Encoder( robotMap.drumEncoder1 , robotMap.drumEncoder2 , Tr
 #shooter motor value
 frontValue = 0
 backValue = 0
+toggle = 0
 
 #drive train
 drive = wpilib.RobotDrive(leftMotor,rightMotor)
@@ -47,7 +48,9 @@ table = wpilib.NetworkTable.GetTable("SmartDashboard")
 #averaging filter for encoder values with array of length 100
 filterEncoder = aimFilter(100)
 
-
+#timer
+timer = wpilib.Timer()
+start = 0
 
 def CheckRestart():
     if lstick.GetRawButton(10):
@@ -85,28 +88,30 @@ class MyRobot(wpilib.IterativeRobot):
         CheckRestart()
         global frontValue
         global backValue
+        global toggle
+        global start
         
         # Drive control
         drive.ArcadeDrive(lstick)
 
 	#shooter controls
         if rstick.GetRawButton(11):				#right button 11 increments FRONT by 10%
-            frontValue+=.1
+            frontValue+=.01
             if frontValue > 1:
                 frontValue = 1
             print("Front: "+str(int(frontValue*100))+"%")
         elif rstick.GetRawButton(10):				#right button 10 decrements FRONT to by 10%
-            frontValue-=.1
+            frontValue-=.01
             if frontValue < 0:
                 frontValue = 0
             print("Front: "+str(int(backValue*100))+"%")
         if rstick.GetRawButton(6):				#right button 6 increments BACK by 10%
-            backValue+=.1
+            backValue+=.01
             if backValue > 1:
                 backValue = 1
             print("Back: "+str(int(frontValue*100))+"%")
         elif rstick.GetRawButton(7):				#right button 7 decrements BACK by 10% 
-            backValue-=.1
+            backValue-=.01
             if backValue < 0:
                 backValue = 0
             print("Back: "+str(int(backValue*100))+"%")
@@ -114,12 +119,19 @@ class MyRobot(wpilib.IterativeRobot):
         backShooter.Set(backValue)
         
         #Shooter piston control
-        if rstick.GetTrigger():
-            loader1.Set( True )	#trigger fires loader solenoid
-            loader2.Set( False )
-            wpilib.Timer.Delay( 1 )
-            loader1.Set( True )
-            loader.Set( False )
+        if rstick.GetTrigger() and toggle == 0: #if trigger is pulled and currently not firing
+            toggle = 1
+            start = timer.Get() #mark the time
+        if start != 0:
+            loader1.Set(False ) #marked time = firing
+            loader2.Set(True )
+        else:
+            loader1.Set(True )
+            loader2.Set(False )
+        if timer.Get() > start+0.2: #If .2 of a second has passed, stop firing
+            start = 0
+        if start == 0 and not rstick.GetTrigger() and toggle == 1: #Finish the cycle
+            toggle = 0 
                     	
         #lift controls
         if lstick.GetRawButton(10):				#left button 10 retracts lift
@@ -128,7 +140,7 @@ class MyRobot(wpilib.IterativeRobot):
         	liftMotor.Set(0.4)
         	
         #prints encoder value
-        print("Shooter: "+str(shootEncoder.GetRate())+" Feeder: "+str(feedEncoder.GetRate()))
+        #print("Shooter: "+str(shootEncoder.GetRate())+" Feeder: "+str(feedEncoder.GetRate()))
         
 
 def run():
