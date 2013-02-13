@@ -6,6 +6,9 @@ pistonReverseChannel = 2
 lockPistonForward = 3
 lockPistonReverse = 4
 
+magicJackUp = 5
+magicJackDown = 6
+
 #pmws
 
 forwardShooterChannel = 3
@@ -14,7 +17,7 @@ backShooterChannel = 4
 leftDrive = 1
 rightDrive = 2
 
-liftMotorChannel = 6
+drumMotorChannel = 6
 
 #Digital I/Os
 
