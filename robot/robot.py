@@ -145,7 +145,7 @@ class MyRobot(wpilib.IterativeRobot):
             fire = False
         
         #Magic Jacks
-        if lstick.GetRawButton(8) and lstick.GetRawButton(9) and jackItUp==False:
+        if lstick.GetRawButton(8) and lstick.GetRawButton(9) and jackItUp==False:	#button 8 and 9 at same time to toggle jacks
             magic1.Set(!magic1.Get())
             magic2.Set(!magic2.Get())
             jackItUp=True
