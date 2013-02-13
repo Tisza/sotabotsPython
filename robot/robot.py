@@ -19,9 +19,12 @@ backShooter = wpilib.Jaguar(robotMap.backShooterChannel)
 loader1 = wpilib.Solenoid(robotMap.pistonForwardChannel)
 loader2 = wpilib.Solenoid(robotMap.pistonReverseChannel)
 
+#magic Jacks
+magic1 = wpilib.Solenoid(robotMap.magicJackUp)
+magic2 = wpilib.Solenoid(robotMap.magicJackDown)
 
 #lift motor
-liftMotor = wpilib.Jaguar(robotMap.liftMotorChannel)
+drumMotor = wpilib.Jaguar(robotMap.drumMotorChannel)
 
 #compressor
 compressor = wpilib.Compressor(robotMap.pressureSwitch,robotMap.compressorSpike)
@@ -33,10 +36,11 @@ leftDriveEncoder = wpilib.Encoder( robotMap.leftDriveEncoder1 , robotMap.leftDri
 rightDriveEncoder = wpilib.Encoder( robotMap.rightDriveEncoder1 , robotMap.rightDriveEncoder2 , True, wpilib.CounterBase.k4X)
 drumEncoder = wpilib.Encoder( robotMap.drumEncoder1 , robotMap.drumEncoder2 , True, wpilib.CounterBase.k4X)
 
-#shooter motor value
+#variables
 frontValue = 0
 backValue = 0
-toggle = 0
+fire = False 
+jackItUp = False
 
 #drive train
 drive = wpilib.RobotDrive(leftMotor,rightMotor)
@@ -82,14 +86,20 @@ class MyRobot(wpilib.IterativeRobot):
         compressor.Start()
         shootEncoder.Start()
         feedEncoder.Start()
-
+        timer.Start()
+        
+        #starting positions
+        magic1.Set(False)
+        magic2.Set(True)
+        
     def TeleopPeriodic(self):
         self.GetWatchdog().Feed()
         CheckRestart()
         global frontValue
         global backValue
-        global toggle
+        global fire
         global start
+        global jackItUp
         
         # Drive control
         drive.ArcadeDrive(lstick)
@@ -119,29 +129,37 @@ class MyRobot(wpilib.IterativeRobot):
         backShooter.Set(backValue)
         
         #Shooter piston control
-        if rstick.GetTrigger() and toggle == 0: #if trigger is pulled and currently not firing
-            toggle = 1
+        if rstick.GetTrigger() and fire==False: #if trigger pulled and currently not firing
+            fire = True
             start = timer.Get() #mark the time
+            print("Shooter: "+str(shootEncoder.GetRate())+" Feeder: "+str(feedEncoder.GetRate()))
         if start != 0:
-            loader1.Set(False ) #marked time = firing
+            loader1.Set(False ) #marked time = fire
             loader2.Set(True )
         else:
             loader1.Set(True )
-            loader2.Set(False )
-        if timer.Get() > start+0.2: #If .2 of a second has passed, stop firing
+            loader2.Set(False )    
+        if timer.Get() > start+0.2: #if half a second has passed, stop firing
             start = 0
-        if start == 0 and not rstick.GetTrigger() and toggle == 1: #Finish the cycle
-            toggle = 0 
-                    	
+        if start == 0 and not rstick.GetTrigger() and fire == True: #finish the cycle
+            fire = False
+        
+        #Magic Jacks
+        if lstick.GetRawButton(8) and lstick.GetRawButton(9) and jackItUp==False:
+            magic1.Set(!magic1.Get())
+            magic2.Set(!magic2.Get())
+            jackItUp=True
+        if (not lstick.GetRawButton(8) or not lstick.GetRawButton(9)) and jackItUp==True:
+            jackItUp=False
+        
         #lift controls
         if lstick.GetRawButton(10):				#left button 10 retracts lift
-        	liftMotor.Set(-0.4)
+            drumMotor.Set(-0.5)
         elif lstick.GetRawButton(11):				#left button 11 extends lift
-        	liftMotor.Set(0.4)
+            drumMotor.Set(0.5)
+        else:
+            drumMotor.Set(0)
         	
-        #prints encoder value
-        #print("Shooter: "+str(shootEncoder.GetRate())+" Feeder: "+str(feedEncoder.GetRate()))
-        
 
 def run():
     robot = MyRobot()
