@@ -9,7 +9,7 @@ lockPistonReverse = 4
 magicJackUp = 5
 magicJackDown = 6
 
-#pmws
+#pwms
 
 forwardShooterChannel = 3
 backShooterChannel = 4
@@ -18,6 +18,8 @@ leftDrive = 1
 rightDrive = 2
 
 drumMotorChannel = 6
+
+weeWooChannel = 7
 
 #Digital I/Os
 
@@ -37,6 +39,8 @@ drumEncoder1 = 9
 drumEncoder2 = 10
 
 pressureSwitch = 14
+
+armLimitSwitch = 11
 
 #Relays 
 

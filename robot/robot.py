@@ -23,8 +23,14 @@ loader2 = wpilib.Solenoid(robotMap.pistonReverseChannel)
 magic1 = wpilib.Solenoid(robotMap.magicJackUp)
 magic2 = wpilib.Solenoid(robotMap.magicJackDown)
 
-#lift motor
-drumMotor = wpilib.Jaguar(robotMap.drumMotorChannel)
+#drum motor
+drumMotor = wpilib.Victor(robotMap.drumMotorChannel)
+
+#arm rotation motor
+weeWooMotor = wpilib.Victor(robotMap.weeWooChannel)
+
+#arm limit switch
+armLimitSwitch = wpilib.DigitalInput(robotMap.armLimitSwitch)
 
 #compressor
 compressor = wpilib.Compressor(robotMap.pressureSwitch,robotMap.compressorSpike)
@@ -41,6 +47,7 @@ frontValue = 0
 backValue = 0
 fire = False 
 jackItUp = False
+weeWoo = True
 
 #drive train
 drive = wpilib.RobotDrive(leftMotor,rightMotor)
@@ -100,27 +107,29 @@ class MyRobot(wpilib.IterativeRobot):
         global fire
         global start
         global jackItUp
+        global armValue
+        global weeWoo
         
         # Drive control
         drive.ArcadeDrive(lstick)
 
 	#shooter controls
-        if rstick.GetRawButton(11):				#right button 11 increments FRONT by 10%
+        if rstick.GetRawButton(11):				#right button 11 increments FRONT by 1%
             frontValue+=.01
             if frontValue > 1:
                 frontValue = 1
             print("Front: "+str(int(frontValue*100))+"%")
-        elif rstick.GetRawButton(10):				#right button 10 decrements FRONT to by 10%
+        elif rstick.GetRawButton(10):				#right button 10 decrements FRONT to by 1%
             frontValue-=.01
             if frontValue < 0:
                 frontValue = 0
             print("Front: "+str(int(backValue*100))+"%")
-        if rstick.GetRawButton(6):				#right button 6 increments BACK by 10%
+        if rstick.GetRawButton(6):				#right button 6 increments BACK by 1%
             backValue+=.01
             if backValue > 1:
                 backValue = 1
             print("Back: "+str(int(frontValue*100))+"%")
-        elif rstick.GetRawButton(7):				#right button 7 decrements BACK by 10% 
+        elif rstick.GetRawButton(7):				#right button 7 decrements BACK by 1% 
             backValue-=.01
             if backValue < 0:
                 backValue = 0
@@ -129,7 +138,7 @@ class MyRobot(wpilib.IterativeRobot):
         backShooter.Set(backValue)
         
         #Shooter piston control
-        if rstick.GetTrigger() and fire==False: #if trigger pulled and currently not firing
+        if rstick.GetTrigger() and fire==False: 			#if trigger pulled and currently not firing
             fire = True
             start = timer.Get() #mark the time
             print("Shooter: "+str(shootEncoder.GetRate())+" Feeder: "+str(feedEncoder.GetRate()))
@@ -159,6 +168,15 @@ class MyRobot(wpilib.IterativeRobot):
             drumMotor.Set(0.5)
         else:
             drumMotor.Set(0)
+            
+        #arm controls
+        if lstick.GetRawButton(6) and armLimitSwitch==False:
+            weeWooMotor.Set(1)
+        elif lstick.GetRawButton(7):
+            weeWooMotor.Set(-1)
+        else:
+            weeWooMotor.Set(0)
+        
         	
 
 def run():
