@@ -23,6 +23,10 @@ loader2 = wpilib.Solenoid(robotMap.pistonReverseChannel)
 magic1 = wpilib.Solenoid(robotMap.magicJackUp)
 magic2 = wpilib.Solenoid(robotMap.magicJackDown)
 
+#Dawg control
+dawg1 = wpilib.Solenoid(robotMap.DawgLock)
+dawg2 = wpilib.Solenoid(robotMap.DawgRelease)
+
 #drum motor
 drumMotor = wpilib.Victor(robotMap.drumMotorChannel)
 
@@ -47,7 +51,7 @@ frontValue = 0
 backValue = 0
 fire = False 
 jackItUp = False
-weeWoo = True
+doggie = False
 
 #drive train
 drive = wpilib.RobotDrive(leftMotor,rightMotor)
@@ -98,6 +102,8 @@ class MyRobot(wpilib.IterativeRobot):
         #starting positions
         magic1.Set(False)
         magic2.Set(True)
+        dawg1.Set(False)
+        dawg2.Set(True)
         
     def TeleopPeriodic(self):
         self.GetWatchdog().Feed()
@@ -108,7 +114,7 @@ class MyRobot(wpilib.IterativeRobot):
         global start
         global jackItUp
         global armValue
-        global weeWoo
+        global doggie
         
         # Drive control
         drive.ArcadeDrive(lstick)
@@ -177,6 +183,13 @@ class MyRobot(wpilib.IterativeRobot):
         else:
             weeWooMotor.Set(0)
         
+        #Dawg Controls
+        if lstick.GetTrigger() and doggie == False:
+            dawg1.Set(!dawg1.Get())
+            dawg2.Set(!dawg2.Get())
+            doggie = True
+        if not lstick.GetTrigger() and doggie == True:
+            doggie = False
         	
 
 def run():
