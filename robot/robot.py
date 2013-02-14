@@ -24,8 +24,8 @@ magic1 = wpilib.Solenoid(robotMap.magicJackUp)
 magic2 = wpilib.Solenoid(robotMap.magicJackDown)
 
 #Dawg control
-dawg1 = wpilib.Solenoid(robotMap.DawgLock)
-dawg2 = wpilib.Solenoid(robotMap.DawgRelease)
+dawg1 = wpilib.Solenoid(robotMap.dawgLock)
+dawg2 = wpilib.Solenoid(robotMap.dawgRelease)
 
 #drum motor
 drumMotor = wpilib.Victor(robotMap.drumMotorChannel)
