@@ -3,8 +3,8 @@
 pistonForwardChannel = 1
 pistonReverseChannel = 2
 
-lockPistonForward = 3
-lockPistonReverse = 4
+dawgLock = 3
+dawgRelease = 4
 
 magicJackUp = 5
 magicJackDown = 6
