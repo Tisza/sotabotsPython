@@ -19,6 +19,10 @@ backShooter = wpilib.Jaguar(robotMap.backShooterChannel)
 loader1 = wpilib.Solenoid(robotMap.pistonForwardChannel)
 loader2 = wpilib.Solenoid(robotMap.pistonReverseChannel)
 
+#hopper piston
+hopper1 = wpilib.Solenoid(robotMap.hopperForwardChannel)
+hopper2 = wpilib.Solenoid(robotMap.hopperReverseChannel)
+
 #magic Jacks
 magic1 = wpilib.Solenoid(robotMap.magicJackUp)
 magic2 = wpilib.Solenoid(robotMap.magicJackDown)
@@ -52,6 +56,7 @@ backValue = 0
 fire = False 
 jackItUp = False
 doggie = False
+hop = False
 
 #drive train
 drive = wpilib.RobotDrive(leftMotor,rightMotor)
@@ -66,6 +71,7 @@ filterEncoder = aimFilter(100)
 #timer
 timer = wpilib.Timer()
 start = 0
+start2 = 0
 
 def CheckRestart():
     if lstick.GetRawButton(10):
@@ -115,6 +121,8 @@ class MyRobot(wpilib.IterativeRobot):
         global jackItUp
         global armValue
         global doggie
+        global start2
+        global hop
         
         # Drive control
         drive.ArcadeDrive(lstick)
@@ -158,11 +166,26 @@ class MyRobot(wpilib.IterativeRobot):
             start = 0
         if start == 0 and not rstick.GetTrigger() and fire == True: #finish the cycle
             fire = False
-        
+            
+        #hopper piston control
+        if rstick.GetRawButton(3) and hop==False:
+            hop = True
+            start2 = timer.Get()
+        if start2 != 0:
+            hopper1.set(False)
+            hopper2.set(True)
+        else:
+            hopper1.set(True)
+            hopper2.set(False)
+        if timer.Get() > start2+0.2:
+            start2 = 0
+        if start == = and not rstick.GetRawButton(3)        
+            hop = False
+            
         #Magic Jacks
         if lstick.GetRawButton(8) and lstick.GetRawButton(9) and jackItUp==False:	#button 8 and 9 at same time to toggle jacks
-            magic1.Set(!magic1.Get())
-            magic2.Set(!magic2.Get())
+            magic1.Set(not magic1.Get())
+            magic2.Set(not magic2.Get())
             jackItUp=True
         if (not lstick.GetRawButton(8) or not lstick.GetRawButton(9)) and jackItUp==True:
             jackItUp=False
@@ -185,8 +208,8 @@ class MyRobot(wpilib.IterativeRobot):
         
         #Dawg Controls
         if lstick.GetTrigger() and doggie == False:
-            dawg1.Set(!dawg1.Get())
-            dawg2.Set(!dawg2.Get())
+            dawg1.Set(not dawg1.Get())
+            dawg2.Set(not dawg2.Get())
             doggie = True
         if not lstick.GetTrigger() and doggie == True:
             doggie = False

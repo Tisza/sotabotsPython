@@ -9,6 +9,9 @@ dawgRelease = 4
 magicJackUp = 5
 magicJackDown = 6
 
+hopperForwardChannel = 7
+hopperReverseChannel = 8
+
 #pwms
 
 forwardShooterChannel = 3
