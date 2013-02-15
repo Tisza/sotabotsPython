@@ -177,9 +177,9 @@ class MyRobot(wpilib.IterativeRobot):
         else:
             hopper1.set(True)
             hopper2.set(False)
-        if timer.Get() > start2+0.2:
+        if timer.Get() > start2+5:
             start2 = 0
-        if start == = and not rstick.GetRawButton(3)        
+        if start == 0 and not rstick.GetRawButton(3)        
             hop = False
             
         #Magic Jacks
