@@ -3,6 +3,9 @@ from GyroFilter import gyroFilter
 from AimFilter import aimFilter
 import robotMap
 
+filterEncoder = gyroFilter(100)
+filterEncoder2 = AimFilter(100)
+
 #joysticks
 lstick = wpilib.Joystick(1)
 rstick = wpilib.Joystick(2)
@@ -106,8 +109,8 @@ class MyRobot(wpilib.IterativeRobot):
         timer.Start()
         
         #starting positions
-        magic1.Set(True)
-        magic2.Set(False)
+        magic1.Set(False)
+        magic2.Set(True)
         dawg1.Set(False)
         dawg2.Set(True)
         
@@ -137,18 +140,39 @@ class MyRobot(wpilib.IterativeRobot):
             frontValue-=.01
             if frontValue < 0:
                 frontValue = 0
-            print("Front: "+str(int(frontValue*100))+"%")
+            print("Front: "+str(int(backValue*100))+"%")
         if rstick.GetRawButton(6):				#right button 6 increments BACK by 1%
             backValue+=.01
             if backValue > 1:
                 backValue = 1
-            print("Back: "+str(int(backValue*100))+"%")
+            print("Back: "+str(int(frontValue*100))+"%")
         elif rstick.GetRawButton(7):				#right button 7 decrements BACK by 1% 
             backValue-=.01
             if backValue < 0:
                 backValue = 0
             print("Back: "+str(int(backValue*100))+"%")
-        forwardShooter.Set(frontValue)
+        
+		
+		
+		
+		#AUTO shooter PRESET CONTROLS		(LONG RANGE)		----must hold rstick button 5
+		if rstick.GetRawButton(5):			
+			if filterEncoder.update(shootEncoder.GetRate()) + 34000 < 2000 and filterEncoder.update(shootEncoder.GetRate()) + 34000 > -2000: #front auto
+				frontValue = frontValue
+			elif (filterEncoder.update( shootEncoder.GetRate() ) < -34000:
+				frontValue -= 0.0005
+			elif (filterEncoder.update( shootEncoder.GetRate() )) > -34000:
+				frontValue += 0.0005
+			if filterEncoder2.update(feedEncoder.GetRate()) + 38000 < 2000 and filterEncoder2.update(feedtEncoder.GetRate()) + 38000 > -2000: #back auto
+				backValue = frontValue
+			elif (filterEncoder2.update( feedEncoder.GetRate() ) < -38000:
+				backValue -= 0.0005
+			elif (filterEncoder2.update( feedEncoder.GetRate() )) > -38000:
+				backValue += 0.0005	
+			
+        	
+		
+		forwardShooter.Set(frontValue)
         backShooter.Set(backValue)
         
         #Shooter piston control
