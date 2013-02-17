@@ -106,8 +106,8 @@ class MyRobot(wpilib.IterativeRobot):
         timer.Start()
         
         #starting positions
-        magic1.Set(False)
-        magic2.Set(True)
+        magic1.Set(True)
+        magic2.Set(False)
         dawg1.Set(False)
         dawg2.Set(True)
         
@@ -137,12 +137,12 @@ class MyRobot(wpilib.IterativeRobot):
             frontValue-=.01
             if frontValue < 0:
                 frontValue = 0
-            print("Front: "+str(int(backValue*100))+"%")
+            print("Front: "+str(int(frontValue*100))+"%")
         if rstick.GetRawButton(6):				#right button 6 increments BACK by 1%
             backValue+=.01
             if backValue > 1:
                 backValue = 1
-            print("Back: "+str(int(frontValue*100))+"%")
+            print("Back: "+str(int(backValue*100))+"%")
         elif rstick.GetRawButton(7):				#right button 7 decrements BACK by 1% 
             backValue-=.01
             if backValue < 0:
