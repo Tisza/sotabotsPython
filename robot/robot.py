@@ -156,23 +156,23 @@ class MyRobot(wpilib.IterativeRobot):
 		
 		
 		#AUTO shooter PRESET CONTROLS		(LONG RANGE)		----must hold rstick button 5
-		if rstick.GetRawButton(5):			
-			if filterEncoder.update(shootEncoder.GetRate()) + 34000 < 2000 and filterEncoder.update(shootEncoder.GetRate()) + 34000 > -2000: #front auto
-				frontValue = frontValue
-			elif (filterEncoder.update( shootEncoder.GetRate() ) < -34000:
-				frontValue -= 0.0005
-			elif (filterEncoder.update( shootEncoder.GetRate() )) > -34000:
-				frontValue += 0.0005
-			if filterEncoder2.update(feedEncoder.GetRate()) + 38000 < 2000 and filterEncoder2.update(feedtEncoder.GetRate()) + 38000 > -2000: #back auto
-				backValue = frontValue
-			elif (filterEncoder2.update( feedEncoder.GetRate() ) < -38000:
-				backValue -= 0.0005
-			elif (filterEncoder2.update( feedEncoder.GetRate() )) > -38000:
-				backValue += 0.0005	
+	if rstick.GetRawButton(5):			
+		if filterEncoder.update(shootEncoder.GetRate()) + 34000 < 2000 and filterEncoder.update(shootEncoder.GetRate()) + 34000 > -2000: #front auto
+			frontValue = frontValue
+		elif (filterEncoder.update( shootEncoder.GetRate() ) < -34000:
+			frontValue -= 0.0005
+		elif (filterEncoder.update( shootEncoder.GetRate() )) > -34000:
+			frontValue += 0.0005
+		if filterEncoder2.update(feedEncoder.GetRate()) + 38000 < 2000 and filterEncoder2.update(feedtEncoder.GetRate()) + 38000 > -2000: #back auto
+			backValue = frontValue
+		elif (filterEncoder2.update( feedEncoder.GetRate() ) < -38000:
+			backValue -= 0.0005
+		elif (filterEncoder2.update( feedEncoder.GetRate() )) > -38000:
+			backValue += 0.0005	
 			
         	
 		
-		forwardShooter.Set(frontValue)
+	forwardShooter.Set(frontValue)
         backShooter.Set(backValue)
         
         #Shooter piston control
