@@ -127,7 +127,7 @@ class MyRobot(wpilib.IterativeRobot):
         # Drive control
         drive.ArcadeDrive(lstick)
 
-	#shooter controls
+		#shooter controls
         if rstick.GetRawButton(11):				#right button 11 increments FRONT by 1%
             frontValue+=.01
             if frontValue > 1:
@@ -177,7 +177,7 @@ class MyRobot(wpilib.IterativeRobot):
         else:
             hopper1.Set(True)
             hopper2.Set(False)
-        if timer.Get() > start2+5:
+        if timer.Get() > start2+5:  #5 second interval for hopper piston
             start2 = 0
         if start == 0 and not rstick.GetRawButton(3):
             hop = False
