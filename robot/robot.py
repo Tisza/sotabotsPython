@@ -40,8 +40,10 @@ drumMotor = wpilib.Victor(robotMap.drumMotorChannel)
 #arm rotation motor
 weeWooMotor = wpilib.Victor(robotMap.weeWooChannel)
 
-#arm limit switch
+#limit switches
 armLimitSwitch = wpilib.DigitalInput(robotMap.armLimitSwitch)
+liftBottomSwitch = wpilib.DigitalInput(robotMap.liftBottomSwitch)
+liftTopSwitch = wpilib.DigitalInput(robotMap.liftTopSwitch)
 
 #compressor
 compressor = wpilib.Compressor(robotMap.pressureSwitch,robotMap.compressorSpike)
@@ -215,9 +217,9 @@ class MyRobot(wpilib.IterativeRobot):
             jackItUp=False
         
         #lift controls
-        if lstick.GetRawButton(10):				#left button 10 retracts lift
+        if lstick.GetRawButton(10) and liftBottomSwitch==False:				#left button 10 retracts lift
             drumMotor.Set(-0.5)
-        elif lstick.GetRawButton(11):				#left button 11 extends lift
+        elif lstick.GetRawButton(11) and liftTopSwitch==False:				#left button 11 extends lift
             drumMotor.Set(0.5)
         else:
             drumMotor.Set(0)
