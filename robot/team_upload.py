@@ -176,15 +176,15 @@ if __name__ == '__main__':
 
     installer = None
 
-    if sys.version_info[0] < 3:
-        response = str(raw_input( 'Upload code to robot for team %d? ' % my_team_number  )).strip().lower()
-    else:
-        response = str(input( 'Upload code to robot for team %d? ' % my_team_number  )).strip().lower()
-
-    if response != 'y' and response != 'yes':
-        print("Not uploading code")
-        wait()
-        exit(1)
+#    # #### if sys.version_info[0] < 3:
+##   # #  #     response = str(raw_input( 'Upload code to robot for team %d? ' % my_team_number  )).strip().lower()
+##   # #  # else:
+# #  # #  #     response = str(input( 'Upload code to robot for team %d? ' % my_team_number  )).strip().lower()
+# #  # #  #
+#  # # #  # if response != 'y' and response != 'yes':
+#  # # #  #     print("Not uploading code")
+#   ## #  #     wait()
+#   ## ####     exit(1)
         
     robot_host = get_robot_host( my_team_number )
 
@@ -198,4 +198,5 @@ if __name__ == '__main__':
     installer.upload_directory( '/py', '.', verbose=True)
 
     installer.close()
+    print("Upload successful")
     wait()
