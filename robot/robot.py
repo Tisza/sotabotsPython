@@ -130,7 +130,9 @@ class MyRobot(wpilib.IterativeRobot):
         global hop
         
         # Drive control
-        drive.ArcadeDrive(lstick)
+        if lstick.GetRawButton(3):
+            direction = direction*-1
+        drive.ArcadeDrive(lstick.GetY()*direction,lstick.GetX()*.8)
 
 		#shooter controls
         if rstick.GetRawButton(11):				#right button 11 increments FRONT by 1%
