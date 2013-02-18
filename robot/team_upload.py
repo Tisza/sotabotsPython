@@ -77,7 +77,7 @@ class RobotCodeInstaller(object):
         cwd = os.path.abspath( os.getcwd() )
 
         if not os.path.isdir( local_root ):
-            print("ERROR: Local root directory %s does not exist" % local_root )
+            print("ERROR: Maaan, you ain't got no %s" % local_root )
             return False
 
         os.chdir( local_root )
@@ -85,7 +85,7 @@ class RobotCodeInstaller(object):
         try:
             self.ftp.cwd( remote_root )
         except ftplib.error_perm as msg:
-            print("ERROR: Accessing remote directory %s failed: %s" % (remote_root, msg))
+            print("ERROR: I couldn' reach yo hoe %s 'cus %s" % (remote_root, msg))
             return False
 
         has_error = False
@@ -113,7 +113,7 @@ class RobotCodeInstaller(object):
                     if verbose:
                         print( 'MKDIR ' + root )
                 except ftplib.error_perm as msg:
-                    print("ERROR: Creating directory %s failed: %s" % (root, msg))
+                    print("ERROR: we couldn' make yo %s 'cus %s" % (root, msg))
                     break
 
             for fn in files:
@@ -130,7 +130,7 @@ class RobotCodeInstaller(object):
                     try:
                         self.ftp.delete( r + '.pyc' )
                         if verbose:
-                            print('DELETE ' + r + '.pyc')
+                            print('DELETE: Poppin a cap in ' + r + '.pyc')
                     except Exception:
                         pass
 
@@ -146,11 +146,11 @@ class RobotCodeInstaller(object):
                             sys.stdout.write('.')
                             sys.stdout.flush()
                     except ftplib.error_perm as msg:
-                        print("ERROR writing %s: %s" % (filename, msg ))
+                        print("ERROR riden %s: %s" % (filename, msg ))
                         has_error = True
                         break
                     except IOError as msg:
-                        print("ERROR reading from %s: %s" % (filename, msg))
+                        print("ERROR reedin' from %s: %s" % (filename, msg))
                         has_error = True
                         break
 
@@ -166,7 +166,7 @@ class RobotCodeInstaller(object):
 def wait():
     try:
         import msvcrt
-        print("Press any key to continue")
+        print("Slappah hoe")
         msvcrt.getch()
     except Exception:
         pass
@@ -191,12 +191,12 @@ if __name__ == '__main__':
     try:
         installer = RobotCodeInstaller( robot_host )
     except Exception as e:
-        print("Could not connect to robot FTP server %s: %s" % (robot_host, e))
+        print("Yo we couldn' fin' yo bot at %s 'cus %s" % (robot_host, e))
         wait()
         exit(1)
 
     installer.upload_directory( '/py', '.', verbose=True)
 
     installer.close()
-    print("Upload successful")
+    print("We done already done had don")
     wait()
