@@ -4,7 +4,7 @@ from AimFilter import aimFilter
 import robotMap
 
 filterEncoder = gyroFilter(100)
-filterEncoder2 = AimFilter(100)
+filterEncoder2 = aimFilter(100)
 
 #joysticks
 lstick = wpilib.Joystick(1)
@@ -156,18 +156,18 @@ class MyRobot(wpilib.IterativeRobot):
 		
         	
         #AUTO shooter PRESET CONTROLS		(LONG RANGE)		----must hold rstick button 5
-        if rstick.GetRawButton(5):			
+        if rstick.GetRawButton(5):		
                 if filterEncoder.update(shootEncoder.GetRate()) + 34000 < 2000 and filterEncoder.update(shootEncoder.GetRate()) + 34000 > -2000: #front auto
                     frontValue = frontValue
                     print("FIRE")
-                elif (filterEncoder.update( shootEncoder.GetRate() ) < -34000:
+                elif (filterEncoder.update( shootEncoder.GetRate() )) < -34000:
                     frontValue -= 0.0005
                 elif (filterEncoder.update( shootEncoder.GetRate() )) > -34000:
                     frontValue += 0.0005
-                if filterEncoder2.update(feedEncoder.GetRate()) + 38000 < 2000 and filterEncoder2.update(feedtEncoder.GetRate()) + 38000 > -2000: #back auto
+                if filterEncoder2.update(feedEncoder.GetRate()) + 38000 < 2000 and filterEncoder2.update(feedEncoder.GetRate()) + 38000 > -2000: #back auto
                     backValue = frontValue
                     print("FIRE")
-                elif (filterEncoder2.update( feedEncoder.GetRate() ) < -38000:
+                elif (filterEncoder2.update( feedEncoder.GetRate() )) < -38000:
                     backValue -= 0.0005
                 elif (filterEncoder2.update( feedEncoder.GetRate() )) > -38000:
                     backValue += 0.0005	
