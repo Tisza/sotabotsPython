@@ -58,10 +58,12 @@ drumEncoder = wpilib.Encoder( robotMap.drumEncoder1 , robotMap.drumEncoder2 , Tr
 #variables
 frontValue = 0
 backValue = 0
+direction = 1
 fire = False 
 jackItUp = False
 doggie = False
 hop = False
+dire=False 
 
 #drive train
 drive = wpilib.RobotDrive(leftMotor,rightMotor)
@@ -128,10 +130,15 @@ class MyRobot(wpilib.IterativeRobot):
         global doggie
         global start2
         global hop
+        global direction
+        global dire
         
         # Drive control
-        if lstick.GetRawButton(3):
+        if lstick.GetRawButton(3) and dire==False:
             direction = direction*-1
+            dire=True
+        if not lstick.GetRawButton(3) and dire==True:
+            dire=False
         drive.ArcadeDrive(lstick.GetY()*direction,lstick.GetX()*.8)
 
 		#shooter controls
@@ -155,6 +162,10 @@ class MyRobot(wpilib.IterativeRobot):
             if backValue < 0:
                 backValue = 0
             print("Back: "+str(int(backValue*100))+"%")
+        if rstick.GetRawButton(8):
+            backValue = 0
+        if rstick.GetRawButton(9):
+            frontValue = 0
         
         
 		
@@ -175,6 +186,8 @@ class MyRobot(wpilib.IterativeRobot):
                     backValue -= 0.0005
                 elif (filterEncoder2.update( feedEncoder.GetRate() )) > -38000:
                     backValue += 0.0005	
+                
+                # 30,000 front / 17,000 back for tower shot
                 
         forwardShooter.Set(frontValue)
         backShooter.Set(backValue)
@@ -205,7 +218,9 @@ class MyRobot(wpilib.IterativeRobot):
         else:
             hopper1.Set(True)
             hopper2.Set(False)
-        if timer.Get() > start2+5:  #5 second interval for hopper piston
+        iif (timer.Get() > start2+.2) and magic1.Get()==True:  #.2 second interval for hopper piston
+            start2 = 0
+        if (timer.Get() > start2+.5) and magic1.Get()==False:
             start2 = 0
         if start == 0 and not rstick.GetRawButton(3):
             hop = False
@@ -219,18 +234,27 @@ class MyRobot(wpilib.IterativeRobot):
             jackItUp=False
         
         #lift controls
-        if lstick.GetRawButton(10) and liftBottomSwitch==False:				#left button 10 retracts lift
-            drumMotor.Set(-0.5)
-        elif lstick.GetRawButton(11) and liftTopSwitch==False:				#left button 11 extends lift
-            drumMotor.Set(0.5)
+        if lstick.GetRawButton(10):
+            if liftTopSwitch.Get()==1:
+                drumMotor.Set(0.5)
+            else:
+                drumMotor.Set(0)
+        elif lstick.GetRawButton(11):
+            if liftBottomSwitch.Get()==1:
+                drumMotor.Set(-0.5)
+            else:
+                drumMotor.Set(0)
         else:
             drumMotor.Set(0)
             
-        #arm controls
-        if lstick.GetRawButton(6) and armLimitSwitch==False:
-            weeWooMotor.Set(1)
+       #arm controls
+        if lstick.GetRawButton(6):
+            weeWooMotor.Set(.5)
         elif lstick.GetRawButton(7):
-            weeWooMotor.Set(-1)
+            if armLimitSwitch.Get()==1:
+                weeWooMotor.Set(-.5)
+            else:
+                weeWooMotor.Set(0)
         else:
             weeWooMotor.Set(0)
         
