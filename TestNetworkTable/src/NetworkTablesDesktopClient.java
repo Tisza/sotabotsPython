@@ -14,7 +14,7 @@ public class NetworkTablesDesktopClient {
 		NetworkTable table = NetworkTable.getTable("SmartDashboard"); 
 		
 			
-			table.putNumber(key, value); //puts the number "11" into a key called "Q"
+		table.putNumber(key, value); //puts the number "11" into a key called "Q"
 			
 				
 		}

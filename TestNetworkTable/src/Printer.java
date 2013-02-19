@@ -39,8 +39,8 @@ public class Printer extends StaticWidget{
 		aimLabel.setText("AIM COORDINATE: " + Vision.centerAim);
 		targetLabel.setText("AIM AVG: " + Vision.avgCenterAim);
                 
-                NetworkTablesDesktopClient.run("DISTANCE", Vision.avgDistance);
-                NetworkTablesDesktopClient.run("AIM", Vision.avgCenterAim);
+                //NetworkTablesDesktopClient.run("DISTANCE", Vision.avgDistance);
+                //NetworkTablesDesktopClient.run("AIM", Vision.avgCenterAim);
 		
 	} 
 	

@@ -141,7 +141,7 @@ public WPIImage processImage(WPIColorImage image) {
      int halfWidth = bestMatch.getWidth() / 2;
      center = bestMatch.getX() + halfWidth;
      
-     avgCenterAim = xCoorAverage.update((center/320) - 1);
+     avgCenterAim = xCoorAverage.update((center/160) - 1);
     
      
      /*try {
@@ -158,7 +158,7 @@ public WPIImage processImage(WPIColorImage image) {
      
      repaint();
      
-     if (loopNumber > 3) {
+     if (loopNumber > 10) {
      Printer.refresh();
      loopNumber = 0;
      }
