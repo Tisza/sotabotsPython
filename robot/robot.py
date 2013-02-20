@@ -55,6 +55,7 @@ backValue = 0
 direction = 1
 lsense = (lstick.GetThrottle() -1)*(-0.5)
 rsense = (rstick.GetThrottle() -1)*(-0.5)
+mode = 0
 ld = {"se":(0),"fe":(0),"ld":0,"rd":0}
 fire = False 
 #jackItUp = False
@@ -134,6 +135,7 @@ class MyRobot(wpilib.IterativeRobot):
         global lsense
         global rsense
         global start3
+        global mode
         
         #sensitivity
         lsense = (lstick.GetThrottle() -1)*(-0.5)
@@ -147,52 +149,69 @@ class MyRobot(wpilib.IterativeRobot):
             dire=False
         drive.ArcadeDrive(lstick.GetY()*direction*lsense,lstick.GetX()*lsense)
 
-		#shooter controls
-        if rstick.GetRawButton(11):				#right button 11 increments FRONT by 1%
+		#manual shooter controls
+        if rstick.GetRawButton(11):				#right button 11 increments FRONT
+            mode = 99
             frontValue+=.05*rsense
             if frontValue > 1:
                 frontValue = 1
             print("Front: "+str(int(frontValue*100))+"%")
-        elif rstick.GetRawButton(10):				#right button 10 decrements FRONT to by 1%
+        elif rstick.GetRawButton(10):				#right button 10 decrements FRONT
+            mode = 99
             frontValue-=.05*rsense
             if frontValue < 0:
                 frontValue = 0
             print("Front: "+str(int(frontValue*100))+"%")
-        if rstick.GetRawButton(6):				#right button 6 increments BACK by 1%
+        if rstick.GetRawButton(6):				#right button 6 increments BACK
+            mode = 99
             backValue+=.05*rsense
             if backValue > 1:
                 backValue = 1
             print("Back: "+str(int(backValue*100))+"%")
-        elif rstick.GetRawButton(7):				#right button 7 decrements BACK by 1% 
+        elif rstick.GetRawButton(7):				#right button 7 decrements BACK
+            mode = 99
             backValue-=.05*rsense
             if backValue < 0:
                 backValue = 0
             print("Back: "+str(int(backValue*100))+"%")
-        if rstick.GetRawButton(8):
-            backValue = 0
-        if rstick.GetRawButton(9):
-            frontValue = 0
-        if rstick.GetRawButton(3):
-            backValue = 0 
-            frontValue = 0
         
-		
-        	
-        #AUTO shooter PRESET CONTROLS		(LONG RANGE)		----must hold rstick button 5
-        if RateGet(shootEncoder.GetRaw(),"se") - 3000 < 100 and RateGet(shootEncoder.GetRaw(),"se") - 3000 > -100: #front auto
+	#Button Control Presets
+	if rstick.GetRawButton(3) and mode != 0:
+            mode = 0
+            print("Shooters Off")
+        if rstick.GetRawButton(5) and mode != 1:
+            mode = 1
+            print("Tower Preset")
+            backValue = .45
+            frontValue = .75
+
+        #AUTO shooter PRESET CONTROLS
+        if mode == 0: #Turn off the shooter
+            if frontValue != 0:
+            	frontValue = 0
+            if backValue != 0:
+            	backValue = 0
+        elif mode == 1: #Encoder preset at tower
+            if RateGet(shootEncoder.GetRaw(),"se") - 3000 < 100 and RateGet(shootEncoder.GetRaw(),"se") - 3000 > -100: #front auto
                     frontValue = frontValue
                     print("FIRE")
-                elif (RateGet(shootEncoder.GetRaw(),"se")) < 3000:
+            elif (RateGet(shootEncoder.GetRaw(),"se")) < 3000:
                     frontValue += 0.001
-                elif (RateGet(shootEncoder.GetRaw()),"se") > 3000:
+            elif (RateGet(shootEncoder.GetRaw()),"se") > 3000:
                     frontValue -= 0.001
-                if RateGet(feedEncoder.GetRaw(),"fe") - 2700 < 100 and RateGet(feedEncoder.GetRaw(),"fe") - 2700 > -100: #back auto
+            if RateGet(feedEncoder.GetRaw(),"fe") - 2700 < 100 and RateGet(feedEncoder.GetRaw(),"fe") - 2700 > -100: #back auto
                     backValue = backValue
-                elif RateGet(feedEncoder.GetRaw(),"fe") < 2700:
+            elif RateGet(feedEncoder.GetRaw(),"fe") < 2700:
                     backValue += 0.0015
-                elif RateGet(feedEncoder.GetRaw(),"fe") > 2700:
+            elif RateGet(feedEncoder.GetRaw(),"fe") > 2700:
                     backValue -= 0.0015
-                # 30,000 front / 17,000 back for tower shot'''
+            # 30,000 front / 17,000 back for tower shot'''
+        elif mode == 99: #Manual Control
+            1 #Something to not catch the else case
+        else: #Default for errors like a nilpointer
+            frontValue = 0
+            backValue = 0
+            
         forwardShooter.Set(frontValue)
         backShooter.Set(backValue)
         
