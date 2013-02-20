@@ -1,10 +1,5 @@
 import wpilib
-from GyroFilter import gyroFilter
-from AimFilter import aimFilter
 import robotMap
-
-filterEncoder = gyroFilter(100)
-filterEncoder2 = aimFilter(100)
 
 #joysticks
 lstick = wpilib.Joystick(1)
@@ -53,7 +48,6 @@ shootEncoder = wpilib.Encoder( robotMap.shootEncoder1 , robotMap.shootEncoder2 ,
 feedEncoder = wpilib.Encoder(robotMap.feedEncoder1, robotMap.feedEncoder2, True, wpilib.CounterBase.k4X)
 leftDriveEncoder = wpilib.Encoder( robotMap.leftDriveEncoder1 , robotMap.leftDriveEncoder2 , True, wpilib.CounterBase.k4X)
 rightDriveEncoder = wpilib.Encoder( robotMap.rightDriveEncoder1 , robotMap.rightDriveEncoder2 , True, wpilib.CounterBase.k4X)
-drumEncoder = wpilib.Encoder( robotMap.drumEncoder1 , robotMap.drumEncoder2 , True, wpilib.CounterBase.k4X)
 
 #variables
 frontValue = 0
@@ -61,6 +55,7 @@ backValue = 0
 direction = 1
 lsense = (lstick.GetThrottle() -1)*(-0.5)
 rsense = (rstick.GetThrottle() -1)*(-0.5)
+ld = {"se":(0),"fe":(0),"ld":0,"rd":0}
 fire = False 
 #jackItUp = False
 doggie = False
@@ -74,9 +69,6 @@ drive = wpilib.RobotDrive(leftMotor,rightMotor)
 #network table initilization
 table = wpilib.NetworkTable.GetTable("SmartDashboard")
 
-#averaging filter for encoder values with array of length 100
-filterEncoder = aimFilter(100)
-
 #timer
 timer = wpilib.Timer()
 start = 0
@@ -88,6 +80,10 @@ def CheckRestart():
         raise RuntimeError("Restart")
         print("CheckRestart")
 
+def RateGet(rawDistance, lastDistance):
+        rate = ld[lastDistance] - rawDistance
+        ld[lastDistance] = rawDistance
+        return rate
 
 class MyRobot(wpilib.IterativeRobot):
     def DisabledContinuous(self):
@@ -149,7 +145,7 @@ class MyRobot(wpilib.IterativeRobot):
             dire=True
         if not lstick.GetRawButton(2) and dire==True:
             dire=False
-        drive.ArcadeDrive(lstick.GetY()*direction*lsense,lstick.GetX()*.8*lsense)
+        drive.ArcadeDrive(lstick.GetY()*direction*lsense,lstick.GetX()*lsense)
 
 		#shooter controls
         if rstick.GetRawButton(11):				#right button 11 increments FRONT by 1%
@@ -176,29 +172,27 @@ class MyRobot(wpilib.IterativeRobot):
             backValue = 0
         if rstick.GetRawButton(9):
             frontValue = 0
-        
+        if rstick.GetRawButton(3):
+            backValue = 0 
+            frontValue = 0
         
 		
         	
         #AUTO shooter PRESET CONTROLS		(LONG RANGE)		----must hold rstick button 5
-        '''if rstick.GetRawButton(5):		
-                if filterEncoder.update(shootEncoder.GetRate()) + 32000 < 2000 and filterEncoder.update(shootEncoder.GetRate()) + 32000 > -2000: #front auto
+        if RateGet(shootEncoder.GetRaw(),"se") - 3000 < 100 and RateGet(shootEncoder.GetRaw(),"se") - 3000 > -100: #front auto
                     frontValue = frontValue
                     print("FIRE")
-                elif (filterEncoder.update( shootEncoder.GetRate() )) < -32000:
-                    frontValue -= 0.0025
-                elif (filterEncoder.update( shootEncoder.GetRate() )) > -32000:
-                    frontValue += 0.0025
-                if filterEncoder2.update(feedEncoder.GetRate()) + 17000 < 2000 and filterEncoder2.update(feedEncoder.GetRate()) + 17000 > -2000: #back auto
-                    backValue = frontValue
-                    print("FIRE")
-                elif (filterEncoder2.update( feedEncoder.GetRate() )) < -17000:
-                    backValue -= 0.0025
-                elif (filterEncoder2.update( feedEncoder.GetRate() )) > -17000:
-                    backValue += 0.0025
-                print("Front: ", filterEncoder.update(shootEncoder.GetRate()), "   Back: ", filterEncoder2.update(feedEncoder.GetRate() ) )
+                elif (RateGet(shootEncoder.GetRaw(),"se")) < 3000:
+                    frontValue += 0.001
+                elif (RateGet(shootEncoder.GetRaw()),"se") > 3000:
+                    frontValue -= 0.001
+                if RateGet(feedEncoder.GetRaw(),"fe") - 2700 < 100 and RateGet(feedEncoder.GetRaw(),"fe") - 2700 > -100: #back auto
+                    backValue = backValue
+                elif RateGet(feedEncoder.GetRaw(),"fe") < 2700:
+                    backValue += 0.0015
+                elif RateGet(feedEncoder.GetRaw(),"fe") > 2700:
+                    backValue -= 0.0015
                 # 30,000 front / 17,000 back for tower shot'''
-                
         forwardShooter.Set(frontValue)
         backShooter.Set(backValue)
         
