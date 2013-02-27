@@ -84,7 +84,7 @@ def CheckRestart():
 def RateGet(rawDistance, lastDistance):
         rate = ld[lastDistance] - rawDistance
         ld[lastDistance] = rawDistance
-        return rate
+        return abs(rate)
 
 class MyRobot(wpilib.IterativeRobot):
     def DisabledContinuous(self):
