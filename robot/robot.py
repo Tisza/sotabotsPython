@@ -110,6 +110,8 @@ class MyRobot(wpilib.IterativeRobot):
         compressor.Start()
         shootEncoder.Start()
         feedEncoder.Start()
+        leftDriveEncoder.Start()
+        rightDriveEncoder.Start()
         timer.Start()
         
         #starting positions
@@ -176,7 +178,7 @@ class MyRobot(wpilib.IterativeRobot):
             print("Back: "+str(int(backValue*100))+"%")
         
 	#Button Control Presets
-	if rstick.GetRawButton(3) and mode != 0:
+        if rstick.GetRawButton(3) and mode != 0:
             mode = 0
             print("Shooters Off")
         if rstick.GetRawButton(5) and mode != 1:
