@@ -43,8 +43,8 @@ drumEncoder2 = 10
 
 pressureSwitch = 14
 
-armLimitSwitch = 11
-liftTopSwitch = 12
+armLimitSwitch = 12
+liftTopSwitch = 11
 liftBottomSwitch = 13
 
 #Relays 
