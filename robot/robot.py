@@ -194,18 +194,18 @@ class MyRobot(wpilib.IterativeRobot):
             if backValue != 0:
             	backValue = 0
         elif mode == 1: #Encoder preset at tower
-            if RateGet(shootEncoder.GetRaw(),"se") - 3000 < 100 and RateGet(shootEncoder.GetRaw(),"se") - 3000 > -100: #front auto
+            if RateGet(shootEncoder.GetRaw(),"se") - 357355 < 100 and RateGet(shootEncoder.GetRaw(),"se") - 357355 > -100: #front auto
                     frontValue = frontValue
                     print("FIRE")
-            elif (RateGet(shootEncoder.GetRaw(),"se")) < 3000:
+            elif (RateGet(shootEncoder.GetRaw(),"se")) < 357355:
                     frontValue += 0.001
-            elif (RateGet(shootEncoder.GetRaw()),"se") > 3000:
+            elif (RateGet(shootEncoder.GetRaw()),"se") > 357355:
                     frontValue -= 0.001
-            if RateGet(feedEncoder.GetRaw(),"fe") - 2700 < 100 and RateGet(feedEncoder.GetRaw(),"fe") - 2700 > -100: #back auto
+            if RateGet(feedEncoder.GetRaw(),"fe") - 290000 < 100 and RateGet(feedEncoder.GetRaw(),"fe") - 290000 > -100: #back auto
                     backValue = backValue
-            elif RateGet(feedEncoder.GetRaw(),"fe") < 2700:
+            elif RateGet(feedEncoder.GetRaw(),"fe") < 290000:
                     backValue += 0.0015
-            elif RateGet(feedEncoder.GetRaw(),"fe") > 2700:
+            elif RateGet(feedEncoder.GetRaw(),"fe") > 290000:
                     backValue -= 0.0015
             # 30,000 front / 17,000 back for tower shot'''
         elif mode == 99: #Manual Control
@@ -243,7 +243,7 @@ class MyRobot(wpilib.IterativeRobot):
         else:
             hopper1.Set(True)
             hopper2.Set(False)
-        if (timer.Get() > start2+.2): #and magic1.Get()==True:  #.2 second interval for hopper piston
+        if (timer.Get() > start2+.5): #and magic1.Get()==True:  #.2 second interval for hopper piston
             start2 = 0
         #if (timer.Get() > start2+.5) and magic1.Get()==False:
             #start2 = 0
