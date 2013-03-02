@@ -65,6 +65,7 @@ fire = False
 doggie = False
 hop = False
 dire=False 
+C=0
 
 #drive train
 drive = wpilib.RobotDrive(leftMotor,rightMotor)
@@ -268,7 +269,7 @@ class MyRobot(wpilib.IterativeRobot):
             if fnum != 0:
             	fnum = 0
             if bnum != 0:
-            	bum = 0
+            	bnum = 0
         elif mode == 1: #Encoder preset at tower
             if RateGet(shootEncoder.GetRaw(),"se") + 380 < 10 and RateGet(shootEncoder.GetRaw(),"se") + 380 > -10: #front auto
                     frontValue = frontValue
