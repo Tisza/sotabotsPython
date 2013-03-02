@@ -58,6 +58,7 @@ bnum = 0
 lsense = (lstick.GetThrottle() -1)*(-0.5)
 rsense = (rstick.GetThrottle() -1)*(-0.5)
 mode = 0
+stage = 0 
 ld = {"se":(0),"fe":(0),"ld":0,"rd":0}
 fire = False 
 #jackItUp = False
@@ -83,9 +84,15 @@ def CheckRestart():
         print("CheckRestart")
 
 def RateGet(rawDistance, lastDistance):
-        rate = ld[lastDistance] - rawDistance
-        ld[lastDistance] = rawDistance
-        return abs(rate)
+	global C
+	C += 1
+	if C<6:
+		return ld[lastDistance]
+	else:
+            rate = ld[lastDistance] - rawDistance
+            ld[lastDistance] = rawDistance
+            C=0
+            return abs(rate)
 
 class MyRobot(wpilib.IterativeRobot):
     def DisabledContinuous(self):
@@ -94,7 +101,66 @@ class MyRobot(wpilib.IterativeRobot):
         wpilib.Wait(0.01)
     def TeleopContinuous(self):
         wpilib.Wait(0.01)
+        global stage
+        global frontValue
+        global backValue
+        global hop
+        global fire
+        if stage == 0:
+            drive.ArcadeDrive(1,0)
+            c=0
+            if leftDriveEncoder.GetRaw()>3000 and rightDriveEncoder.GetRaw()>3000:
+                stage=1
+        if stage == 1:
+            #hopper piston control
+            if hop==False:
+                hop = True
+                start2 = timer.Get()
+            drive.ArcadeDrive(0,.1)
+            if leftDriveEncoder.GetRaw()>4000 or rightDriveEncoder.GetRaw()>4500:
+                stage=2
+        if stage == 2:
+            if start2 == 0:
+                hop = False
+            drive.ArcadeDrive(0,0)
+            if RateGet(shootEncoder.GetRaw(),"se") + 380 < 10 and RateGet(shootEncoder.GetRaw(),"se") + 380 > -10: #front auto
+                    frontValue = frontValue
+                    #Shooter piston control
+                    if fire==False: 			#if trigger pulled and currently not firing
+                        fire = True
+                        start = timer.Get() #mark the time
+            elif (RateGet(shootEncoder.GetRaw(),"se")) > -380:
+                    frontValue += 0.001
+            elif (RateGet(shootEncoder.GetRaw(),"se")) < -380:
+                    frontValue -= 0.001
+            elif RateGet(feedEncoder.GetRaw(),"fe") + 250 < 10 and RateGet(feedEncoder.GetRaw(),"fe") + 250 > -10: #back auto
+                    backValue = backValue
+            elif RateGet(feedEncoder.GetRaw(),"fe") < -250:
+                    backValue += 0.0015
+            elif RateGet(feedEncoder.GetRaw(),"fe") > -250:
+                    backValue -= 0.0015
 
+        #Modulated processes
+        if start != 0: #Shooting
+            loader1.Set(False ) #marked time = fire
+            loader2.Set(True )
+            c += 1
+        else:
+            loader1.Set(True )
+            loader2.Set(False )
+        if timer.Get() > start+0.2: #if half a second has passed, stop firing
+            start = 0
+            fire = False
+            start2 = timer.Get()
+
+        if start2 != 0:#Loading
+                hopper1.Set(False)
+                hopper2.Set(True)
+        else:
+                hopper1.Set(True)
+                hopper2.Set(False)
+        if (timer.Get() > start2+.5): #and magic1.Get()==True:  #.2 second interval for hopper piston
+                start2 = 0
     def DisabledPeriodic(self):
         CheckRestart()
 
@@ -105,6 +171,8 @@ class MyRobot(wpilib.IterativeRobot):
         CheckRestart()
 
     def TeleopInit(self):
+    	global frontValue
+    	global backValue
         dog = self.GetWatchdog()
         dog.SetEnabled(True)
         dog.SetExpiration(0.25)
@@ -114,6 +182,8 @@ class MyRobot(wpilib.IterativeRobot):
         leftDriveEncoder.Start()
         rightDriveEncoder.Start()
         timer.Start()
+        frontValue = 0
+        backValue = 0 
         
         #starting positions
         #magic1.Set(True)
