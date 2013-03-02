@@ -53,6 +53,8 @@ rightDriveEncoder = wpilib.Encoder( robotMap.rightDriveEncoder1 , robotMap.right
 frontValue = 0
 backValue = 0
 direction = 1
+fnum = 0
+bnum = 0
 lsense = (lstick.GetThrottle() -1)*(-0.5)
 rsense = (rstick.GetThrottle() -1)*(-0.5)
 mode = 0
@@ -74,7 +76,6 @@ table = wpilib.NetworkTable.GetTable("SmartDashboard")
 timer = wpilib.Timer()
 start = 0
 start2 = 0
-start3 = 0
 
 def CheckRestart():
     if lstick.GetRawButton(15):
@@ -136,8 +137,9 @@ class MyRobot(wpilib.IterativeRobot):
         global dire
         global lsense
         global rsense
-        global start3
         global mode
+        global fnum
+        global bnum
         
         #sensitivity
         lsense = (lstick.GetThrottle() -1)*(-0.5)
@@ -154,28 +156,28 @@ class MyRobot(wpilib.IterativeRobot):
 		#manual shooter controls
         if rstick.GetRawButton(11):				#right button 11 increments FRONT
             mode = 99
-            frontValue+=.05*rsense
+            fnum += 10*rsense
             if frontValue > 1:
                 frontValue = 1
-            print("Front: "+str(int(frontValue*100))+"%")
+            print("Front: "+str(int(fnum)))
         elif rstick.GetRawButton(10):				#right button 10 decrements FRONT
             mode = 99
-            frontValue-=.05*rsense
+            fnum -= 10*rsense
             if frontValue < 0:
                 frontValue = 0
-            print("Front: "+str(int(frontValue*100))+"%")
+            print("Front: "+str(int(fnum)))
         if rstick.GetRawButton(6):				#right button 6 increments BACK
             mode = 99
-            backValue+=.05*rsense
+            bnum += 10*rsense
             if backValue > 1:
                 backValue = 1
-            print("Back: "+str(int(backValue*100))+"%")
+            print("Back: "+str(int(bnum)))
         elif rstick.GetRawButton(7):				#right button 7 decrements BACK
             mode = 99
-            backValue-=.05*rsense
+            bnum-= 10*rsense
             if backValue < 0:
                 backValue = 0
-            print("Back: "+str(int(backValue*100))+"%")
+            print("Back: "+str(int(bnum)))
         
 	#Button Control Presets
         if rstick.GetRawButton(3) and mode != 0:
@@ -193,24 +195,39 @@ class MyRobot(wpilib.IterativeRobot):
             	frontValue = 0
             if backValue != 0:
             	backValue = 0
+            if fnum != 0:
+            	fnum = 0
+            if bnum != 0:
+            	bum = 0
         elif mode == 1: #Encoder preset at tower
-            if RateGet(shootEncoder.GetRaw(),"se") - 357355 < 100 and RateGet(shootEncoder.GetRaw(),"se") - 357355 > -100: #front auto
+            if RateGet(shootEncoder.GetRaw(),"se") + 380 < 10 and RateGet(shootEncoder.GetRaw(),"se") + 380 > -10: #front auto
                     frontValue = frontValue
                     print("FIRE")
-            elif (RateGet(shootEncoder.GetRaw(),"se")) < 357355:
+            elif (RateGet(shootEncoder.GetRaw(),"se")) > -380:
                     frontValue += 0.001
-            elif (RateGet(shootEncoder.GetRaw()),"se") > 357355:
+            elif (RateGet(shootEncoder.GetRaw(),"se")) < -380:
                     frontValue -= 0.001
-            if RateGet(feedEncoder.GetRaw(),"fe") - 290000 < 100 and RateGet(feedEncoder.GetRaw(),"fe") - 290000 > -100: #back auto
+            if RateGet(feedEncoder.GetRaw(),"fe") + 250 < 10 and RateGet(feedEncoder.GetRaw(),"fe") + 250 > -10: #back auto
                     backValue = backValue
-            elif RateGet(feedEncoder.GetRaw(),"fe") < 290000:
+            elif RateGet(feedEncoder.GetRaw(),"fe") < -250:
                     backValue += 0.0015
-            elif RateGet(feedEncoder.GetRaw(),"fe") > 290000:
+            elif RateGet(feedEncoder.GetRaw(),"fe") > -250:
                     backValue -= 0.0015
             # 30,000 front / 17,000 back for tower shot'''
-        elif mode == 99: #Manual Control
-            1 #Something to not catch the else case
-        else: #Default for errors like a nilpointer
+        elif mode == 99: 
+            if RateGet(shootEncoder.GetRaw(),"se") + fnum < 10 and RateGet(shootEncoder.GetRaw(),"se") + fnum > -10: #front auto
+                    frontValue = frontValue
+            elif (RateGet(shootEncoder.GetRaw(),"se")) > -fnum:
+                    frontValue += 0.001
+            elif (RateGet(shootEncoder.GetRaw(),"se")) < -fnum:
+                    frontValue -= 0.001
+            if RateGet(feedEncoder.GetRaw(),"fe") + bnum < 10 and RateGet(feedEncoder.GetRaw(),"fe") + bnum > -10: #back auto
+                    backValue = backValue
+            elif RateGet(feedEncoder.GetRaw(),"fe") < -bnum:
+                    backValue += 0.0015
+            elif RateGet(feedEncoder.GetRaw(),"fe") > -bnum:
+                    backValue -= 0.0015
+        else:
             frontValue = 0
             backValue = 0
             
@@ -232,6 +249,8 @@ class MyRobot(wpilib.IterativeRobot):
             start = 0
         if start == 0 and not rstick.GetTrigger() and fire == True: #finish the cycle
             fire = False
+            hop = True
+            start2 = timer.Get()
             
         #hopper piston control
         if rstick.GetRawButton(2) and hop==False:
@@ -264,12 +283,8 @@ class MyRobot(wpilib.IterativeRobot):
                 drumMotor.Set(lsense)
             else:
                 drumMotor.Set(0)
-            if dawg1.Get()==True:
-                start3 = timer.Get()
-            if timer.Get() > start3+.05:
-                dawg1.Set(False)
-                dawg2.Set(True)
-                start3 = 0
+            dawg1.Set(False)
+            dawg2.Set(True)
         elif lstick.GetRawButton(11):
             if liftBottomSwitch.Get()==1:
                 drumMotor.Set(-lsense)
@@ -280,6 +295,10 @@ class MyRobot(wpilib.IterativeRobot):
                 dawg2.Set(False)
         else:
             drumMotor.Set(0)
+        if lstick.GetRawButton(5): #Unhitch the dog.
+            drumMotor.Set(lsense)
+            dawg1.Set(True)
+            dawg2.Set(False)
             
        #arm controls
         if lstick.GetRawButton(6):
