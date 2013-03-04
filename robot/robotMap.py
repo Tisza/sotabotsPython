@@ -3,11 +3,11 @@
 pistonForwardChannel = 1
 pistonReverseChannel = 2
 
-dawgLock = 3
-dawgRelease = 4
+dawgLock = 5#3
+dawgRelease = 6#4
 
-magicJackUp = 5
-magicJackDown = 6
+magicJackUp = 3#5
+magicJackDown = 4#6
 
 hopperForwardChannel = 7
 hopperReverseChannel = 8
