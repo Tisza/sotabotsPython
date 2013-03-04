@@ -22,8 +22,8 @@ hopper1 = wpilib.Solenoid(robotMap.hopperForwardChannel)
 hopper2 = wpilib.Solenoid(robotMap.hopperReverseChannel)
 
 #magic Jacks
-#magic1 = wpilib.Solenoid(robotMap.magicJackUp)
-#magic2 = wpilib.Solenoid(robotMap.magicJackDown)
+magic1 = wpilib.Solenoid(robotMap.magicJackUp)
+magic2 = wpilib.Solenoid(robotMap.magicJackDown)
 
 #Dawg control
 dawg1 = wpilib.Solenoid(robotMap.dawgLock)
@@ -58,14 +58,13 @@ bnum = 0
 lsense = (lstick.GetThrottle() -1)*(-0.5)
 rsense = (rstick.GetThrottle() -1)*(-0.5)
 mode = 0
-stage = 0 
+stage = 0
 ld = {"se":(0),"fe":(0),"ld":0,"rd":0}
 fire = False 
-#jackItUp = False
+jackItUp = False
 doggie = False
 hop = False
 dire=False 
-C=0
 
 #drive train
 drive = wpilib.RobotDrive(leftMotor,rightMotor)
@@ -83,17 +82,11 @@ def CheckRestart():
     if lstick.GetRawButton(15):
         raise RuntimeError("Restart")
         print("CheckRestart")
-
+    
 def RateGet(rawDistance, lastDistance):
-	global C
-	C += 1
-	if C<6:
-		return ld[lastDistance]
-	else:
-            rate = ld[lastDistance] - rawDistance
-            ld[lastDistance] = rawDistance
-            C=0
-            return abs(rate)
+    rate = ld[lastDistance] - rawDistance
+    ld[lastDistance] = rawDistance
+    return rate
 
 class MyRobot(wpilib.IterativeRobot):
     def DisabledContinuous(self):
@@ -187,10 +180,8 @@ class MyRobot(wpilib.IterativeRobot):
         backValue = 0 
         
         #starting positions
-        #magic1.Set(True)
-        #magic2.Set(False)
-        #dawg1.Set(False)
-        #dawg2.Set(True)
+        magic1.Set(False)
+        magic2.Set(True)
         
     def TeleopPeriodic(self):
         self.GetWatchdog().Feed()
@@ -199,7 +190,7 @@ class MyRobot(wpilib.IterativeRobot):
         global backValue
         global fire
         global start
-        #global jackItUp
+        global jackItUp
         global armValue
         global doggie
         global start2
@@ -211,6 +202,10 @@ class MyRobot(wpilib.IterativeRobot):
         global mode
         global fnum
         global bnum
+        
+        #Rates
+        frontRate = RateGet(shootEncoder.GetRaw(),"se")
+        backRate = RateGet(feedEncoder.GetRaw(),"fe")
         
         #sensitivity
         lsense = (lstick.GetThrottle() -1)*(-0.5)
@@ -228,37 +223,38 @@ class MyRobot(wpilib.IterativeRobot):
         if rstick.GetRawButton(11):				#right button 11 increments FRONT
             mode = 99
             fnum += 10*rsense
-            if frontValue > 1:
-                frontValue = 1
             print("Front: "+str(int(fnum)))
         elif rstick.GetRawButton(10):				#right button 10 decrements FRONT
             mode = 99
             fnum -= 10*rsense
-            if frontValue < 0:
-                frontValue = 0
+            if fnum < 0:
+                fnum = 0
             print("Front: "+str(int(fnum)))
         if rstick.GetRawButton(6):				#right button 6 increments BACK
             mode = 99
             bnum += 10*rsense
-            if backValue > 1:
-                backValue = 1
             print("Back: "+str(int(bnum)))
         elif rstick.GetRawButton(7):				#right button 7 decrements BACK
             mode = 99
             bnum-= 10*rsense
-            if backValue < 0:
-                backValue = 0
+            if bnum < 0:
+                bnum = 0
             print("Back: "+str(int(bnum)))
         
 	#Button Control Presets
         if rstick.GetRawButton(3) and mode != 0:
             mode = 0
             print("Shooters Off")
-        if rstick.GetRawButton(5) and mode != 1:
+        if rstick.GetRawButton(5) and mode != 1 and magic1.Get() == False:
             mode = 1
             print("Tower Preset")
-            backValue = .45
-            frontValue = .75
+            backValue = .5
+            frontValue = 1
+        if rstick.GetRawButton(5) and mode != 1 and magic1.Get() == True:
+            mode = 1
+            print("Magic Preset")
+            backValue = .6
+            frontValue = 1
 
         #AUTO shooter PRESET CONTROLS
         if mode == 0: #Turn off the shooter
@@ -270,38 +266,58 @@ class MyRobot(wpilib.IterativeRobot):
             	fnum = 0
             if bnum != 0:
             	bnum = 0
-        elif mode == 1: #Encoder preset at tower
-            if RateGet(shootEncoder.GetRaw(),"se") + 380 < 10 and RateGet(shootEncoder.GetRaw(),"se") + 380 > -10: #front auto
+        elif mode == 1 and magic1.Get() == False: #Encoder preset at tower
+            if frontRate + 150 < 10 and frontRate + 150 > -10: #front auto
                     frontValue = frontValue
                     print("FIRE")
-            elif (RateGet(shootEncoder.GetRaw(),"se")) > -380:
+            elif frontRate > -150:
                     frontValue += 0.001
-            elif (RateGet(shootEncoder.GetRaw(),"se")) < -380:
+            elif frontRate < -150:
                     frontValue -= 0.001
-            if RateGet(feedEncoder.GetRaw(),"fe") + 250 < 10 and RateGet(feedEncoder.GetRaw(),"fe") + 250 > -10: #back auto
+            if backRate + 800 < 10 and backRate + 800 > -10: #back auto
                     backValue = backValue
-            elif RateGet(feedEncoder.GetRaw(),"fe") < -250:
+            elif backRate > -800:
                     backValue += 0.0015
-            elif RateGet(feedEncoder.GetRaw(),"fe") > -250:
+            elif backRate < -800:
                     backValue -= 0.0015
-            # 30,000 front / 17,000 back for tower shot'''
-        elif mode == 99: 
-            if RateGet(shootEncoder.GetRaw(),"se") + fnum < 10 and RateGet(shootEncoder.GetRaw(),"se") + fnum > -10: #front auto
+        elif mode == 1 and magic1.Get() == True: #Encoder preset at feeder
+            if frontRate + 150 < 10 and frontRate + 150 > -10: #front auto
                     frontValue = frontValue
-            elif (RateGet(shootEncoder.GetRaw(),"se")) > -fnum:
+                    print("FIRE")
+            elif frontRate > -150:
                     frontValue += 0.001
-            elif (RateGet(shootEncoder.GetRaw(),"se")) < -fnum:
+            elif frontRate < -150:
                     frontValue -= 0.001
-            if RateGet(feedEncoder.GetRaw(),"fe") + bnum < 10 and RateGet(feedEncoder.GetRaw(),"fe") + bnum > -10: #back auto
+            if backRate + 975 < 10 and backRate + 975 > -10: #back auto
                     backValue = backValue
-            elif RateGet(feedEncoder.GetRaw(),"fe") < -bnum:
+            elif backRate > -975:
                     backValue += 0.0015
-            elif RateGet(feedEncoder.GetRaw(),"fe") > -bnum:
+            elif backRate < -975:
+                    backValue -= 0.0015
+        elif mode == 99: #Encoder manual
+            if frontRate + fnum < 10 and frontRate + fnum > -10: #front auto
+                    frontValue = frontValue
+            elif frontRate > -fnum:
+                    frontValue += 0.001
+            elif frontRate < -fnum:
+                    frontValue -= 0.001
+            if backRate + bnum < 10 and backRate + bnum > -10: #back auto
+                    backValue = backValue
+            elif backRate > -bnum:
+                    backValue += 0.0015
+            elif backRate < -bnum:
                     backValue -= 0.0015
         else:
             frontValue = 0
             backValue = 0
-            
+        if frontValue >1:
+            frontValue = 1
+        if backValue >1:
+            backValue = 1
+        if frontValue < 0:
+            frontValue = 0
+        if backValue < 0:
+            backValue = 0
         forwardShooter.Set(frontValue)
         backShooter.Set(backValue)
         
@@ -309,7 +325,7 @@ class MyRobot(wpilib.IterativeRobot):
         if rstick.GetTrigger() and fire==False: 			#if trigger pulled and currently not firing
             fire = True
             start = timer.Get() #mark the time
-            print("Shooter: "+str(shootEncoder.GetRate())+" Feeder: "+str(feedEncoder.GetRate()))
+            #print("Shooter: "+str(shootEncoder.GetRate())+" Feeder: "+str(feedEncoder.GetRate()))
         if start != 0:
             loader1.Set(False ) #marked time = fire
             loader2.Set(True )
@@ -320,11 +336,12 @@ class MyRobot(wpilib.IterativeRobot):
             start = 0
         if start == 0 and not rstick.GetTrigger() and fire == True: #finish the cycle
             fire = False
-            hop = True
-            start2 = timer.Get()
+
+        if rstick.GetRawButton(4): #Debug printer
+            print(str(frontRate)+":"+str(shootEncoder.GetRaw())+":"+str(frontValue)+"|"+str(backRate)+":"+str(feedEncoder.GetRaw())+":"+str(backValue))
             
         #hopper piston control
-        if rstick.GetRawButton(2) and hop==False:
+        """if rstick.GetRawButton(2) and hop==False:
             hop = True
             start2 = timer.Get()
         if start2 != 0:
@@ -338,18 +355,18 @@ class MyRobot(wpilib.IterativeRobot):
         #if (timer.Get() > start2+.5) and magic1.Get()==False:
             #start2 = 0
         if start == 0 and not rstick.GetRawButton(2):
-            hop = False
+            hop = False"""
             
-        #Magic Jacks
-        #if lstick.GetRawButton(8) and lstick.GetRawButton(9) and jackItUp==False:	#button 8 and 9 at same time to toggle jacks
-        #    magic1.Set(not magic1.Get())
-        #    magic2.Set(not magic2.Get())
-        #    jackItUp=True
-        #if (not lstick.GetRawButton(8) or not lstick.GetRawButton(9)) and jackItUp==True:
-        #    jackItUp=False
+        Magic Jacks
+        if ((lstick.GetRawButton(8) and lstick.GetRawButton(9)) or (rstick.GetRawButton(8) and rstick.GetRawButton(9))) and jackItUp==False:	#button 8 and 9 at same time to toggle jacks
+            magic1.Set(not magic1.Get())
+            magic2.Set(not magic2.Get())
+            jackItUp=True
+        if ((lstick.GetRawButton(8) and lstick.GetRawButton(9)) or (rstick.GetRawButton(8) and rstick.GetRawButton(9))) and jackItUp==True:
+            jackItUp=False
         
         #lift controls
-        if lstick.GetRawButton(10):
+        """if lstick.GetRawButton(10):
             if liftTopSwitch.Get()==1:
                 drumMotor.Set(lsense)
             else:
@@ -389,7 +406,7 @@ class MyRobot(wpilib.IterativeRobot):
             doggie = True
             print("Dog Enabled:"+str(dawg1.Get()))
         if not lstick.GetTrigger() and doggie == True:
-            doggie = False
+            doggie = False"""
         	
 
 def run():
