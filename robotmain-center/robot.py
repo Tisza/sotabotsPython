@@ -59,8 +59,6 @@ deltaFront = 0
 backValue = 0
 deltaBack = 0
 direction = -1
-frate = 0
-brate = 0
 fnum = 0
 bnum = 0
 lsense = (lstick.GetThrottle() -1)*(-0.5)
@@ -104,13 +102,6 @@ def RateGet(rawDistance, lastDistance):
     return rate
 
 def FrontEncoderSet(rate, desiredrate, variance, initVal):             #separate function for encoder-motor logic. NO MORE CONFUSION FOR US!
-    global frate
-    if rate > frate + 50:
-        SmartDashboard.PutNumber("FRONT ENCODER VALUE:  ", rate)
-        frate = rate
-    if rate < frate - 50:
-        SmartDashboard.PutNumber("FRONT ENCODER VALUE:  ", rate)
-        frate = rate
     if rate - desiredrate > -variance and rate - desiredrate < variance:
         motorVal = initVal
     elif rate < desiredrate:
@@ -126,13 +117,6 @@ def FrontEncoderSet(rate, desiredrate, variance, initVal):             #separate
     return motorVal
 
 def BackEncoderSet(rate, desiredrate, variance, initVal):              #separate function for redundancy :D
-    global brate
-    if rate > brate + 50:
-        SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", rate)
-        brate = rate
-    if rate < brate - 50:
-        SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", rate)
-        brate = rate
     if rate - desiredrate > -variance and rate - desiredrate < variance:
         motorVal = initVal
     elif rate < desiredrate:
@@ -227,7 +211,7 @@ class MyRobot(wpilib.IterativeRobot):
         if stage == 4:#Fourth Stage - SHOOT!
             drive.ArcadeDrive(0,0)
             #Encoder speeding
-            backValue = BackEncoderSet(backRate, bnum, 10, backValue)
+            backValue = FrontEncoderSet(backRate, bnum, 10, backValue)
             #shoot command
             if (backRate > bnum - 50 and backRate < bnum + 50) and fire == False and start2 == 0:
                 fire = True
@@ -260,7 +244,6 @@ class MyRobot(wpilib.IterativeRobot):
         #SmartDashboard.PutNumber("FRONT ENCODER VALUE:  ", frontRate)
         #SmartDashboard.PutNumber("FRONT PERCENTAGE VALUE:  ", frontValue*100)
         #SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
-        #SmartDashboard.PutNumber("BACK PERCENTAGE VALUE:  ", backValue*100)
         #Shooting
         if fire == True:
             loader1.Set(False )
@@ -282,6 +265,7 @@ class MyRobot(wpilib.IterativeRobot):
                 updateCycles+=1
         else:
                 SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
+                SmartDashboard.PutNumber("BACK PERCENTAGE VALUE:  ", backValue*100)
                 updateCycles = 0
 
         #forward 13669
@@ -429,7 +413,7 @@ class MyRobot(wpilib.IterativeRobot):
             	bnum = 0
         elif mode != 0 and mode != 99: #Encoder preset at tower
              frontValue = FrontEncoderSet(frontRate, fnum, 10, frontValue)
-             backValue = BackEncoderSet(backRate, bnum, 10, backValue)
+             backValue = FrontEncoderSet(backRate, bnum, 10, backValue)
 
         if frontValue != deltaFront:
             deltaFront = frontValue
