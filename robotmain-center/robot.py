@@ -265,7 +265,8 @@ class MyRobot(wpilib.IterativeRobot):
                 updateCycles+=1
         else:
                 SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
-                SmartDashboard.PutNumber("BACK PERCENTAGE VALUE:  ", backValue*100)
+                SmartDashboard.PutNumber("BACK PERCENTAGE VALUE:  ", backValue*100)              
+                SmartDashboard.PutNumber("DRIVE ENCODER DISTANCE: ", leftDriveEncoder.GetRaw())
                 updateCycles = 0
 
         #forward 13669
