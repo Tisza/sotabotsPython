@@ -186,7 +186,7 @@ class MyRobot(wpilib.IterativeRobot):
             drive.ArcadeDrive(-.7,-.1)
             frontValue = 1
             backValue = .8
-            if leftDriveEncoder.GetRaw()>forward and rightDriveEncoder.GetRaw()>forward:
+            if leftDriveEncoder.GetRaw()>forward: #and rightDriveEncoder.GetRaw()>forward:
                 print("Stage 2")
                 stage = 2
                 leftDriveEncoder.Reset()
@@ -194,7 +194,7 @@ class MyRobot(wpilib.IterativeRobot):
 
         if stage == 2: #Second Stage - TURNING
             drive.ArcadeDrive(0,.7)
-            if leftDriveEncoder.GetRaw()>turn and rightDriveEncoder.GetRaw()<-turn:
+            if leftDriveEncoder.GetRaw()>turn: #and rightDriveEncoder.GetRaw()<-turn:
                 print("Stage 3")
                 stage = 3
                 leftDriveEncoder.Reset()
@@ -202,7 +202,7 @@ class MyRobot(wpilib.IterativeRobot):
 
         if stage == 3: #Third Stage - BACK IT UP
             drive.ArcadeDrive(.7,0)
-            if leftDriveEncoder.GetRaw()<-backAdjust and rightDriveEncoder.GetRaw()<-backAdjust:
+            if leftDriveEncoder.GetRaw()<-backAdjust: #and rightDriveEncoder.GetRaw()<-backAdjust:
                 stage("Stage 4")
                 stage = 4
                 leftDriveEncoder.Reset()
@@ -225,7 +225,7 @@ class MyRobot(wpilib.IterativeRobot):
 
         if stage == 5: #Fifth Stage - TURN BACK
             drive.ArcadeDrive(0,-.7)
-            if leftDriveEncoder.GetRaw()<-turn and rightDriveEncoder.GetRaw()>turn:
+            if leftDriveEncoder.GetRaw()<-turn: #and rightDriveEncoder.GetRaw()>turn:
                 print("Stage 6")
                 stage = 6
                 leftDriveEncoder.Reset()
@@ -233,7 +233,7 @@ class MyRobot(wpilib.IterativeRobot):
 
         if stage == 6: #Sixth Stage - BACK OFF BRO
             drive.ArcadeDrive(.7,0)
-            if leftDriveEncoder.GetRaw()<-backOff and rightDriveEncoder.GetRaw()<-backOff:
+            if leftDriveEncoder.GetRaw()<-backOff: #and rightDriveEncoder.GetRaw()<-backOff:
                 print("Finished")
                 stage = 0
 
@@ -265,7 +265,7 @@ class MyRobot(wpilib.IterativeRobot):
                 updateCycles+=1
         else:
                 SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
-                SmartDashboard.PutNumber("BACK PERCENTAGE VALUE:  ", backValue*100)              
+                SmartDashboard.PutNumber("BACK PERCENTAGE VALUE:  ", backValue*100)
                 SmartDashboard.PutNumber("DRIVE ENCODER DISTANCE: ", leftDriveEncoder.GetRaw())
                 updateCycles = 0
 
