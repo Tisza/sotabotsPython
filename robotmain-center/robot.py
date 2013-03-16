@@ -183,7 +183,7 @@ class MyRobot(wpilib.IterativeRobot):
             drive.ArcadeDrive(0,0)
 
         if stage == 1: #First Stage - FORWARD
-            drive.ArcadeDrive(.7,.1)
+            drive.ArcadeDrive(-.7,-.1)
             frontValue = 1
             backValue = .8
             if leftDriveEncoder.GetRaw()>forward and rightDriveEncoder.GetRaw()>forward:
@@ -193,7 +193,7 @@ class MyRobot(wpilib.IterativeRobot):
                 rightDriveEncoder.Reset()
 
         if stage == 2: #Second Stage - TURNING
-            drive.ArcadeDrive(0,-.7)
+            drive.ArcadeDrive(0,.7)
             if leftDriveEncoder.GetRaw()>turn and rightDriveEncoder.GetRaw()<-turn:
                 print("Stage 3")
                 stage = 3
@@ -201,7 +201,7 @@ class MyRobot(wpilib.IterativeRobot):
                 rightDriveEncoder.Reset()
 
         if stage == 3: #Third Stage - BACK IT UP
-            drive.ArcadeDrive(-.7,0)
+            drive.ArcadeDrive(.7,0)
             if leftDriveEncoder.GetRaw()<-backAdjust and rightDriveEncoder.GetRaw()<-backAdjust:
                 stage("Stage 4")
                 stage = 4
@@ -224,7 +224,7 @@ class MyRobot(wpilib.IterativeRobot):
                 backValue = 0
 
         if stage == 5: #Fifth Stage - TURN BACK
-            drive.ArcadeDrive(0,.7)
+            drive.ArcadeDrive(0,-.7)
             if leftDriveEncoder.GetRaw()<-turn and rightDriveEncoder.GetRaw()>turn:
                 print("Stage 6")
                 stage = 6
@@ -232,7 +232,7 @@ class MyRobot(wpilib.IterativeRobot):
                 rightDriveEncoder.Reset()
 
         if stage == 6: #Sixth Stage - BACK OFF BRO
-            drive.ArcadeDrive(-.7,0)
+            drive.ArcadeDrive(.7,0)
             if leftDriveEncoder.GetRaw()<-backOff and rightDriveEncoder.GetRaw()<-backOff:
                 print("Finished")
                 stage = 0
@@ -260,7 +260,7 @@ class MyRobot(wpilib.IterativeRobot):
         #Wait for a reload
         if timer.Get() > start2 + 1:
             start2 = 0
-            
+
         if updateCycles < 20:
                 updateCycles+=1
         else:
@@ -291,6 +291,10 @@ class MyRobot(wpilib.IterativeRobot):
         timer.Start()
         frontValue = 0
         backValue = 0
+        forwardShooter.Set(0)
+        backShooter.Set(0)
+
+
 
         #starting positions
         magic1.Set(False)
@@ -298,7 +302,7 @@ class MyRobot(wpilib.IterativeRobot):
         hopper1.Set(False)
         hopper2.Set(True)
 
-        SmartDashboard.PutString("DRIVE REVERSAL STATE:  ", "LALALAL BLANDA")
+        SmartDashboard.PutString("DRIVE REVERSAL STATE:  ", "BACKWARD")
 
     def TeleopPeriodic(self):
         self.GetWatchdog().Feed()
@@ -341,9 +345,7 @@ class MyRobot(wpilib.IterativeRobot):
                 dirstr = "FORWARD"
             if direction == -1:
                 dirstr = "BACKWARD"
-        else:
-            dirstr = "FORWARD"
-        SmartDashboard.PutString("DRIVE REVERSAL STATE:  ", dirstr)
+            SmartDashboard.PutString("DRIVE REVERSAL STATE:  ", dirstr)
         if not lstick.GetRawButton(2) and dire==True:
             dire=False
         drive.ArcadeDrive(lstick.GetY()*direction,lstick.GetX())
@@ -480,7 +482,7 @@ class MyRobot(wpilib.IterativeRobot):
         if mode == 3 and modey != "AUTO: Tower Center Preset":
             modey = "AUTO: Tower Center Preset"
             SmartDashboard.PutString("Mode","SHOOTER CONTROL MODE:  " + modey)
-            
+
         if modey != "OFF":                                                          #prints encoder values only when running; every 20 loops
             if updateCycles < 20:
                 updateCycles+=1
@@ -488,7 +490,7 @@ class MyRobot(wpilib.IterativeRobot):
                 SmartDashboard.PutNumber("FRONT ENCODER VALUE:  ", frontRate)
                 SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
                 updateCycles = 0
-                
+
 def run():
     robot = MyRobot()
     robot.StartCompetition()
