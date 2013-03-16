@@ -76,6 +76,7 @@ hop = False
 dire=False
 modey = "MANUAL"
 incrementValue = 0.003
+updateCycles = 0
 
 
 
@@ -184,6 +185,7 @@ class MyRobot(wpilib.IterativeRobot):
         global start
         global start2
         global fcount
+        global updateCycles
         #frontRate = RateGet(shootEncoder.GetRaw(),"se")
         backRate = RateGet(feedEncoder.GetRaw(),"fe")
         ###variables
@@ -275,6 +277,12 @@ class MyRobot(wpilib.IterativeRobot):
         #Wait for a reload
         if timer.Get() > start2 + 1:
             start2 = 0
+            
+        if updateCycles < 20:
+                updateCycles+=1
+        else:
+                SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
+                updateCycles = 0
 
         #forward 13669
         #turn 1534 ~error 30 clicks.
@@ -330,6 +338,7 @@ class MyRobot(wpilib.IterativeRobot):
         global fnum
         global bnum
         global modey
+        global updateCycles
 
         #Rates
         frontRate = RateGet(shootEncoder.GetRaw(),"se")
@@ -348,6 +357,8 @@ class MyRobot(wpilib.IterativeRobot):
                 dirstr = "FORWARD"
             if direction == -1:
                 dirstr = "BACKWARD"
+        else:
+            dirstr = "FORWARD"
         SmartDashboard.PutString("DRIVE REVERSAL STATE:  ", dirstr)
         if not lstick.GetRawButton(2) and dire==True:
             dire=False
@@ -485,7 +496,15 @@ class MyRobot(wpilib.IterativeRobot):
         if mode == 3 and modey != "AUTO: Tower Center Preset":
             modey = "AUTO: Tower Center Preset"
             SmartDashboard.PutString("Mode","SHOOTER CONTROL MODE:  " + modey)
-
+            
+        if modey != "OFF":                                                          #prints encoder values only when running; every 20 loops
+            if updateCycles < 20:
+                updateCycles+=1
+            else:
+                SmartDashboard.PutNumber("FRONT ENCODER VALUE:  ", frontRate)
+                SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
+                updateCycles = 0
+                
 def run():
     robot = MyRobot()
     robot.StartCompetition()
