@@ -55,7 +55,9 @@ SmartDashboard.init()
 
 #variables
 frontValue = 0
+deltaFront = 0
 backValue = 0
+deltaBack = 0
 direction = -1
 fnum = 0
 bnum = 0
@@ -166,7 +168,7 @@ class MyRobot(wpilib.IterativeRobot):
         global start
         global start2
         global fcount
-        frontRate = RateGet(shootEncoder.GetRaw(),"se")
+        #frontRate = RateGet(shootEncoder.GetRaw(),"se")
         backRate = RateGet(feedEncoder.GetRaw(),"fe")
         ###variables
         forward = 13500
@@ -237,10 +239,10 @@ class MyRobot(wpilib.IterativeRobot):
         forwardShooter.Set(frontValue)
         backShooter.Set(backValue)
         #SmartDrashboard Controls
-        SmartDashboard.PutNumber("FRONT ENCODER VALUE:  ", frontRate)
-        SmartDashboard.PutNumber("FRONT PERCENTAGE VALUE:  ", frontValue*100)
-        SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
-        SmartDashboard.PutNumber("BACK PERCENTAGE VALUE:  ", backValue*100)
+        #SmartDashboard.PutNumber("FRONT ENCODER VALUE:  ", frontRate)
+        #SmartDashboard.PutNumber("FRONT PERCENTAGE VALUE:  ", frontValue*100)
+        #SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
+        #SmartDashboard.PutNumber("BACK PERCENTAGE VALUE:  ", backValue*100)
         #Shooting
         if fire == True:
             loader1.Set(False )
@@ -292,7 +294,9 @@ class MyRobot(wpilib.IterativeRobot):
         self.GetWatchdog().Feed()
         CheckRestart()
         global frontValue
+        global deltaFront
         global backValue
+        global deltaBack
         global fire
         global start
         global jackItUp
@@ -322,6 +326,7 @@ class MyRobot(wpilib.IterativeRobot):
         if lstick.GetRawButton(2) and dire==False:
             direction = direction*-1
             dire=True
+        SmartDashboard.PutString("DRIVE REVERSAL STATE:  ", str(direction))
         if not lstick.GetRawButton(2) and dire==True:
             dire=False
         drive.ArcadeDrive(lstick.GetY()*direction,lstick.GetX())
@@ -400,8 +405,16 @@ class MyRobot(wpilib.IterativeRobot):
         elif mode != 0 and mode != 99: #Encoder preset at tower
              frontValue = FrontEncoderSet(frontRate, fnum, 10, frontValue)
              backValue = FrontEncoderSet(backRate, bnum, 10, backValue)
-        forwardShooter.Set(frontValue)
-        backShooter.Set(backValue)
+
+        if frontValue != deltaFront:
+            deltaFront = frontValue
+            forwardShooter.Set(frontValue)
+            SmartDashboard.PutNumber("FRONT PERCENTAGE VALUE:  ", frontValue*100)
+        if backValue != deltaBack:
+            deltaBack = backValue
+            backShooter.Set(backValue)
+            SmartDashboard.PutNumber("BACK PERCENTAGE VALUE:  ", backValue*100)
+
 
         #Shooter piston control
         if rstick.GetTrigger() and fire==False: 			#if trigger pulled and currently not firing
@@ -442,12 +455,9 @@ class MyRobot(wpilib.IterativeRobot):
         if modey == "":
             modey = "MANUAL SHOOTER CONTROL"
 
-        SmartDashboard.PutString("Mode","SHOOTER CONTROL MODE:  " + modey) #         Display shooter control mode
-        SmartDashboard.PutNumber("FRONT ENCODER VALUE:  ", frontRate)
-        SmartDashboard.PutNumber("FRONT PERCENTAGE VALUE:  ", frontValue*100)
-        SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
-        SmartDashboard.PutNumber("BACK PERCENTAGE VALUE:  ", backValue*100)
-        SmartDashboard.PutString("DRIVE REVERSAL STATE:  ", str(dire))
+        #SmartDashboard.PutString("Mode","SHOOTER CONTROL MODE:  " + modey) #         Display shooter control mode
+        #SmartDashboard.PutNumber("FRONT ENCODER VALUE:  ", frontRate)
+        #SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
 
 
 
