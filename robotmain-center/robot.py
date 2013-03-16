@@ -59,6 +59,8 @@ deltaFront = 0
 backValue = 0
 deltaBack = 0
 direction = -1
+frate = 0
+brate = 0
 fnum = 0
 bnum = 0
 lsense = (lstick.GetThrottle() -1)*(-0.5)
@@ -101,6 +103,13 @@ def RateGet(rawDistance, lastDistance):
     return rate
 
 def FrontEncoderSet(rate, desiredrate, variance, initVal):             #separate function for encoder-motor logic. NO MORE CONFUSION FOR US!
+    global frate
+    if rate > frate + 50:
+        SmartDashboard.PutNumber("FRONT ENCODER VALUE:  ", rate)
+        frate = rate
+    if rate < frate - 50:
+        SmartDashboard.PutNumber("FRONT ENCODER VALUE:  ", rate)
+        frate = rate
     if rate - desiredrate > -variance and rate - desiredrate < variance:
         motorVal = initVal
     elif rate < desiredrate:
@@ -116,6 +125,13 @@ def FrontEncoderSet(rate, desiredrate, variance, initVal):             #separate
     return motorVal
 
 def BackEncoderSet(rate, desiredrate, variance, initVal):              #separate function for redundancy :D
+    global brate
+    if rate > brate + 50:
+        SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", rate)
+        brate = rate
+    if rate < brate - 50:
+        SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", rate)
+        brate = rate
     if rate - desiredrate > -variance and rate - desiredrate < variance:
         motorVal = initVal
     elif rate < desiredrate:
@@ -269,7 +285,9 @@ class MyRobot(wpilib.IterativeRobot):
 
     def TeleopInit(self):
         global frontValue
+        global deltaFront
         global backValue
+        global deltaBack
         dog = self.GetWatchdog()
         dog.SetEnabled(True)
         dog.SetExpiration(0.25)
@@ -326,35 +344,35 @@ class MyRobot(wpilib.IterativeRobot):
         if lstick.GetRawButton(2) and dire==False:
             direction = direction*-1
             dire=True
-        SmartDashboard.PutString("DRIVE REVERSAL STATE:  ", str(direction))
+            if direction == 1:
+                dirstr = "FORWARD"
+            if direction == -1:
+                dirstr = "BACKWARD"
+        SmartDashboard.PutString("DRIVE REVERSAL STATE:  ", dirstr)
         if not lstick.GetRawButton(2) and dire==True:
             dire=False
         drive.ArcadeDrive(lstick.GetY()*direction,lstick.GetX())
 
 		#manual shooter controls
         if rstick.GetRawButton(11):				#right button 11 increments FRONT
-            modey = "MANUAL"
             mode = 99
             frontValue += .05*rsense
             if frontValue > 1:
                 frontValue = 1
             print("Front: "+str(int(frontValue*100)))
         elif rstick.GetRawButton(10):				#right button 10 decrements FRONT
-            modey = "MANUAL"
             mode = 99
             frontValue -= .05*rsense
             if frontValue < 0:
                 frontValue = 0
             print("Front: "+str(int(frontValue*100)))
         if rstick.GetRawButton(6):				#right button 6 increments BACK
-            modey = "MANUAL"
             mode = 99
             backValue += .05*rsense
             if backValue > 1:
                 backValue = 1
             print("Back: "+str(int(backValue*100)))
         elif rstick.GetRawButton(7):				#right button 7 decrements BACK
-            modey = "MANUAL"
             mode = 99
             backValue-= .05*rsense
             if backValue < 0:
@@ -365,11 +383,9 @@ class MyRobot(wpilib.IterativeRobot):
         if rstick.GetRawButton(3) and mode != 0:                        #shooter off
             mode = 0
             #print("Shooters Off")
-            modey = "OFF"
         if rstick.GetRawButton(5) and mode!=1 and magic1.Get() == False: #tower angle preset
             mode = 1
             #print("Tower Preset")
-            modey = "AUTO: Tower Angle Preset"
             backValue = .531
             frontValue = 1
             fnum = 1500
@@ -377,7 +393,6 @@ class MyRobot(wpilib.IterativeRobot):
         if rstick.GetRawButton(5) and mode!=2 and magic1.Get() == True: #magic jack preset
             mode = 2
             #print("Magic Preset")
-            modey = "AUTO: Magic Jack Preset"
             backValue = .636
             frontValue = 1
             fnum = 2400
@@ -385,7 +400,6 @@ class MyRobot(wpilib.IterativeRobot):
         if rstick.GetRawButton(2) and mode!=3:                          #tower center preset
             mode = 3
             #print("Tower Center Preset")
-            modey = "AUTO: Tower Center Preset"
             backValue = .380
             frontValue = .8 #1
             fnum = 1500
@@ -404,7 +418,7 @@ class MyRobot(wpilib.IterativeRobot):
             	bnum = 0
         elif mode != 0 and mode != 99: #Encoder preset at tower
              frontValue = FrontEncoderSet(frontRate, fnum, 10, frontValue)
-             backValue = FrontEncoderSet(backRate, bnum, 10, backValue)
+             backValue = BackEncoderSet(backRate, bnum, 10, backValue)
 
         if frontValue != deltaFront:
             deltaFront = frontValue
@@ -452,16 +466,25 @@ class MyRobot(wpilib.IterativeRobot):
         if ((not lstick.GetRawButton(7)) and (not rstick.GetRawButton(8))) and jackItUp==True:
             jackItUp=False
 
+
+        #Mode setting
         if modey == "":
             modey = "MANUAL SHOOTER CONTROL"
-
-        #SmartDashboard.PutString("Mode","SHOOTER CONTROL MODE:  " + modey) #         Display shooter control mode
-        #SmartDashboard.PutNumber("FRONT ENCODER VALUE:  ", frontRate)
-        #SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
-
-
-
-
+        if mode == 99 and modey != "MANUAL":
+            modey = "MANUAL"
+            SmartDashboard.PutString("Mode","SHOOTER CONTROL MODE:  " + modey)
+        if mode == 0 and modey != "OFF":
+            modey = "OFF"
+            SmartDashboard.PutString("Mode","SHOOTER CONTROL MODE:  " + modey)
+        if mode == 1 and modey != "AUTO: Tower Angle Preset":
+            modey = "AUTO: Tower Angle Preset"
+            SmartDashboard.PutString("Mode","SHOOTER CONTROL MODE:  " + modey)
+        if mode == 2 and modey != "AUTO: Magic Jack Preset":
+            modey = "AUTO: Magic Jack Preset"
+            SmartDashboard.PutString("Mode","SHOOTER CONTROL MODE:  " + modey)
+        if mode == 3 and modey != "AUTO: Tower Center Preset":
+            modey = "AUTO: Tower Center Preset"
+            SmartDashboard.PutString("Mode","SHOOTER CONTROL MODE:  " + modey)
 
 def run():
     robot = MyRobot()
