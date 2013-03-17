@@ -209,15 +209,16 @@ class MyRobot(wpilib.IterativeRobot):
                 stage = 4
                 leftDriveEncoder.Reset()
                 rightDriveEncoder.Reset()
+                start2 = timer.Get()
 
         if stage == 4:#Fourth Stage - SHOOT!
             drive.ArcadeDrive(0,0)
             #Encoder speeding
             backValue = .7
             #shoot command
-            if (backRate > bnum - 50 and backRate < bnum + 50) and fire == False and start2 == 0:
-                fire = True
-                start = timer.Get()
+            if start2 == 0:
+            	start = timer.Get()
+            	fire = True 
             #kill shooting
             if fcount > 3:
                 print("Stage 5")
@@ -260,7 +261,7 @@ class MyRobot(wpilib.IterativeRobot):
             start = 0
             fcount += 1
         #Wait for a reload
-        if timer.Get() > start2 + 1:
+        if timer.Get() > start2 + 3:
             start2 = 0
 
         if updateCycles < 20:
