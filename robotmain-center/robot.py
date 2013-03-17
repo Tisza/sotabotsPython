@@ -333,8 +333,8 @@ class MyRobot(wpilib.IterativeRobot):
         global updateCycles
 
         #Rates
-        frontRate = RateGet(shootEncoder.GetRaw(),"se")
-        backRate = RateGet(feedEncoder.GetRaw(),"fe")
+        #frontRate = RateGet(shootEncoder.GetRaw(),"se")
+        #backRate = RateGet(feedEncoder.GetRaw(),"fe")
 
 
         #sensitivity
@@ -488,7 +488,7 @@ class MyRobot(wpilib.IterativeRobot):
             SmartDashboard.PutString("Mode","SHOOTER CONTROL MODE:  " + modey)
 
         if modey != "OFF":                                                          #prints encoder values only when running; every 20 loops
-            if updateCycles < 20:
+            if updateCycles < 100:
                 updateCycles+=1
             else:
                 SmartDashboard.PutNumber("FRONT ENCODER VALUE:  ", frontRate)
