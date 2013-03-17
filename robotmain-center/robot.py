@@ -414,9 +414,9 @@ class MyRobot(wpilib.IterativeRobot):
             	fnum = 0
             if bnum != 0:
             	bnum = 0
-        elif mode != 0 and mode != 99: #Encoder preset at tower
-             frontValue = FrontEncoderSet(frontRate, fnum, 10, frontValue)
-             backValue = FrontEncoderSet(backRate, bnum, 10, backValue)
+        elif mode != 0 and mode != 99: #Encoder preset at tower                 #############
+             frontValue = FrontEncoderSet(frontRate, fnum, 10, frontValue)      ##
+             backValue = FrontEncoderSet(frontRate, fnum, 10, backValue)        ##change this back to backrate for competition!!!
 
         if frontValue != deltaFront:
             deltaFront = frontValue
