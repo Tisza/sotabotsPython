@@ -45,10 +45,12 @@ liftTopSwitch = wpilib.DigitalInput(robotMap.liftTopSwitch)
 compressor = wpilib.Compressor(robotMap.pressureSwitch,robotMap.compressorSpike)
 
 #encoders
-shootEncoder = wpilib.Encoder( robotMap.shootEncoder1 , robotMap.shootEncoder2 , True, wpilib.CounterBase.k4X)
-feedEncoder = wpilib.Encoder(robotMap.feedEncoder1, robotMap.feedEncoder2, True, wpilib.CounterBase.k4X)
+shootEncoder = wpilib.Encoder( robotMap.shootEncoder1 , robotMap.shootEncoder2 , True, wpilib.CounterBase.k1X)
+feedEncoder = wpilib.Encoder(robotMap.feedEncoder1, robotMap.feedEncoder2, True, wpilib.CounterBase.k1X)
 leftDriveEncoder = wpilib.Encoder( robotMap.leftDriveEncoder1 , robotMap.leftDriveEncoder2 , True, wpilib.CounterBase.k4X)
 rightDriveEncoder = wpilib.Encoder( robotMap.rightDriveEncoder1 , robotMap.rightDriveEncoder2 , True, wpilib.CounterBase.k4X)
+
+encoderHighTest = wpilib.DigitalOutput(9)
 
 #initialize smartDashboard
 SmartDashboard.init()
@@ -184,8 +186,8 @@ class MyRobot(wpilib.IterativeRobot):
 
         if stage == 1: #First Stage - FORWARD
             drive.ArcadeDrive(-.7,-.1)
-            frontValue = 1
-            backValue = .8
+            frontValue = .7
+            backValue = .7
             if leftDriveEncoder.GetRaw()>forward: #and rightDriveEncoder.GetRaw()>forward:
                 print("Stage 2")
                 stage = 2
@@ -211,7 +213,7 @@ class MyRobot(wpilib.IterativeRobot):
         if stage == 4:#Fourth Stage - SHOOT!
             drive.ArcadeDrive(0,0)
             #Encoder speeding
-            backValue = FrontEncoderSet(backRate, bnum, 10, backValue)
+            backValue = .7
             #shoot command
             if (backRate > bnum - 50 and backRate < bnum + 50) and fire == False and start2 == 0:
                 fire = True
@@ -384,22 +386,22 @@ class MyRobot(wpilib.IterativeRobot):
         if rstick.GetRawButton(5) and mode!=1 and magic1.Get() == False: #tower angle preset
             mode = 1
             #print("Tower Preset")
-            backValue = .531
-            frontValue = 1
-            fnum = 1500
-            bnum = 2270
+            backValue = .7
+            frontValue = .75
+            #fnum = 1500
+            #bnum = 2270
         if rstick.GetRawButton(5) and mode!=2 and magic1.Get() == True: #magic jack preset
             mode = 2
             #print("Magic Preset")
-            backValue = .636
-            frontValue = 1
+            backValue = .85
+            frontValue = .85
             fnum = 2400
             bnum = 880
         if rstick.GetRawButton(2) and mode!=3:                          #tower center preset
             mode = 3
             #print("Tower Center Preset")
-            backValue = .380
-            frontValue = .8 #1
+            backValue = .7
+            frontValue = .72 #1
             fnum = 1500
             bnum = 2400
 
@@ -415,8 +417,8 @@ class MyRobot(wpilib.IterativeRobot):
             if bnum != 0:
             	bnum = 0
         elif mode != 0 and mode != 99: #Encoder preset at tower                 #############
-             frontValue = FrontEncoderSet(frontRate, fnum, 10, frontValue)      ##
-             backValue = FrontEncoderSet(frontRate, fnum, 10, backValue)        ##change this back to backrate for competition!!!
+             frontValue = frontValue      ##
+             backValue = backValue      ##change this back to backrate for competition!!!
 
         if frontValue != deltaFront:
             deltaFront = frontValue
@@ -491,6 +493,9 @@ class MyRobot(wpilib.IterativeRobot):
                 SmartDashboard.PutNumber("FRONT ENCODER VALUE:  ", frontRate)
                 SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
                 updateCycles = 0
+                
+        encoderHighTest.EnablePWM(1)
+        encoderHighTest.Set(1)
 
 def run():
     robot = MyRobot()
