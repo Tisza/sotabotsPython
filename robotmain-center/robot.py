@@ -173,7 +173,7 @@ class MyRobot(wpilib.IterativeRobot):
         global fcount
         global updateCycles
         #frontRate = RateGet(shootEncoder.GetRaw(),"se")
-        backRate = RateGet(feedEncoder.GetRaw(),"fe")
+        #backRate = RateGet(feedEncoder.GetRaw(),"fe")
         ###variables
         forward = 13500
         turn = 1500
@@ -267,7 +267,7 @@ class MyRobot(wpilib.IterativeRobot):
         if updateCycles < 20:
                 updateCycles+=1
         else:
-                SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
+                #SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
                 SmartDashboard.PutNumber("BACK PERCENTAGE VALUE:  ", backValue*100)
                 SmartDashboard.PutNumber("DRIVE ENCODER DISTANCE: ", leftDriveEncoder.GetRaw())
                 updateCycles = 0
@@ -448,7 +448,7 @@ class MyRobot(wpilib.IterativeRobot):
             fire = False
 
         if rstick.GetRawButton(4):
-            print(str(frontRate)+":"+str(shootEncoder.GetRaw())+":"+str(frontValue)+"|"+str(backRate)+":"+str(feedEncoder.GetRaw())+":"+str(backValue))
+            print(str(shootEncoder.GetRaw())+":"+str(frontValue)+"|"+str(feedEncoder.GetRaw())+":"+str(backValue))
 
 
         if lstick.GetTrigger() and hop==False:
@@ -487,13 +487,13 @@ class MyRobot(wpilib.IterativeRobot):
             modey = "AUTO: Tower Center Preset"
             SmartDashboard.PutString("Mode","SHOOTER CONTROL MODE:  " + modey)
 
-        if modey != "OFF":                                                          #prints encoder values only when running; every 20 loops
-            if updateCycles < 100:
-                updateCycles+=1
-            else:
-                SmartDashboard.PutNumber("FRONT ENCODER VALUE:  ", frontRate)
-                SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
-                updateCycles = 0
+        #if modey != "OFF":                                                          #prints encoder values only when running; every 20 loops
+            #if updateCycles < 100:
+            #    updateCycles+=1
+            #else:
+                #SmartDashboard.PutNumber("FRONT ENCODER VALUE:  ", frontRate)
+                #SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
+                #updateCycles = 0
                 
         encoderHighTest.EnablePWM(1)
         encoderHighTest.Set(1)
