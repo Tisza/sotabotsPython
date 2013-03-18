@@ -204,6 +204,7 @@ class MyRobot(wpilib.IterativeRobot):
 
         if stage == 2: #Second Stage - TURNING
             drive.ArcadeDrive(0,.7)
+            start = 0
             if leftDriveEncoder.GetRaw()>turn: #and rightDriveEncoder.GetRaw()<-turn:
                 print("Stage 3")
                 stage = 3
@@ -211,6 +212,7 @@ class MyRobot(wpilib.IterativeRobot):
                 rightDriveEncoder.Reset()
 
         if stage == 3: #Third Stage - BACK IT UP
+            start = 0
             drive.ArcadeDrive(.7,0)
             if leftDriveEncoder.GetRaw() < (-1 * backAdjust): #and rightDriveEncoder.GetRaw()<-backAdjust:
                 print("Stage 4")
@@ -218,21 +220,21 @@ class MyRobot(wpilib.IterativeRobot):
                 leftDriveEncoder.Reset()
                 rightDriveEncoder.Reset()
                 start2 = timer.Get()
-                start = 0
 
         if stage == 4:#Fourth Stage - SHOOT!
             drive.ArcadeDrive(0,0)
             #Encoder speeding
             backValue = .7
             #shoot command
-            if timer.Get() > start2 + 3:      #wait 2 seconds
-                fireOn = True
+            if timer.Get() > start2 + 2 and fire == False and fcount <= 3:      #wait 2 seconds
+                start = timer.Get()
                 fire = True
                 start2 = 0
+                print("Shoot")
             #kill shooting
-            if fcount > 5:
-                print("Stage 5")
-                #stage = 5
+            if fcount > 3:
+                print("WE DONE DONE IT!")
+                stage = 0
                 frontValue = 0
                 backValue = 0
 
@@ -253,28 +255,23 @@ class MyRobot(wpilib.IterativeRobot):
         #Shooter Speed Setting
         forwardShooter.Set(frontValue)
         backShooter.Set(backValue)
-        
-        
+
+
         #Shooting
         #Modulated processes
-        if fireOn == True: #Shooting
+        if start != 0: #Shooting
             loader1.Set(False) #marked time = fire
             loader2.Set(True)
         else:
             loader1.Set(True )
             loader2.Set(False )
-        if timer.Get() > start+0.2 and fire==True and start3 == 0: #if half a second has passed, stop firing
-            fireOn == False
+        if timer.Get() > start+0.2 and start!=0 and start2 == 0: #if half a second has passed, stop firing
             fcount += 1
-            start3 = timer.Get()
+            start2 = timer.Get()
             fire = False
+            start = 0
             print("Wait...")
 
-        if timer.Get() > start3+.5:
-            start3 = 0
-            fireOn = True
-            fire = True
-            
         if updateCycles < 20:
                 updateCycles+=1
         else:
@@ -291,7 +288,7 @@ class MyRobot(wpilib.IterativeRobot):
         #forward 13669
         #turn 1534 ~error 30 clicks.
         #-26490
-        
+
         #autonomous center
         #-14000
 
