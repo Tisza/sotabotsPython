@@ -93,7 +93,9 @@ drive = wpilib.RobotDrive(leftMotor,rightMotor)
 timer = wpilib.Timer()
 start = 0
 start2 = 0
+start3 = 0
 
+fireOn = False
 
 def CheckRestart():
     if rstick.GetRawButton(15):
@@ -172,23 +174,27 @@ class MyRobot(wpilib.IterativeRobot):
         global fire
         global start
         global start2
+        global start3
         global fcount
         global updateCycles
+        global fireOn
         #frontRate = RateGet(shootEncoder.GetRaw(),"se")
         #backRate = RateGet(feedEncoder.GetRaw(),"fe")
         ###variables
         forward = 13500
-        turn = 1500
-        backAdjust = 5000
+        turn = 1650
+        backAdjust = 4000
         backOff = 16000
         bnum = -2500
 
         if stage == 0: #Null
             drive.ArcadeDrive(0,0)
+            start = 0
 
         if stage == 1: #First Stage - FORWARD
-            drive.ArcadeDrive(-.7,-.1)
-            frontValue = .7
+            start = 0
+            drive.ArcadeDrive(-.7,.1)
+            frontValue = .8
             backValue = .7
             if leftDriveEncoder.GetRaw()>forward: #and rightDriveEncoder.GetRaw()>forward:
                 print("Stage 2")
@@ -206,25 +212,27 @@ class MyRobot(wpilib.IterativeRobot):
 
         if stage == 3: #Third Stage - BACK IT UP
             drive.ArcadeDrive(.7,0)
-            if leftDriveEncoder.GetRaw()<-backAdjust: #and rightDriveEncoder.GetRaw()<-backAdjust:
-                stage("Stage 4")
+            if leftDriveEncoder.GetRaw() < (-1 * backAdjust): #and rightDriveEncoder.GetRaw()<-backAdjust:
+                print("Stage 4")
                 stage = 4
                 leftDriveEncoder.Reset()
                 rightDriveEncoder.Reset()
                 start2 = timer.Get()
+                start = 0
 
         if stage == 4:#Fourth Stage - SHOOT!
             drive.ArcadeDrive(0,0)
             #Encoder speeding
             backValue = .7
             #shoot command
-            if start2 == 0:
-            	start = timer.Get()
-            	fire = True
+            if timer.Get() > start2 + 3:      #wait 2 seconds
+                fireOn = True
+                fire = True
+                start2 = 0
             #kill shooting
             if fcount > 5:
                 print("Stage 5")
-                stage = 5
+                #stage = 5
                 frontValue = 0
                 backValue = 0
 
@@ -245,39 +253,45 @@ class MyRobot(wpilib.IterativeRobot):
         #Shooter Speed Setting
         forwardShooter.Set(frontValue)
         backShooter.Set(backValue)
-        #SmartDrashboard Controls
-        #SmartDashboard.PutNumber("FRONT ENCODER VALUE:  ", frontRate)
-        #SmartDashboard.PutNumber("FRONT PERCENTAGE VALUE:  ", frontValue*100)
-        #SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
+        
+        
         #Shooting
-        if fire == True:
-            loader1.Set(False )
-            loader2.Set(True )
+        #Modulated processes
+        if fireOn == True: #Shooting
+            loader1.Set(False) #marked time = fire
+            loader2.Set(True)
         else:
             loader1.Set(True )
             loader2.Set(False )
-        #Retract piston after .2 of a second
-        if timer.Get() > start + 0.2:
-            fire = False
-            start2 = timer.Get()
-            start = 0
+        if timer.Get() > start+0.2 and fire==True and start3 == 0: #if half a second has passed, stop firing
+            fireOn == False
             fcount += 1
-        #Wait for a reload
-        if timer.Get() > start2 + 3:
-            start2 = 0
+            start3 = timer.Get()
+            fire = False
+            print("Wait...")
 
+        if timer.Get() > start3+.5:
+            start3 = 0
+            fireOn = True
+            fire = True
+            
         if updateCycles < 20:
                 updateCycles+=1
         else:
                 #SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
                 SmartDashboard.PutNumber("BACK PERCENTAGE VALUE:  ", backValue*100)
+                SmartDashboard.PutNumber("FRONT PERCENTAGE VALUE: ", frontValue*100)
                 SmartDashboard.PutNumber("DRIVE ENCODER DISTANCE: ", leftDriveEncoder.GetRaw())
+                SmartDashboard.PutString("Start: ", str(start))
+                SmartDashboard.PutString("Start2: ", str(start2))
+                SmartDashboard.PutString("Start3: ", str(start3))
+                SmartDashboard.PutString("Fire: ", str(fire))
                 updateCycles = 0
 
         #forward 13669
         #turn 1534 ~error 30 clicks.
         #-26490
-
+        
         #autonomous center
         #-14000
 
