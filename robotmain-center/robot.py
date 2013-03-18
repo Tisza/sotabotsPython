@@ -224,7 +224,7 @@ class MyRobot(wpilib.IterativeRobot):
         if stage == 4:#Fourth Stage - SHOOT!
             drive.ArcadeDrive(0,0)
             #Encoder speeding
-            backValue = .7
+            backValue = .67
             #shoot command
             if timer.Get() > start2 + 2 and fire == False and fcount <= 3:      #wait 2 seconds
                 start = timer.Get()
