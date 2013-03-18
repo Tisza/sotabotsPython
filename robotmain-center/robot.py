@@ -392,6 +392,10 @@ class MyRobot(wpilib.IterativeRobot):
             if backValue < 0:
                 backValue = 0
             print("Back: "+str(int(backValue*100 )))
+        if abs(rstick.GetY())> 0.05:
+            frontValue = frontValue + rstick.GetY()*.025
+            backValue = backValue + rstick.GetY()*.025
+            print("Front: "+str(int(frontValue*100))+" Back: "+str(int(backValue*100)))
 
 	#Button Control Presets
         if rstick.GetRawButton(3) and mode != 0:                        #shooter off
