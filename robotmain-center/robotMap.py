@@ -50,3 +50,8 @@ liftBottomSwitch = 12
 #Relays
 
 compressorSpike = 1
+
+#analog module
+analogModule = 1
+frontVoltage = 1
+backVoltage = 2

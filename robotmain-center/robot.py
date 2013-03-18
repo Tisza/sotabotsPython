@@ -55,6 +55,8 @@ encoderHighTest = wpilib.DigitalOutput(9)
 #initialize smartDashboard
 SmartDashboard.init()
 
+analog = wpilib.AnalogModule(robotMap.analogModule)
+
 #variables
 frontValue = 0
 deltaFront = 0
@@ -218,9 +220,9 @@ class MyRobot(wpilib.IterativeRobot):
             #shoot command
             if start2 == 0:
             	start = timer.Get()
-            	fire = True 
+            	fire = True
             #kill shooting
-            if fcount > 3:
+            if fcount > 5:
                 print("Stage 5")
                 stage = 5
                 frontValue = 0
@@ -333,8 +335,8 @@ class MyRobot(wpilib.IterativeRobot):
         global updateCycles
 
         #Rates
-        #frontRate = RateGet(shootEncoder.GetRaw(),"se")
-        #backRate = RateGet(feedEncoder.GetRaw(),"fe")
+        frontRate = RateGet(shootEncoder.GetRaw(),"se")
+        backRate = RateGet(feedEncoder.GetRaw(),"fe")
 
 
         #sensitivity
@@ -487,14 +489,18 @@ class MyRobot(wpilib.IterativeRobot):
             modey = "AUTO: Tower Center Preset"
             SmartDashboard.PutString("Mode","SHOOTER CONTROL MODE:  " + modey)
 
-        #if modey != "OFF":                                                          #prints encoder values only when running; every 20 loops
-            #if updateCycles < 100:
-            #    updateCycles+=1
-            #else:
-                #SmartDashboard.PutNumber("FRONT ENCODER VALUE:  ", frontRate)
-                #SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
-                #updateCycles = 0
-                
+        if modey != "OFF":                                                          #prints encoder values only when running; every 20 loops
+            if updateCycles < 100:
+                updateCycles+=1
+            else:
+                frontVolts = analog.GetAverageVoltage(robotMap.frontVoltage) ### LETS USE VOLTAGE!!!
+                backVolts = analog.GetAverageVoltage(robotMap.backVoltage)
+                SmartDashboard.PutNumber("FRONT VOLTAGE: ",frontVolts)
+                SmartDashboard.PutNumber("BACK VOLTAGE: ",backVolts)
+                SmartDashboard.PutNumber("FRONT ENCODER VALUE:  ", frontRate)
+                SmartDashboard.PutNumber("BACK ENCODER VALUE:  ", backRate)
+                updateCycles = 0
+
         encoderHighTest.EnablePWM(1)
         encoderHighTest.Set(1)
 
