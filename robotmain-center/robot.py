@@ -392,9 +392,9 @@ class MyRobot(wpilib.IterativeRobot):
             if backValue < 0:
                 backValue = 0
             print("Back: "+str(int(backValue*100 )))
-        if abs(rstick.GetY())> 0.05:
-            frontValue = frontValue + rstick.GetY()*.025
-            backValue = backValue + rstick.GetY()*.025
+        if abs(rstick.GetY())> 0.01:
+            frontValue = frontValue - rstick.GetY()*.0025
+            backValue = backValue - rstick.GetY()*.0025
             print("Front: "+str(int(frontValue*100))+" Back: "+str(int(backValue*100)))
 
 	#Button Control Presets
