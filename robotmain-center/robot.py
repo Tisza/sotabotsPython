@@ -181,7 +181,7 @@ class MyRobot(wpilib.IterativeRobot):
         #frontRate = RateGet(shootEncoder.GetRaw(),"se")
         #backRate = RateGet(feedEncoder.GetRaw(),"fe")
         ###variables
-        forward = 13500
+        forward = 12750
         turn = 1650
         backAdjust = 4000
         backOff = 16000
@@ -195,7 +195,7 @@ class MyRobot(wpilib.IterativeRobot):
             start = 0
             drive.ArcadeDrive(-.7,.1)
             frontValue = .8
-            backValue = .7
+            backValue = .8
             if leftDriveEncoder.GetRaw()>forward: #and rightDriveEncoder.GetRaw()>forward:
                 print("Stage 2")
                 stage = 2
@@ -224,7 +224,7 @@ class MyRobot(wpilib.IterativeRobot):
         if stage == 4:#Fourth Stage - SHOOT!
             drive.ArcadeDrive(0,0)
             #Encoder speeding
-            backValue = .67
+            backValue = .74
             #shoot command
             if timer.Get() > start2 + 2 and fire == False and fcount <= 3:      #wait 2 seconds
                 start = timer.Get()
@@ -392,7 +392,7 @@ class MyRobot(wpilib.IterativeRobot):
             if backValue < 0:
                 backValue = 0
             print("Back: "+str(int(backValue*100 )))
-        if abs(rstick.GetY())> 0.01:
+        if abs(rstick.GetY())> 0.1:
             frontValue = frontValue - rstick.GetY()*.0025
             backValue = backValue - rstick.GetY()*.0025
             print("Front: "+str(int(frontValue*100))+" Back: "+str(int(backValue*100)))
